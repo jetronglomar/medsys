@@ -25,6 +25,18 @@
     <!-- bootstrap-daterangepicker -->
     <link href="<?php echo base_url();?>resources/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-    <!-- Custom Theme Style -->
+    <!-- NProgress -->
+    <link href="<?php echo base_url();?>resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="<?php echo base_url();?>resources/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="<?php echo base_url();?>resources/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <!-- Switchery -->
+    <link href="<?php echo base_url();?>resources/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="<?php echo base_url();?>resources/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+
     <link href="<?php echo base_url();?>resources/build/css/custom.min.css" rel="stylesheet">
   </head>

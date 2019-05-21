@@ -4,6 +4,9 @@
   $this->load->view('includes/head');
 ?>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
@@ -37,122 +40,107 @@
                   </div>
                   <div class="x_content">
 
-                    <form action="http://webapps/bps/booking/saveBooking/0" class="form-horizontal form-label-left" novalidate="" method="post">
+                    <form action="<?php echo base_url();?>patient/savePatient" class="form-horizontal form-label-left" novalidate="" method="post">
 
                         <div class="item form-group">
                             <div class="col-md-4 col-sm-4 col-xs-12">
                                 <label for="occupation">First Name<span class="required">*</span></label>
-                                <input id="FirstName" type="text" name="FirstName" class="optional form-control col-md-7 col-xs-12" required="required">
+                                <input id="FirstName" type="text" name="FirstName" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter First Name">
                             </div>
                             <div class="col-md-4 col-sm-4 col-xs-12">
                                 <label for="occupation">Middle Name</label>
-                                <input id="MiddleName" type="text" name="MiddleName" class="optional form-control col-md-7 col-xs-12">
+                                <input id="MiddleName" type="text" name="MiddleName" class="optional form-control col-md-7 col-xs-12" placeholder="Enter Middle Name">
                             </div>
                             <div class="col-md-4 col-sm-4 col-xs-12">
                                 <label for="occupation">Last Name<span class="required">*</span></label>
-                                <input id="LastName" type="text" name="LastName" class="optional form-control col-md-7 col-xs-12" required="required">
+                                <input id="LastName" type="text" name="LastName" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter Last Name">
                             </div>
                         </div>
 
 
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <label for="website">Date of Travel <span class="required">*</span></label>
-                                <input type="text" id="DateRange" name="DateRange" required="required" class="form-control col-md-7 col-xs-12">
+                                <label for="website">Birthday <span class="required">*</span></label>
+                                <input type="text" id="Birthday" name="Birthday" required="required" class="form-control col-md-7 col-xs-12">
                             </div>
 
-                            
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <label for="occupation">T.O. Number<span class="required">*</span></label>
-                                <input id="TO_Number" type="text" name="TO_Number" class="optional form-control col-md-7 col-xs-12" required="required">
+                                <label for="website">Gender <span class="required">*</span></label>
+                                <br/>
+                                <label>
+                                <input type="radio" name="Gender" value="1" checked="checked"> &nbsp; Male &nbsp;
+                                </label>
+                                <label>
+                                <input type="radio" name="Gender" value="2"> Female
+                                </label>
                             </div>
+                        
                         </div>
 
                         <div class="item form-group">
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <label for="occupation">Date Booked<span class="required">*</span></label>
-                                    <input id="DateBooked" type="text" name="DateBooked" class="optional form-control col-md-7 col-xs-12" required="required">
-                                </div>
-                                
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <label for="occupation">Booking Reference <span class="required">*</span></label>
-                                    <input id="BookingReferenceNo" type="text" required="required" name="BookingReferenceNo" class="form-control col-md-7 col-xs-12">
-                                </div>
-                        </div>
-
-
-                        <div class="item form-group"> 
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label for="textarea">Route <span class="required">*</span></label>
-                                    <textarea name="Route" class="form-control col-md-7 col-xs-12" required="required"></textarea>
-                                </div>
-                        </div>
-
-
-                        <div class="item form-group">
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <label for="occupation">Airline<span class="required">*</span></label>
-                                    <input id="Airline" type="text" name="Airline" class="optional form-control col-md-7 col-xs-12" required="required">
-                                </div>
-
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <label for="occupation">Ticket Cost<span class="required">*</span></label>
-                                <input id="TicketCost" type="text" name="TicketCost" required="required" class="optional form-control col-md-7 col-xs-12">
-                                </div>
-                        </div>
-
-                        <div class="item form-group">
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <label for="occupation">PAL CL</label>
-                                <input id="PAL_CL" type="text" name="PAL_CL" class="optional form-control col-md-7 col-xs-12">
-                            </div> 
-
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <label for="occupation">CEBAC CL</label>
-                                <input id="CEBAC_CL" type="text" name="CEBAC_CL" class="optional form-control col-md-7 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="textarea">Address 1<span class="required">*</span></label>
+                                <textarea id="textarea"  name="Address1" class="form-control col-md-7 col-xs-12" placeholder="Enter Address Details"></textarea>
                             </div>
 
-                            
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <label for="occupation">Ageing Period</label>
-                                <input id="AegingPeriod" type="text" name="AegingPeriod" class="optional form-control col-md-7 col-xs-12">
-                            </div>
-                        </div>
-
-
-                        <div class="item form-group">
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <label for="occupation">Agent<span class="required">*</span></label>
-                                <select class="optional form-control col-md-7 col-xs-12" id="Agent" name="Agent" required="required">
-                                    <option value="">---Select Agent---</option>
-                                    <option value="1">CEB CL</option><option value="2">PAL CL</option><option value="3">PAL UNILINK</option><option value="4">INTL UNILINK</option><option value="5">TRIPCLUB</option><option value="6">CREDIT LINE</option>                                </select>
-                            </div>
-
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <label for="occupation">Requestor Lead Time</label>
-                                <input id="RequestorLeadTime" type="text" name="RequestorLeadTime" class="optional form-control col-md-7 col-xs-12">
-                            </div>
-
-                            
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <label for="occupation">Condition</label>
-                                <select class="optional form-control col-md-7 col-xs-12" id="Condition" name="Condition">
-                                    <option value="">---Select Condition---</option>
-                                    <option value="1">CONSIDERING LEAD TIME
-</option><option value="2">NOT CONSIDERING LEAD TIME
-</option><option value="3">--N/A--</option>                                </select>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="textarea">Address 2<span class="required"></span></label>
+                                <textarea id="textarea" name="Address2" class="form-control col-md-7 col-xs-12" placeholder="Enter Address Details"></textarea>
                             </div>
                         </div>
 
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <label for="textarea">Remarks<span class="required">*</span></label>
-                                <textarea id="textarea" required="required" name="Remarks" class="form-control col-md-7 col-xs-12"></textarea>
+                                <label for="occupation">City/Village</label>
+                                <select class="ronselect form-control col-md-7 col-xs-12" id="CityVillage" name="CityVillage" required="required">
+                                    <option value="">---Select City or Village---</option>
+                                    <?php 
+                                        foreach($Cities as $row){
+                                            echo "<option value='".$row->id."'>".$row->citymunDesc."</option>";
+                                        }
+                                    ?>                                       
+                                </select>
                             </div>
 
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <label for="textarea">Purpose<span class="required">*</span></label>
-                                <textarea id="textarea" required="required" name="Purpose" class="form-control col-md-7 col-xs-12"></textarea>
+                                <label for="occupation">State/Province</label>
+                                <select class="ronselect form-control col-md-7 col-xs-12" id="StateProvince" name="StateProvince" required="required">
+                                    <option value="">---Select City or Province---</option>
+                                    <?php 
+                                        foreach($Provinces as $row){
+                                            echo "<option value='".$row->id."'>".$row->provDesc."</option>";
+                                        }
+                                    ?>                              
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="occupation">Country</label>
+                                <select class="ronselect form-control select2 col-md-7 col-xs-12" id="Country" name="Country" required="required">
+                                    <option value="">---Select Country---</option>
+                                    <?php 
+                                        foreach($Countries as $row){
+                                            echo "<option value='".$row->id."'>".$row->country_name."</option>";
+                                        }
+                                    ?>                           
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="occupation">Postal Code</label>
+                                <input id="PostalCode" type="text" name="PostalCode" class="optional form-control col-md-7 col-xs-12" placeholder="Enter Postal Code">
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="occupation">Cellphone Number<span class="required">*</span></label>
+                                <input id="PhoneNumber" type="text" name="PhoneNumber" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter Cellphone Number">
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="occupation">Tel. Number</label>
+                                <input id="CellPhoneNumber" type="text" name="CellPhoneNumber" class="optional form-control col-md-7 col-xs-12" placeholder="Enter Telephone Number">
                             </div>
                         </div>
 
@@ -178,6 +166,7 @@
       </div>
     </div>
           
+     
       <script src="<?php echo base_url();?>resources/vendors/jquery/dist/jquery.min.js"></script>
       <!-- Bootstrap -->
       <script src="<?php echo base_url();?>resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -200,8 +189,6 @@
       <script src="<?php echo base_url();?>resources/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
       <!-- Switchery -->
       <script src="<?php echo base_url();?>resources/vendors/switchery/dist/switchery.min.js"></script>
-      <!-- Select2 -->
-      <script src="<?php echo base_url();?>resources/vendors/select2/dist/js/select2.full.min.js"></script>
       <!-- Parsley -->
       <script src="<?php echo base_url();?>resources/vendors/parsleyjs/dist/parsley.min.js"></script>
       <!-- Autosize -->
@@ -213,6 +200,28 @@
       <!-- Custom Theme Scripts -->
       <script src="<?php echo base_url();?>resources/build/js/custom.min.js"></script>
     <!-- insert scripts here -->
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+    
+    <script>
+            $(document).ready(function() {
+                $('.ronselect').select2();
+
+                $('#CityVillage').select2();
+            });
+    </script>
+    
+    <script>
+        $(function() {
+            $('input[name="Birthday"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true
+            });
+        });
+    </script>
 	
   </body>
 </html>
