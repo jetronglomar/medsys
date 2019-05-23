@@ -1,7 +1,7 @@
 <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-stethoscope"></i> <span>JG | MedSys</span></a>
+              <a href="<?php echo base_url() ?>home" class="site_title"><i class="fa fa-stethoscope"></i> <span>JG | MedSys</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -34,8 +34,8 @@
                 
                   <li><a><i class="fa fa-group"></i> Patient Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="index.html">Profile</a></li>
-                      <li><a href="index2.html">Laboratory Result</a></li>
+                      <li><a href="<?php echo base_url();?>patient">Profile</a></li>
+                      <li><a href="<?php echo base_url();?>lab">Laboratory Result</a></li>
                       <li><a href="index3.html">Schedule</a></li>
                       <li><a href="index3.html">Activities</a></li>
                     </ul>

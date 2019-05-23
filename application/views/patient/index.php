@@ -26,93 +26,77 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row top_tiles">
-             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-search"></i></div>
-                  <!-- <div class="count">179</div> -->
-                  <div class="count" style="font-size:30px !important">Find Patient</div>
-                  <p style="margin-bottom:10px !important">Search for Patient Profile</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-user"></i></div>
-                  <!-- <div class="count">179</div> -->
-                  <a href="<?php echo base_url()?>patient/register">
-                    <div class="count" style="font-size:30px !important">Register</div>
-                    <p style="margin-bottom:10px !important">Create new Patient Profile</p>
-                  </a>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-calendar"></i></div>
-                    <!-- <div class="count">179</div> -->
-                    <div class="count" style="font-size:30px !important">Appointment</div>
-                    <p style="margin-bottom:10px !important">Create new Appointments</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-file-text-o"></i></div>
-                  <!-- <div class="count">179</div> -->
-                  <div class="count" style="font-size:30px !important">History</div>
-                  <p style="margin-bottom:10px !important">Check for Medical History</p>
-                </div>
-              </div>
-          </div>
-          <!-- /top tiles -->
           <br />
 
           <div class="row"> 
               <!-- Insert Datatable Here -->
+              
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>List of Today's Patients</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
+                    <h2>Patient Profile</h2>
                     <div class="clearfix"></div>
+                  </div>
+                  <div class="pull-right">
+                    <a href="<?php echo base_url(); ?>patient/register/0" class="btn btn-primary btn-md pull-right">Register a Patient</a>
                   </div>
                   <div class="x_content">
                     
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>ID</th>
                           <th>Name</th>
                           <th>Gender</th>
-                          <th>Birthday</th>
-                          <th>Purpose</th>
-                          <th>Type</th>
+                          <th>Phone Number</th>
+                          <th>Status</th>
+                          <th>Action</th>
                         </tr>
                       </thead>
 
 
                       <tbody>
-                        <tr>
+                        <!-- <tr>
                           <td>1001</td>
                           <td>Glomar, Jet Ronrick T.</td>
                           <td>M</td>
                           <td>27</td>
                           <td>Check-up</td>
                           <td>OP</td>
-                        </tr>
+                        </tr> -->
+                        <?php 
+                          foreach($Patient as $row){
+                            echo "<tr>";
+                              echo "<td>".$row->LastName.", ".$row->FirstName."</td>";
+                              if($row->Gender == 1){
+                                echo "<td>Male</td>";
+                              }
+                              else{
+                                echo "<td>Female</td>";
+                              }
+
+                              echo "<td>".$row->PhoneNumber."</td>";
+
+                              if($row->Status == 1){
+                                echo "<td>Active</td>";
+                              }
+                              else{
+                                echo "<td>Inactive</td>";
+                              }
+                              echo "<td>";
+                              echo "<a href='".base_url()."patient/detail/".$row->Id."'>View | </a>";
+                              echo "<a href='".base_url()."patient/edit/".$row->Id."'>Edit</a>";
+                              if($row->Status == 1){
+                                echo "<a href='".base_url()."patient/toggleStatus/0/".$row->Id."'> | Deactivate</a>";
+                              }
+                              else{
+                                echo "<a href='".base_url()."patient/toggleStatus/1/".$row->Id."'> | Activate</a>";
+                              }
+                              echo "</td>";
+
+
+                            echo "</tr>";
+                          }
+                        ?>
                       </tbody>
                     </table>
                   </div>

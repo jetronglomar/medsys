@@ -3,19 +3,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Patient extends CI_Controller {
 
-	public function Register()
+
+	public function index(){
+
+		$data['Patient'] = $this->database_model->getAll('R_Patient');
+		$this->load->view('patient/index',$data);
+	}
+
+	public function register()
 	{ 
-		$this->load->model('database_model');
+		
+		$data['Countries'] = $this->database_model->getAll('R_Countries');
+		$data['Cities'] = $this->database_model->getAll('R_City');
+		$data['Provinces'] = $this->database_model->getAll('R_Province');
+		
+		$this->load->view('patient/register',$data);
+	}
+
+	public function edit(){
+		$Id = $this->uri->segment(3);
+		$data['PatientDetails'] = $this->database_model->getSpecificPatient($Id);
 
 		$data['Countries'] = $this->database_model->getAll('R_Countries');
 		$data['Cities'] = $this->database_model->getAll('R_City');
 		$data['Provinces'] = $this->database_model->getAll('R_Province');
 
-		$this->load->view('patient/register',$data);
+		$this->load->view('patient/edit', $data);
+	}
+
+	public function detail(){
+		$Id = $this->uri->segment(3);
+		$data['PatientDetails'] = $this->database_model->getSpecificPatient($Id);
+
+		$data['Countries'] = $this->database_model->getAll('R_Countries');
+		$data['Cities'] = $this->database_model->getAll('R_City');
+		$data['Provinces'] = $this->database_model->getAll('R_Province');
+
+		$this->load->view('patient/detail', $data);
 	}
 
 	public function savePatient(){
 		
+		$Id= $this->uri->segment(3);
+
 		$FirstName = $this->input->post('FirstName');
 		$MiddleName = $this->input->post('MiddleName');
 		$LastName = $this->input->post('LastName');
@@ -33,10 +63,17 @@ class Patient extends CI_Controller {
 		$QRCode = $this->randomizer();
 		 $QRCode;
  
-		$result= 	$this->database_model->savePatient($FirstName,$MiddleName, $LastName,$QRCode, $Gender, $Birthday, $Address1, $Address2, $CityVillage, $StateProvince, $Country, $PostalCode, $PhoneNumber, $CellPhoneNumber);
+		$result= 	$this->database_model->savePatient($Id, $FirstName,$MiddleName, $LastName,$QRCode, $Gender, $Birthday, $Address1, $Address2, $CityVillage, $StateProvince, $Country, $PostalCode, $PhoneNumber, $CellPhoneNumber);
 		if($result == true){
-			echo "success saving";
+			redirect('patient/index');
 		}
+	}
+
+	function toggleStatus(){
+		$status = $this->uri->segment(3);
+		$Id = $this->uri->segment(4);
+		$result = $this->database_model->toggleStatus($status,$Id);
+		redirect('patient/index');
 	}
 
 	function randomizer(){

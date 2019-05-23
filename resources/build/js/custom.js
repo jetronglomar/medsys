@@ -179,11 +179,11 @@ $(document).ready(function() {
 // /Panel toolbox
 
 // Tooltip
-$(document).ready(function() {
-    $('[data-toggle="tooltip"]').tooltip({
-        container: 'body'
-    });
-});
+// $(document).ready(function() {
+//     $('[data-toggle="tooltip"]').tooltip({
+//         container: 'body'
+//     });
+// });
 // /Tooltip
 
 // Progressbar
@@ -1153,8 +1153,8 @@ if (typeof NProgress != 'undefined') {
 				};
 
 
-			// Tooltip
-			$('[data-toggle="tooltip"]').tooltip();
+			// // Tooltip
+			// $('[data-toggle="tooltip"]').tooltip();
 
 
 			// Cropper
