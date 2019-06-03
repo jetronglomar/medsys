@@ -8,4 +8,10 @@ class Lab extends CI_Controller {
 		$this->load->view('lab/index',$data);
     }
 
+    public function new(){
+        $data['Patient'] = $this->database_model->getAll('R_Patient');
+        $data['LabCategory'] = $this->database_model->getAll('R_LaboratoryCategory');
+        $this->load->view('lab/new.php',$data);
+    }
+
 }

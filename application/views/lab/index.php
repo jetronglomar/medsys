@@ -38,7 +38,7 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="pull-right">
-                    <a href="<?php echo base_url(); ?>patient/register/0" class="btn btn-primary btn-md pull-right">Add Laboratory Results</a>
+                    <a href="<?php echo base_url(); ?>lab/new/0" class="btn btn-primary btn-md pull-right">Add Laboratory Results</a>
                   </div>
                   <div class="x_content">
                     
@@ -46,9 +46,9 @@
                       <thead>
                         <tr>
                           <th>Name</th>
-                          <th>Gender</th>
-                          <th>Phone Number</th>
-                          <th>Status</th>
+                          <th>Date of Test</th>
+                          <th>Date of Result</th>
+                          <th>Attachment</th>
                           <th>Action</th>
                         </tr>
                       </thead>
