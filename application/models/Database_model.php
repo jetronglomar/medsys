@@ -72,7 +72,86 @@ class Database_model extends CI_Model
         $this->db->update('R_Patient', $data);
     }
 
+    public function saveLabResult($Id,$TestDate, $ResultDate, $Findings, $RequestedBy, $PatientId, $CategoryId, $Attachment, $ExecutedBy){
+        if($Id == 0){
+            $data = array(
+                'TestDate' => $TestDate,
+                'ResultDate' => $ResultDate,
+                'Findings' => $Findings,
+                'RequestedBy' => $RequestedBy,
+                'PatientId' => $PatientId,
+                'CategoryId' => $CategoryId,
+                'Attachment' => $Attachment,
+                'ExecutedBy' => $ExecutedBy
+            );
 
+            $this->db->insert('T_LaboratoryResult', $data);
+        }
+        else{
+            $data = array(
+                'TestDate' => $TestDate,
+                'ResultDate' => $ResultDate,
+                'Findings' => $Findings,
+                'RequestedBy' => $RequestedBy,
+                'PatientId' => $PatientId,
+                'CategoryId' => $CategoryId,
+                'Attachment' => $Attachment,
+                'ExecutedBy' => $ExecutedBy
+            );
+
+            $this->db->where('Id', $Id);
+            $this->db->update('T_LaboratoryResult', $data);
+        }
+
+        return true;
+    }
+
+    public function getLaboratoryResult(){
+
+        $query_string = "select t.Id,
+                        t.TestDate,
+                        t.ResultDate,
+                        t.Findings,
+                        t.Attachment,
+                        concat(p.LastName,', ',
+                        p.FirstName,' ',
+                        p. MiddleName) as 'PatientName',
+                        concat(d.LastName,', ',
+                        d.FirstName,' ',
+                        d. MiddleName) as 'DoctorName',
+                        c.Description as 'CategoryDescription'
+                        
+                        from T_LaboratoryResult t
+                        inner join R_Patient p on t.PatientId = p.Id
+                        inner join R_Doctor d on t.RequestedBy = d.Id
+                        inner join R_LaboratoryCategory c on t.CategoryId = c.Id";
+
+        return $this->db->query($query_string)->result();
+    }
+
+
+    public function getSpecificLabResult($Id){
+
+        $query_string = "select * from T_LaboratoryResult where Id = $Id";
+        
+        $data = $this->db->query($query_string)->row_array();
+        return $data;
+    }
+
+
+    public function saveEngagement($PatientId, $PurposeId, $PatientType, $RoomId,$DateOfEngagement){
+        $data = array(
+            'PatientId'=> $PatientId,
+            'PurposeId'=> $PurposeId,
+            'PatientType' => $PatientType,
+            'RoomId' =>$RoomId,
+            'DateOfEngagement'=> $DateOfEngagement
+        );
+        
+        $this->db->insert('T_Engagement', $data);
+
+        return true;
+    }
     
 
 }

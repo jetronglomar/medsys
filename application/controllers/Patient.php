@@ -82,4 +82,34 @@ class Patient extends CI_Controller {
 		$alpha=substr(str_shuffle($chars), 0, 50);
 		return $alpha;
 	}
+
+	function engagement(){
+		
+		$Id = $this->uri->segment(3);	
+		$data['Id'] = $Id;
+		$data['Purpose'] = $this->database_model->getAll('R_Purpose');
+		$data['Patient'] = $this->database_model->getAll('R_Patient');
+		$data['Room'] = $this->database_model->getAll('R_Room');
+		$this->load->view('patient/engagement', $data);
+
+	}
+
+	function saveEngagement(){
+
+		$PatientId = $this->input->post('PatientId');
+		$PurposeId = $this->input->post('PurposeId');
+		$PatientType = $this->input->post('PatientType');
+		$RoomId = $this->input->post('RoomId');
+
+		$currentDate = date('Y-m-d h:i:sa');
+		$result = $this->database_model->saveEngagement($PatientId, $PurposeId, $PatientType, $RoomId, $currentDate);
+
+
+		redirect('patient/enDetails/1');		
+	}
+
+	function enDetails(){
+		$data['Id'] = $this->uri->segment(3);
+		$this->load->view('patient/endetails', $data);
+	}
 }

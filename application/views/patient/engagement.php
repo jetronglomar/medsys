@@ -35,15 +35,15 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Laboratory Result Form</h2>
+                    <h2>Patient Engagement Form</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
 
-                    <form action="<?php echo base_url();?>lab/saveResult/0" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
+                    <form action="<?php echo base_url();?>patient/saveEngagement/0" class="form-horizontal form-label-left" method="post">
 
-                        <div class="item form-group">
-                            <div class="col-md-4 col-sm-6 col-xs-12">
+                       <div class="item form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="occupation">Patient Name</label>
                                 <select class="ronselect form-control col-md-7 col-xs-12" id="PatientId" name="PatientId" required="required">
                                     <option value="">---Search Patient Name---</option>
@@ -55,61 +55,48 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <label for="occupation">Requested By</label>
-                                <select class="ronselect form-control col-md-7 col-xs-12" id="RequestedBy" name="RequestedBy" required="required">
-                                    <option value="">---Search Doctor Name---</option>
-                                    <?php 
-                                        foreach($Doctor as $row){
-                                            echo "<option value='".$row->Id."'>".$row->LastName.", ".$row->FirstName." ".$row->MiddleName."</option>";
-                                        }
-                                    ?>                                       
-                                </select>
-                            </div>
-
-                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <label for="occupation">Laboratory Test Category</label>
-                                <select class="ronselect form-control col-md-7 col-xs-12" id="CategoryId" name="CategoryId" required="required">
-                                    <option value=""> ---Search Category---</option>
-                                    <?php 
-                                        foreach($LabCategory as $row){
-                                            echo "<option value='".$row->Id."'>".$row->Description."</option>";
-                                        }
-                                    ?>                                       
-                                </select>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="occupation">Purpose</label>
+                                    <select class="ronselect form-control col-md-7 col-xs-12" id="PurposeId" name="PurposeId" required="required">
+                                        <option value=""> ---Select Engagement Purpose---</option>
+                                        <?php 
+                                            foreach($Purpose as $row){
+                                                echo "<option value='".$row->Id."'>".$row->Description."</option>";
+                                            }
+                                        ?>         
+                                    </select>
                             </div>
                         </div>
 
 
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <label for="website">Date of Test <span class="required">*</span></label>
-                                <input type="text" id="TestDate" name="TestDate" required="required" class="form-control col-md-7 col-xs-12">
+                                <label for="occupation">Patient Type</label>
+                                <select class="ronselect form-control col-md-7 col-xs-12" id="PatientType" name="PatientType" required="required">
+                                    <option value=""> ---Select Patient Type---</option>
+                                    <option value="1">Outpatient</option>
+                                    <option value="2">Inpatient</option>
+                                </select>
                             </div>
 
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <label for="website">Date of Result <span class="required">*</span></label>
-                                <input type="text" id="ResultDate" name="ResultDate" required="required" class="form-control col-md-7 col-xs-12">
+                            <div id="roomDiv" class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="occupation">Room</label>
+                                <select class="ronselect form-control col-md-7 col-xs-12" id="RoomId" name="RoomId">
+                                    <option value=""> ---Search Room---</option>
+                                     <?php 
+                                            foreach($Room as $row){
+                                                echo "<option value='".$row->Id."'>".$row->Description."</option>";
+                                            }
+                                        ?>   
+                                </select>
                             </div>
-                        </div>
-
-                        <div class="item form-group">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <label for="textarea">Attachment<span class="required">*</span></label>
-                                <input type="file" clas="form control col-md-6 col-xs-12" name="attachment" id="attachment">
-                            </div>
-
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <label for="textarea">Findings<span class="required">*</span></label>
-                                <textarea id="Findings" name="Findings" class="form-control col-md-7 col-xs-12" placeholder="Enter Address Details" required></textarea>
-                            </div>
-                        </div>
+                        </div>                    
 
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                          <button id="send" type="submit" class="btn btn-success">Submit</button>
-                          <a href="<?php echo base_url()?>lab" class="btn btn-info">Cancel</a>
+                          <button id="send" type="submit" class="btn btn-success">Proceed</button>
+                          <a href="<?php echo base_url()?>patient/detail/<?php echo $Id; ?>" class="btn btn-info">Cancel</a>
                         </div>
                       </div>
                     </form>
@@ -173,28 +160,22 @@
 
                 $('#CityVillage').select2();
             });
+    $(document).ready(function (){
+        $('#PatientType').on('change', function() {
+            if(this.value == 2){
+                $('#roomDiv').show();
+                $('#RoomId').prop('required',true);
+            }
+            else{
+                $('#roomDiv').hide();
+                $('#RoomId').prop('required',false);
+            }
+        });
+
+    });
+
     </script>
     
-    <script>
-        $(function() {
-            $('input[name="TestDate"]').daterangepicker({
-                singleDatePicker: true,
-                showDropdowns: true,
-                locale:{
-                  format: 'YYYY-MM-DD'
-                }
-            });
-
-              $('input[name="ResultDate"]').daterangepicker({
-                singleDatePicker: true,
-                showDropdowns: true,
-                locale:{
-                  format: 'YYYY-MM-DD'
-                },
-                minDate: $('#TestDate').val()
-            });
-        });
-    </script>
 	
   </body>
 </html>

@@ -39,7 +39,7 @@
                   <div class="x_title">
                     <h2>Patient Details</h2>
                     <div class="pull-right">
-                        <a href="<?php echo base_url(); ?>patient/register/0" class="btn btn-primary btn-md pull-right"></a>
+                        <a href="<?php echo base_url(); ?>patient/engagement/<?php echo $PatientDetails['Id']; ?>" class="btn btn-primary btn-md pull-right">Start Engagement</a>
                     </div>
                     <div class="clearfix"></div>
                   </div>

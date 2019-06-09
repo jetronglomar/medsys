@@ -83,13 +83,13 @@
                                 echo "<td>Inactive</td>";
                               }
                               echo "<td>";
-                              echo "<a href='".base_url()."patient/detail/".$row->Id."'>View | </a>";
-                              echo "<a href='".base_url()."patient/edit/".$row->Id."'>Edit</a>";
+                              echo "<a href='".base_url()."patient/detail/".$row->Id."'  class='btn btn-info btn-xs'  data-toggle='tooltip' title='View'><i class='fa fa-eye'></i></a>";
+                              echo "<a href='".base_url()."patient/edit/".$row->Id."'  class='btn btn-warning btn-xs' data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i></a>";
                               if($row->Status == 1){
-                                echo "<a href='".base_url()."patient/toggleStatus/0/".$row->Id."'> | Deactivate</a>";
+                                echo "<a href='".base_url()."patient/toggleStatus/0/".$row->Id."'  class='btn btn-danger btn-xs' data-toggle='tooltip' title='Deactivate'><i class='fa fa-close'> </i></a>";
                               }
                               else{
-                                echo "<a href='".base_url()."patient/toggleStatus/1/".$row->Id."'> | Activate</a>";
+                                echo "<a href='".base_url()."patient/toggleStatus/1/".$row->Id."'  class='btn btn-success btn-xs' data-toggle='tooltip' title='Activate'><i class='fa fa-check'></i></a>";
                               }
                               echo "</td>";
 

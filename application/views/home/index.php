@@ -32,8 +32,10 @@
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-search"></i></div>
                   <!-- <div class="count">179</div> -->
-                  <div class="count" style="font-size:30px !important">Find Patient</div>
-                  <p style="margin-bottom:10px !important">Search for Patient Profile</p>
+                  <a href="<?php echo base_url()?>patient">
+                    <div class="count" style="font-size:30px !important">Find Patient</div>
+                    <p style="margin-bottom:10px !important">Search for Patient Profile</p>
+                  </a>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">

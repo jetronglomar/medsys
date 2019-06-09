@@ -40,7 +40,7 @@
                   </div>
                   <div class="x_content">
 
-                    <form action="<?php echo base_url();?>lab/saveResult/0" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
+                    <form action="<?php echo base_url();?>lab/saveResult/<?php echo $LabDetails['Id'];?>" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
 
                         <div class="item form-group">
                             <div class="col-md-4 col-sm-6 col-xs-12">
@@ -49,7 +49,10 @@
                                     <option value="">---Search Patient Name---</option>
                                     <?php 
                                         foreach($Patient as $row){
-                                            echo "<option value='".$row->Id."'>".$row->LastName.", ".$row->FirstName." ".$row->MiddleName."</option>";
+                                            if($LabDetails['PatientId'] == $row->Id)
+                                                echo "<option value='".$row->Id."' selected>".$row->LastName.", ".$row->FirstName." ".$row->MiddleName."</option>";
+                                            else
+                                                echo "<option value='".$row->Id."'>".$row->LastName.", ".$row->FirstName." ".$row->MiddleName."</option>";
                                         }
                                     ?>                                       
                                 </select>
@@ -61,7 +64,10 @@
                                     <option value="">---Search Doctor Name---</option>
                                     <?php 
                                         foreach($Doctor as $row){
-                                            echo "<option value='".$row->Id."'>".$row->LastName.", ".$row->FirstName." ".$row->MiddleName."</option>";
+                                            if($LabDetails['RequestedBy'] == $row->Id)
+                                                echo "<option value='".$row->Id."' selected>".$row->LastName.", ".$row->FirstName." ".$row->MiddleName."</option>";
+                                            else
+                                                echo "<option value='".$row->Id."'>".$row->LastName.", ".$row->FirstName." ".$row->MiddleName."</option>";
                                         }
                                     ?>                                       
                                 </select>
@@ -73,7 +79,10 @@
                                     <option value=""> ---Search Category---</option>
                                     <?php 
                                         foreach($LabCategory as $row){
-                                            echo "<option value='".$row->Id."'>".$row->Description."</option>";
+                                            if($LabDetails['CategoryId'] == $row->Id)
+                                                echo "<option value='".$row->Id."' selected>".$row->Description."</option>";
+                                            else
+                                                echo "<option value='".$row->Id."'>".$row->Description."</option>";
                                         }
                                     ?>                                       
                                 </select>
@@ -84,12 +93,12 @@
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="website">Date of Test <span class="required">*</span></label>
-                                <input type="text" id="TestDate" name="TestDate" required="required" class="form-control col-md-7 col-xs-12">
+                                <input type="text" id="TestDate" name="TestDate" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $LabDetails['TestDate']; ?>">
                             </div>
 
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="website">Date of Result <span class="required">*</span></label>
-                                <input type="text" id="ResultDate" name="ResultDate" required="required" class="form-control col-md-7 col-xs-12">
+                                <input type="text" id="ResultDate" name="ResultDate" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $LabDetails['ResultDate']; ?>"> 
                             </div>
                         </div>
 
@@ -97,11 +106,12 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="textarea">Attachment<span class="required">*</span></label>
                                 <input type="file" clas="form control col-md-6 col-xs-12" name="attachment" id="attachment">
+                                <input type="text" clas="form control col-md-6 col-xs-12" name="TempAttachment" id="TempAttachment" value="<?php echo $LabDetails['Attachment']; ?>" hidden>
                             </div>
 
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="textarea">Findings<span class="required">*</span></label>
-                                <textarea id="Findings" name="Findings" class="form-control col-md-7 col-xs-12" placeholder="Enter Address Details" required></textarea>
+                                <textarea id="Findings" name="Findings" class="form-control col-md-7 col-xs-12" placeholder="Enter Address Details" required> <?php echo $LabDetails['Findings']; ?> </textarea>
                             </div>
                         </div>
 
