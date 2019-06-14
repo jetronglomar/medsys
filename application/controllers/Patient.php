@@ -86,7 +86,9 @@ class Patient extends CI_Controller {
 	function engagement(){
 		
 		$Id = $this->uri->segment(3);	
+
 		$data['Id'] = $Id;
+		$data['PatientDetails'] = $this->database_model->getSpecificPatient($Id);
 		$data['Purpose'] = $this->database_model->getAll('R_Purpose');
 		$data['Patient'] = $this->database_model->getAll('R_Patient');
 		$data['Room'] = $this->database_model->getAll('R_Room');
@@ -104,12 +106,19 @@ class Patient extends CI_Controller {
 		$currentDate = date('Y-m-d h:i:sa');
 		$result = $this->database_model->saveEngagement($PatientId, $PurposeId, $PatientType, $RoomId, $currentDate);
 
+		$EngagementId = $result['Id'];
 
-		redirect('patient/enDetails/1');		
+		redirect('patient/enDetails/'.$EngagementId);		
 	}
 
 	function enDetails(){
-		$data['Id'] = $this->uri->segment(3);
+		$Id = $this->uri->segment(3);
+		$data['EngagementDetails'] = $this->database_model->selectSpecificEngagement($Id);
+		$data['PatientDetails'] = $this->database_model->getSpecificPatient($data['EngagementDetails']['PatientId']);
+		$data['MedicalRecord'] = $this->database_model->getLaboratoryResultbyPatientId($data['EngagementDetails']['PatientId']);
+		
+		$data['RecentEngagement'] = $this->database_model->getRecentVisit($data['EngagementDetails']['PatientId']);
+
 		$this->load->view('patient/endetails', $data);
 	}
 }

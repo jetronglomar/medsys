@@ -45,14 +45,20 @@
                        <div class="item form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="occupation">Patient Name</label>
-                                <select class="ronselect form-control col-md-7 col-xs-12" id="PatientId" name="PatientId" required="required">
+                                <select class="ronselect form-control col-md-7 col-xs-12" id="PatientId" name="Patient" required="required" disabled>
                                     <option value="">---Search Patient Name---</option>
                                     <?php 
                                         foreach($Patient as $row){
+                                          if($PatientDetails['Id'] == $row->Id){
+                                            echo "<option value='".$row->Id."' selected>".$row->LastName.", ".$row->FirstName." ".$row->MiddleName."</option>";
+                                          }
+                                          else{
                                             echo "<option value='".$row->Id."'>".$row->LastName.", ".$row->FirstName." ".$row->MiddleName."</option>";
+                                          }
                                         }
                                     ?>                                       
                                 </select>
+                                <input type="text" name="PatientId" value="<?php echo $Id; ?>" hidden/>
                             </div>
 
                             <div class="col-md-6 col-sm-6 col-xs-12">

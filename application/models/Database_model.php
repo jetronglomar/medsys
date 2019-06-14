@@ -150,8 +150,60 @@ class Database_model extends CI_Model
         
         $this->db->insert('T_Engagement', $data);
 
-        return true;
+
+        $query_string = "select * from T_Engagement order by Id desc limit 1";
+        $data = $this->db->query($query_string)->row_array();
+
+        return $data;
     }
     
 
+    public function selectSpecificEngagement($Id){
+
+        $query_string = "select * from T_Engagement where Id = $Id";
+        $data = $this->db->query($query_string)->row_array();
+
+        return $data;
+    }
+
+    public function getDescription($Id,$TableName){
+        $query_string = "select * from $TableName where Id = $Id";
+
+        $data = $this->db->query($query_string)->row_array();
+        return $data['Description'];        
+    }
+
+
+    public function getLaboratoryResultbyPatientId($PatientId){
+
+        $query_string = "select t.Id,
+                        t.TestDate,
+                        t.ResultDate,
+                        t.Findings,
+                        t.Attachment,
+                        concat(p.LastName,', ',
+                        p.FirstName,' ',
+                        p. MiddleName) as 'PatientName',
+                        concat(d.LastName,', ',
+                        d.FirstName,' ',
+                        d. MiddleName) as 'DoctorName',
+                        c.Description as 'CategoryDescription'
+                        
+                        from T_LaboratoryResult t
+                        inner join R_Patient p on t.PatientId = p.Id
+                        inner join R_Doctor d on t.RequestedBy = d.Id
+                        inner join R_LaboratoryCategory c on t.CategoryId = c.Id
+                        where p.Id = $PatientId";
+
+        return $this->db->query($query_string)->result();
+    }
+
+    public function getRecentVisit($PatientId){
+
+        $query_string = "select * from T_Engagement limit 5";
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
+
+    }
 }
