@@ -172,7 +172,7 @@
                                 <div class="x_content">
                                     <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <input id="PhoneNumber" type="text" name="PhoneNumber" class="optional form-control col-md-7 col-xs-12" required="required" readonly>
+                                            <input id="PhoneNumber" value="<?php echo $this->database_model->getDescription($EngagementDetails['PurposeId'],'R_Purpose'); ?>" type="text" name="PhoneNumber" class="optional form-control col-md-7 col-xs-12" required="required" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +189,16 @@
                                 <div class="x_content">
                                     <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <input id="PhoneNumber" type="text" name="PhoneNumber" class="optional form-control col-md-7 col-xs-12" required="required" readonly>
+                                            <select class="form-control" id="chiefComplaint" name="chiefComplaint" required>
+                                                <option value="">--Select Here--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <div class="item form-group">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <textarea class="form-control" id="chiefComplaintRemarks" name="chiefComplaintRemarks" placeholder="Enter Remarks"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -210,36 +219,36 @@
                                             <div class="item form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Height (cm)</label>
-                                                    <input id="PhoneNumber" type="text" name="PhoneNumber" value="<?php echo $PatientDetails['LastName'].', '.$PatientDetails['FirstName'].' '.$PatientDetails['MiddleName'] ?>" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter Cellphone Number" readonly>
+                                                    <input id="Height" type="text" name="Height"  class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter in CM">
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Pulse (/min)</label>
-                                                    <input id="PhoneNumber" type="text" value="<?php echo $PatientDetails['CellPhoneNumber']; ?>" name="PhoneNumber" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter Cellphone Number" readonly>
+                                                    <input id="Pulse" type="number"  name="Pulse" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter /min">
                                                 </div>
                                             </div>
                                             
                                             <div class="item form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Weight (kg)</label>
-                                                    <input id="PhoneNumber" type="text" name="PhoneNumber" value="<?php echo $PatientDetails['LastName'].', '.$PatientDetails['FirstName'].' '.$PatientDetails['MiddleName'] ?>" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter Cellphone Number" readonly>
+                                                    <input id="Weight" type="number" name="Weight"  class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter in kg">
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Respiratory Rate (/min)</label>
-                                                    <input id="PhoneNumber" type="text" value="<?php echo $PatientDetails['CellPhoneNumber']; ?>" name="PhoneNumber" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter Cellphone Number" readonly>
+                                                    <input id="Respiratory" type="number" name="Respiratory" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter /min">
                                                 </div>
 
                                             </div>   
                                             <div class="item form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Calculated BMI (kg/m&sup2;)</label>
-                                                    <input id="PhoneNumber" type="text" name="PhoneNumber" value="<?php echo $PatientDetails['LastName'].', '.$PatientDetails['FirstName'].' '.$PatientDetails['MiddleName'] ?>" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter Cellphone Number" readonly>
+                                                    <input id="BMI" type="number" name="BMI" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter BMI">
                                                 </div>
 
                                                 <div class="col-md-2 col-sm-6 col-xs-12">
                                                     <label for="occupation">BP (mmHg)</label>
-                                                    <input id="PhoneNumber" type="text" value="<?php echo $PatientDetails['CellPhoneNumber']; ?>" name="PhoneNumber" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="Enter Cellphone Number" readonly>
+                                                    <input id="PhoneNumber" type="number" name="PhoneNumber" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0">
                                                 </div>
                                                 <div class="col-md-1 col-sm-6 col-xs-12" style="width:10%; padding-left:0px; padding-right:0px">
                                                     <label for="occupation">&nbsp;</label>
@@ -248,7 +257,7 @@
 
                                                 <div class="col-md-2 col-sm-6 col-xs-12">
                                                     <label for="occupation">&nbsp;</label>
-                                                    <input id="PhoneNumber" type="text" value="<?php echo $PatientDetails['CellPhoneNumber']; ?>" name="PhoneNumber" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="Enter Cellphone Number" readonly>
+                                                    <input id="PhoneNumber" type="number"  name="PhoneNumber" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0">
                                                 </div>
                                             </div>               
 
