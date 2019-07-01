@@ -191,6 +191,11 @@
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <select class="form-control" id="chiefComplaint" name="chiefComplaint" required>
                                                 <option value="">--Select Here--</option>
+                                                <?php
+                                                    foreach($ChiefComplaint as $row){
+                                                        echo "<option value='".$row->Id."'>".$row->Description."</option>";
+                                                    }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
@@ -279,12 +284,75 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                        <h3><i class='fa fa-folder'></i> No Records Found</h3>
+                                        <form action="<?php echo base_url();?>patient/saveEngagement/0" class="form-horizontal form-label-left" method="post">
+                                                <div class="item form-group">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <label for="occupation">Medicine</label>
+                                                        <textarea class="form-control" placeholder="" readonly></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="item form-group" hidden>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <label for="occupation">Tests</label>
+                                                        <textarea class="form-control" placeholder="" readonly></textarea>
+                                                    </div>
+                                                </div>
+
+                                                 <div class="item form-group" hidden>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <label for="occupation">Referrals</label>
+                                                        <textarea class="form-control" placeholder="" readonly></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="item form-group" hidden>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                                        <label for="occupation">Disposition</label>
+                                                        <select class="form-control" id="chiefComplaint" name="chiefComplaint" readonly>
+                                                            <option value="">--Select Here--</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="item form-group" hidden>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <label for="occupation">Follow Up</label>
+                                                        <input type="text" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                        </form>
                                     </div>
                         </div>
                      </div>
+                    
                 </div> 
             </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Allergies</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <form id="allergyForm" action="<?php echo base_url();?>patient/saveEngagement/0" class="form-horizontal form-label-left" method="post">
+                                    <div class="item form-group">
+                                        <div class="col-md-8 col-sm-12 col-xs-12">
+                                                <input type="text" name="allergy[]" class="form-control" placeholder="Enter Allergy" required>
+                                        </div>
+                                        <div class="btnholder col-md-4 col-sm-12 col-xs-12">
+                                                <button id="AddAllergy" class="btn btn-success btn-md pull-right">Add</button>
+                                                <button id="AddAllergy" val="0" class="removeAllergy btn btn-success btn-md pull-right" style="display:none">Remove</button>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
           <!-- Content End -->
         </div>
         <!-- /page content -->
@@ -311,7 +379,26 @@
     
     
     <script>
+     
     $(document).ready(function (){
+        
+        //Allergy Counter
+        var i = 0;
+
+
+        $('#AddAllergy').click(function(event){
+            event.preventDefault();
+            i = i+1;
+            $("#allergyForm").append('<div class="item form-group"><div class="col-md-8 col-sm-12 col-xs-12"><input id="allergy'+i+'" name="allergy[]"  type="text" class="form-control" placeholder="Enter Allergy" required></div><div class="btnholder col-md-4 col-sm-12 col-xs-12"><button value="'+i+'" onClick="$(this).parent().parent().remove();" class="removeAllergy btn btn-danger btn-md pull-right">Remove</button></div></div>');
+          
+        });
+
+        $('.removeAllergy').live(function () {
+                $(this).parent().remove();   
+        });
+
+     
+
         $('#PatientType').on('change', function() {
             if(this.value == 2){
                 $('#roomDiv').show();

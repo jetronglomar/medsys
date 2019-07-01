@@ -118,7 +118,7 @@ class Patient extends CI_Controller {
 		$data['MedicalRecord'] = $this->database_model->getLaboratoryResultbyPatientId($data['EngagementDetails']['PatientId']);
 		
 		$data['RecentEngagement'] = $this->database_model->getRecentVisit($data['EngagementDetails']['PatientId']);
-
+		$data['ChiefComplaint'] = $this->database_model->getAll('R_ChiefComplaint');
 		$this->load->view('patient/endetails', $data);
 	}
 }
