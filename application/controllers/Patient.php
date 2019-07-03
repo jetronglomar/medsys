@@ -153,13 +153,14 @@ class Patient extends CI_Controller {
 		);
 
 
-		echo $engagementDetailsId;
+		
 
 		$allergy = $_POST['allergy'];
 		// print_r($allergy);
 
 		for($i = 0; $i<count($allergy); $i++){
 			// create functionality for saving allergyu
+			$this->database_model->saveAllergies($allergy[$i], $engagementDetailsId);
 		}
 
 

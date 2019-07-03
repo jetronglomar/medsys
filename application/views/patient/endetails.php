@@ -45,7 +45,7 @@
                   </div>
                   <div class="x_content">
 
-                      <input type="text" value="<?php echo $this->uri->segment(3); ?>" name="EngagementId" />
+                      <input type="text" value="<?php echo $this->uri->segment(3); ?>" name="EngagementId" hidden/>
                        <div class="item form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="occupation">Patient Name</label>
@@ -314,9 +314,9 @@
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
 
                                                         <label for="occupation">Disposition</label>
-                                                        <select class="form-control" id="chiefComplaint" name="chiefComplaint" readonly>
+                                                        <!-- <select class="form-control" id="chiefComplaint" name="chiefComplaint" readonly>
                                                             <option value="">--Select Here--</option>
-                                                        </select>
+                                                        </select> -->
                                                     </div>
                                                 </div>
 

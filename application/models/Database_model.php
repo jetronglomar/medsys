@@ -222,8 +222,8 @@ class Database_model extends CI_Model
             'BPDen'=>$BPDen,
             'chiefComplaint'=>$chiefComplaint,
             'chiefComplaintRemarks'=>$chiefComplaintRemarks,
-            'DateCreated'=>$DateCreated,
-            'DateModified'=>$DateModified,
+            'DateCreated'=>$today,
+            'DateModified'=>$today,
             'ModifiedBy'=>1,
             'EngagementId'=>$EngagementId
         );
@@ -239,10 +239,22 @@ class Database_model extends CI_Model
 
     public function getEngagementDetails($EngagementId){
 
-        $query_string = "select * from T_EngagementDetails where EngagementId=$EngagementId limit 1";
+        $query_string = "select * from T_EngagementDetails where EngagementId=$EngagementId order by Id desc limit 1";
         
         $query_result = $this->db->query($query_string)->row_array();
         return $query_result;
+
+    }
+
+    public function saveAllergies($allergy, $engagementDetailsId){
+        $data = array(
+            'Description'=>$allergy,
+            'EngagementDetailsId'=>$engagementDetailsId,
+            'ActiveStatus'=>1
+        );
+        
+
+        $this->db->insert('T_Allergies',$data);
 
     }
 }
