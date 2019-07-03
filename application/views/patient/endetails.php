@@ -7,6 +7,10 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
 
+<script>
+
+
+</script>
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
@@ -31,6 +35,7 @@
         <div class="right_col" role="main">
           <!-- top tiles -->
           <!-- Content Here -->
+          <form id="" action="<?php echo base_url();?>patient/saveEnDetails/0" class="form-horizontal form-label-left" method="post">
           <div class="row">
               <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -40,7 +45,6 @@
                   </div>
                   <div class="x_content">
 
-                    <form action="<?php echo base_url();?>patient/saveEngagement/0" class="form-horizontal form-label-left" method="post">
 
                        <div class="item form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -82,7 +86,7 @@
                           <a href="<?php echo base_url()?>patient/detail/<?php echo $Id; ?>" class="btn btn-info">Cancel</a>
                         </div> -->
                       </div>
-                    </form>
+                    
                   </div>
                 </div>
               </div>
@@ -199,8 +203,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <br/>
-                                    <br/>
                                     <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <textarea class="form-control" id="chiefComplaintRemarks" name="chiefComplaintRemarks" placeholder="Enter Remarks"></textarea>
@@ -220,11 +222,11 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                        <form action="<?php echo base_url();?>patient/saveEngagement/0" class="form-horizontal form-label-left" method="post">
+                                   
                                             <div class="item form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Height (cm)</label>
-                                                    <input id="Height" type="text" name="Height"  class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter in CM">
+                                                    <input id="Height" type="text" name="Height"  class="form-control col-md-7 col-xs-12" required="required" placeholder="Enter in CM">
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -268,12 +270,12 @@
 
                                             <div class="ln_solid"></div>
                                             <div class="form-group">
-                                            <!-- <div class="col-md-6 col-md-offset-3">
-                                            <button id="send" type="submit" class="btn btn-success">Proceed</button>
-                                            <a href="<?php echo base_url()?>patient/detail/<?php echo $Id; ?>" class="btn btn-info">Cancel</a>
-                                            </div> -->
+                                            <div class="col-md-6 col-md-offset-3">
+                                            <!-- <button id="send" type="submit" class="btn btn-success">Proceed</button> -->
+                                            <!-- <a href="<?php echo base_url()?>patient/detail/<?php echo $Id; ?>" class="btn btn-info">Cancel</a> -->
                                             </div>
-                                        </form>
+                                            </div>
+                                        
                                     </div>
                         </div>
                      </div>
@@ -284,7 +286,7 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                        <form action="<?php echo base_url();?>patient/saveEngagement/0" class="form-horizontal form-label-left" method="post">
+                                    
                                                 <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Medicine</label>
@@ -322,7 +324,7 @@
                                                         <input type="text" class="form-control" readonly>
                                                     </div>
                                                 </div>
-                                        </form>
+                                    
                                     </div>
                         </div>
                      </div>
@@ -337,22 +339,36 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <form id="allergyForm" action="<?php echo base_url();?>patient/saveEngagement/0" class="form-horizontal form-label-left" method="post">
+                            <div id="allergyForm">
                                     <div class="item form-group">
                                         <div class="col-md-8 col-sm-12 col-xs-12">
                                                 <input type="text" name="allergy[]" class="form-control" placeholder="Enter Allergy" required>
                                         </div>
                                         <div class="btnholder col-md-4 col-sm-12 col-xs-12">
                                                 <button id="AddAllergy" class="btn btn-success btn-md pull-right">Add</button>
-                                                <button id="AddAllergy" val="0" class="removeAllergy btn btn-success btn-md pull-right" style="display:none">Remove</button>
                                         </div>
                                     </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-          
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_content">
+                        <!-- <form action="<?php echo base_url();?>patient/saveEnDetails/0" class="form-horizontal form-label-left" method="post"> -->
+                                <div class="form-group">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <input style="margin:auto; display:block" id="saveForms" type="submit" class="btn btn-primary" value="Update Record" />
+                                    </div>
+                                </div>
+                        <!-- </form> -->
+                    </div>
+                </div>
+            </div>
+            <!-- <br/> -->
+                                                </form>
           <!-- Content End -->
         </div>
         <!-- /page content -->
@@ -381,7 +397,9 @@
     <script>
      
     $(document).ready(function (){
+
         
+  
         //Allergy Counter
         var i = 0;
 
@@ -393,11 +411,7 @@
           
         });
 
-        $('.removeAllergy').live(function () {
-                $(this).parent().remove();   
-        });
 
-     
 
         $('#PatientType').on('change', function() {
             if(this.value == 2){

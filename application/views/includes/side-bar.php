@@ -9,11 +9,11 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="<?php echo base_url();?>resources/images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="<?php echo base_url();?>resources/images/nurse.png" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <span>Welcome Nurse,</span>
+                <h2>Jet Glomar</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->

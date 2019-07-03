@@ -121,4 +121,10 @@ class Patient extends CI_Controller {
 		$data['ChiefComplaint'] = $this->database_model->getAll('R_ChiefComplaint');
 		$this->load->view('patient/endetails', $data);
 	}
+
+	function saveEnDetails(){
+
+		echo "its working";
+		$Height =  $this->input->post('Height');
+	}
 }
