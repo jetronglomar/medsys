@@ -176,6 +176,7 @@ class Database_model extends CI_Model
 
     public function getLaboratoryResultbyPatientId($PatientId){
 
+
         $query_string = "select t.Id,
                         t.TestDate,
                         t.ResultDate,
@@ -204,6 +205,44 @@ class Database_model extends CI_Model
         $data = $this->db->query($query_string)->result();
 
         return $data;
+
+    }
+
+    public function saveEnagementDetails($Height,$Pulse,$Weight,$Respiratory,$BMI,$BPNum,$BPDen,$chiefComplaint,$chiefComplaintRemarks,$EngagementId)
+    {
+        $today = date("Y-m-d");
+
+        $data = array(
+            'Height'=>$Height,
+            'Pulse'=>$Pulse,
+            'Weight'=>$Weight,
+            'Respiratory'=>$Respiratory,
+            'BMI'=>$BMI,
+            'BPNum'=>$BPNum,
+            'BPDen'=>$BPDen,
+            'chiefComplaint'=>$chiefComplaint,
+            'chiefComplaintRemarks'=>$chiefComplaintRemarks,
+            'DateCreated'=>$DateCreated,
+            'DateModified'=>$DateModified,
+            'ModifiedBy'=>1,
+            'EngagementId'=>$EngagementId
+        );
+
+        $this->db->insert('T_EngagementDetails', $data);
+
+        $query_string = "select * from T_EngagementDetails order by Id desc limit 1";
+        
+        $query_result = $this->db->query($query_string)->row_array();
+        return $query_result['Id'];
+
+    }
+
+    public function getEngagementDetails($EngagementId){
+
+        $query_string = "select * from T_EngagementDetails where EngagementId=$EngagementId limit 1";
+        
+        $query_result = $this->db->query($query_string)->row_array();
+        return $query_result;
 
     }
 }

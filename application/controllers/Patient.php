@@ -119,12 +119,49 @@ class Patient extends CI_Controller {
 		
 		$data['RecentEngagement'] = $this->database_model->getRecentVisit($data['EngagementDetails']['PatientId']);
 		$data['ChiefComplaint'] = $this->database_model->getAll('R_ChiefComplaint');
+
+		$data['EngagementDetailsFinal'] = $this->database_model->getEngagementDetails($Id);
+
 		$this->load->view('patient/endetails', $data);
 	}
 
 	function saveEnDetails(){
 
-		echo "its working";
+		// echo "its working";
 		$Height =  $this->input->post('Height');
+		$Pulse =  $this->input->post('Pulse'); 
+		$Weight =  $this->input->post('Weight');
+		$Respiratory =  $this->input->post('Respiratory');
+		$BMI =  $this->input->post('BMI');
+		$BPNum =  $this->input->post('BPNum');
+		$BPDen =  $this->input->post('BPDen');
+		$chiefComplaint = $this->input->post('chiefComplaint');
+		$chiefComplaintRemarks = $this->input->post('chiefComplaintRemarks');
+		$EngagementId = $this->input->post('EngagementId');
+
+		$engagementDetailsId = $this->database_model->saveEnagementDetails(
+			$Height,
+			$Pulse,
+			$Weight,
+			$Respiratory,
+			$BMI,
+			$BPNum,
+			$BPDen,
+			$chiefComplaint,
+			$chiefComplaintRemarks,
+			$EngagementId
+		);
+
+
+		echo $engagementDetailsId;
+
+		$allergy = $_POST['allergy'];
+		// print_r($allergy);
+
+		for($i = 0; $i<count($allergy); $i++){
+			// create functionality for saving allergyu
+		}
+
+
 	}
 }

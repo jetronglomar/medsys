@@ -45,7 +45,7 @@
                   </div>
                   <div class="x_content">
 
-
+                      <input type="text" value="<?php echo $this->uri->segment(3); ?>" name="EngagementId" />
                        <div class="item form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label for="occupation">Patient Name</label>
@@ -197,7 +197,17 @@
                                                 <option value="">--Select Here--</option>
                                                 <?php
                                                     foreach($ChiefComplaint as $row){
+                                                      if($EngagementDetailsFinal['chiefComplaint']!=null){
+                                                        if($EngagementDetailsFinal['chiefComplaint']==$row->Id){
+                                                            echo "<option value='".$row->Id."' selected>".$row->Description."</option>";
+                                                        }
+                                                        else{
+                                                            echo "<option value='".$row->Id."'>".$row->Description."</option>";
+                                                        }
+                                                      }
+                                                      else{
                                                         echo "<option value='".$row->Id."'>".$row->Description."</option>";
+                                                      }
                                                     }
                                                 ?>
                                             </select>
@@ -205,7 +215,7 @@
                                     </div>
                                     <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <textarea class="form-control" id="chiefComplaintRemarks" name="chiefComplaintRemarks" placeholder="Enter Remarks"></textarea>
+                                            <textarea class="form-control" id="chiefComplaintRemarks" name="chiefComplaintRemarks" placeholder="Enter Remarks"><?php if($EngagementDetailsFinal['chiefComplaintRemarks']!=null) echo $EngagementDetailsFinal['chiefComplaintRemarks']; ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -226,36 +236,36 @@
                                             <div class="item form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Height (cm)</label>
-                                                    <input id="Height" type="text" name="Height"  class="form-control col-md-7 col-xs-12" required="required" placeholder="Enter in CM">
+                                                    <input value="<?php if($EngagementDetailsFinal['Height']!=null) echo $EngagementDetailsFinal['Height']; ?>" id="Height" type="text" name="Height"  class="form-control col-md-7 col-xs-12" required="required" placeholder="Enter in CM">
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Pulse (/min)</label>
-                                                    <input id="Pulse" type="number"  name="Pulse" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter /min">
+                                                    <input value="<?php if($EngagementDetailsFinal['Pulse']!=null) echo $EngagementDetailsFinal['Pulse']; ?>" id="Pulse" type="number"  name="Pulse" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter /min">
                                                 </div>
                                             </div>
                                             
                                             <div class="item form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Weight (kg)</label>
-                                                    <input id="Weight" type="number" name="Weight"  class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter in kg">
+                                                    <input value="<?php if($EngagementDetailsFinal['Weight']!=null) echo $EngagementDetailsFinal['Weight']; ?>" id="Weight" type="number" name="Weight"  class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter in kg">
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Respiratory Rate (/min)</label>
-                                                    <input id="Respiratory" type="number" name="Respiratory" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter /min">
+                                                    <input value="<?php if($EngagementDetailsFinal['Respiratory']!=null) echo $EngagementDetailsFinal['Respiratory']; ?>" id="Respiratory" type="number" name="Respiratory" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter /min">
                                                 </div>
 
                                             </div>   
                                             <div class="item form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Calculated BMI (kg/m&sup2;)</label>
-                                                    <input id="BMI" type="number" name="BMI" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter BMI">
+                                                    <input value="<?php if($EngagementDetailsFinal['BMI']!=null) echo $EngagementDetailsFinal['BMI']; ?>" id="BMI" type="number" name="BMI" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter BMI">
                                                 </div>
 
                                                 <div class="col-md-2 col-sm-6 col-xs-12">
                                                     <label for="occupation">BP (mmHg)</label>
-                                                    <input id="PhoneNumber" type="number" name="PhoneNumber" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0">
+                                                    <input value="<?php if($EngagementDetailsFinal['BPNum']!=null) echo $EngagementDetailsFinal['BPNum']; ?>"  id="BPNum" type="number" name="BPNum" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0">
                                                 </div>
                                                 <div class="col-md-1 col-sm-6 col-xs-12" style="width:10%; padding-left:0px; padding-right:0px">
                                                     <label for="occupation">&nbsp;</label>
@@ -264,18 +274,10 @@
 
                                                 <div class="col-md-2 col-sm-6 col-xs-12">
                                                     <label for="occupation">&nbsp;</label>
-                                                    <input id="PhoneNumber" type="number"  name="PhoneNumber" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0">
+                                                    <input value="<?php if($EngagementDetailsFinal['BPDen']!=null) echo $EngagementDetailsFinal['BPDen']; ?>"  id="BPDen" type="number"  name="BPDen" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0">
                                                 </div>
                                             </div>               
 
-                                            <div class="ln_solid"></div>
-                                            <div class="form-group">
-                                            <div class="col-md-6 col-md-offset-3">
-                                            <!-- <button id="send" type="submit" class="btn btn-success">Proceed</button> -->
-                                            <!-- <a href="<?php echo base_url()?>patient/detail/<?php echo $Id; ?>" class="btn btn-info">Cancel</a> -->
-                                            </div>
-                                            </div>
-                                        
                                     </div>
                         </div>
                      </div>
