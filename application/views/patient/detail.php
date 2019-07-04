@@ -38,7 +38,20 @@
                   <div class="x_panel">
                       <div class="x_title">
                           <h2>Recent Engagement</h2>
-                          <div class="clearfix"></div>
+                          <!-- <script src="<?php echo base_url();?>resources/js/qrcode.min.js"></script> -->
+                          <!-- <div id="qrcode"></div>
+                          <script type="text/javascript">
+                          var qrcode = new QRCode(document.getElementById("qrcode"), {
+    text: "http://jindo.dev.naver.com/collie",
+    width: 128,
+    height: 128,
+    colorDark : "#000000",
+    colorLight : "#ffffff",
+    correctLevel : QRCode.CorrectLevel.H
+}); -->
+                          
+                            <!-- </script> -->
+                            <div class="clearfix"></div>
                       </div>
                       <div class="x_content">
                                     <?php if($RecentEngagement == null){ ?>
@@ -71,6 +84,7 @@
                     <h2>Patient Details</h2>
                     <div class="pull-right">
                         <a href="<?php echo base_url(); ?>patient/engagement/<?php echo $PatientDetails['Id']; ?>" class="btn btn-primary btn-md pull-right">New Engagement</a>
+                        <a href="<?php echo base_url(); ?>patient/card/<?php echo $PatientDetails['Id']; ?>" class="btn btn-success btn-md pull-right" target="_blank"><i class="fa fa-print"></i> Patient Card</a>
                     </div>
                     <div class="clearfix"></div>
                   </div>
@@ -252,6 +266,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+    
     <script src="<?php echo base_url();?>resources/build/js/custom.js"></script>
     <script>
             $(document).ready(function() {

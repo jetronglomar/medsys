@@ -125,7 +125,7 @@ class Patient extends CI_Controller {
 			$data['Allergies'] = $this->database_model->getAllergies($data['EngagementDetailsFinal']['Id']);
 		else
 			$data['Allergies'] = null;
-			
+
 		$this->load->view('patient/endetails', $data);
 	}
 
@@ -166,7 +166,10 @@ class Patient extends CI_Controller {
 			// create functionality for saving allergyu
 			$this->database_model->saveAllergies($allergy[$i], $engagementDetailsId);
 		}
+	}
 
 
+	public function card(){
+		$this->load->view('patient/card');
 	}
 }

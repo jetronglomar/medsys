@@ -35,6 +35,12 @@
         <div class="right_col" role="main">
           <!-- top tiles -->
           <!-- Content Here -->
+          <div class="row">
+                        <div class="pull-right" style="margin-right:5px; margin-bottom:3px">
+                            <a href="<?php echo base_url(); ?>patient/engagement/<?php echo $PatientDetails['Id']; ?>" class="btn btn-md btn-primary">End Engagement</a>
+                        </div>
+          </div>
+          
           <form id="enDetailsForm" action="<?php echo base_url();?>patient/saveEnDetails/0" class="form-horizontal form-label-left" method="post">
           <div class="row">
               <div class="col-md-8 col-sm-12 col-xs-12">
