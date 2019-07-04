@@ -35,7 +35,7 @@
         <div class="right_col" role="main">
           <!-- top tiles -->
           <!-- Content Here -->
-          <form id="" action="<?php echo base_url();?>patient/saveEnDetails/0" class="form-horizontal form-label-left" method="post">
+          <form id="enDetailsForm" action="<?php echo base_url();?>patient/saveEnDetails/0" class="form-horizontal form-label-left" method="post">
           <div class="row">
               <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -362,7 +362,7 @@
                         <!-- <form action="<?php echo base_url();?>patient/saveEnDetails/0" class="form-horizontal form-label-left" method="post"> -->
                                 <div class="form-group">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input style="margin:auto; display:block" id="saveForms" type="submit" class="btn btn-primary" value="Update Record" />
+                                        <input style="margin:auto; display:block" id="saveEnDetails" type="submit" class="btn btn-primary" value="Update Record" />
                                     </div>
                                 </div>
                         <!-- </form> -->
@@ -382,6 +382,7 @@
     </div>
           
     <?php $this->load->view('includes/scripts'); ?>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="<?php echo base_url();?>resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url();?>resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="<?php echo base_url();?>resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
@@ -399,12 +400,33 @@
     <script>
      
     $(document).ready(function (){
-
-        
+      
+                    
   
         //Allergy Counter
         var i = 0;
+        
 
+        $("#enDetailsForm").submit(function(e) {
+            var form = $(this);
+            e.preventDefault();
+            $.ajax({type: "POST",
+                url: "<?php echo base_url();?>patient/saveEnDetails/0",
+                data: form.serialize(),
+                success:function(result) {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Successfully Updated'
+                    })
+                },
+                error:function(result) {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Something went wrong, Please try again.'
+                    })
+                }
+            });
+        });
 
         $('#AddAllergy').click(function(event){
             event.preventDefault();

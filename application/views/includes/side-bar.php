@@ -1,7 +1,7 @@
 <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="<?php echo base_url() ?>home" class="site_title"><i class="fa fa-stethoscope"></i> <span>JG | MedSys</span></a>
+              <a href="<?php echo base_url() ?>home" class="site_title"><i class="fa fa-stethoscope"></i> <span>JG | PMTS</span></a>
             </div>
 
             <div class="clearfix"></div>
