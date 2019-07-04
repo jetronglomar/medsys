@@ -25,6 +25,9 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
+                  <li><a href="<?php echo base_url() ?>doctor"> <i class="fa fa-stethoscope"></i> Doctor Dashboard</a></li>
+                  <li><a href="<?php echo base_url() ?>doctor/findpatient"> <i class="fa fa-search"></i> Find Patient</a></li>
+
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo base_url() ?>home">Dashboard</a></li>

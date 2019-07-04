@@ -170,6 +170,9 @@ class Patient extends CI_Controller {
 
 
 	public function card(){
-		$this->load->view('patient/card');
+		$Id = $this->uri->segment(3);
+		$data['PatientDetails'] = $this->database_model->getSpecificPatient($Id);
+		
+		$this->load->view('patient/card',$data);
 	}
 }

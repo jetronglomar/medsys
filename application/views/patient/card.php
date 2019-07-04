@@ -49,7 +49,7 @@
                           
                           <script type="text/javascript">
                           var qrcode = new QRCode(document.getElementById("qrcode"), {
-    text: "http://jindo.dev.naver.com/collie",
+    text: "http://localhost/patient/details/<?php echo $PatientDetails['Id']; ?>",
     width: 128,
     height: 128,
     colorDark : "#000000",
@@ -58,7 +58,7 @@
 });
                           
                             </script>
-                            <h5>Jet Ronrick T. Glomar</h5>
+                            <h5><?php echo $PatientDetails['FirstName'].' '.$PatientDetails['LastName'] ?></h5>
                             <h5>32711475</h5>
                     </div>
                 </div>

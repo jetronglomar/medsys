@@ -36,7 +36,7 @@
           <!-- top tiles -->
           <!-- Content Here -->
           <div class="row">
-                        <div class="pull-right" style="margin-right:5px; margin-bottom:3px">
+                        <div class="pull-right" style="margin-right:7px; margin-bottom:3px">
                             <a href="<?php echo base_url(); ?>patient/engagement/<?php echo $PatientDetails['Id']; ?>" class="btn btn-md btn-primary">End Engagement</a>
                         </div>
           </div>

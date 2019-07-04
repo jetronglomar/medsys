@@ -166,6 +166,24 @@ class Database_model extends CI_Model
         return $data;
     }
 
+    public function getAllTodaysEngagement(){
+        $today = date("Y-m-d");
+        $query_string = "
+            select e.*,
+            p.FirstName,
+            p.LastName,
+            p.MiddleName,
+            p.Gender
+            from T_Engagement e
+            inner join R_Patient p
+            on e.PatientId = p.Id
+            where date(e.DateOfEngagement) = '$today'";
+
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
+    }
+
     public function getDescription($Id,$TableName){
         $query_string = "select * from $TableName where Id = $Id";
 
@@ -205,7 +223,6 @@ class Database_model extends CI_Model
         $data = $this->db->query($query_string)->result();
 
         return $data;
-
     }
 
     public function saveEnagementDetails($Height,$Pulse,$Weight,$Respiratory,$BMI,$BPNum,$BPDen,$chiefComplaint,$chiefComplaintRemarks,$EngagementId)
