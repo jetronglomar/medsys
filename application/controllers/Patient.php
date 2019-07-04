@@ -34,7 +34,7 @@ class Patient extends CI_Controller {
 	public function detail(){
 		$Id = $this->uri->segment(3);
 		$data['PatientDetails'] = $this->database_model->getSpecificPatient($Id);
-
+		$data['RecentEngagement'] = $this->database_model->getRecentVisit($Id);
 		$data['Countries'] = $this->database_model->getAll('R_Countries');
 		$data['Cities'] = $this->database_model->getAll('R_City');
 		$data['Provinces'] = $this->database_model->getAll('R_Province');
@@ -121,7 +121,11 @@ class Patient extends CI_Controller {
 		$data['ChiefComplaint'] = $this->database_model->getAll('R_ChiefComplaint');
 
 		$data['EngagementDetailsFinal'] = $this->database_model->getEngagementDetails($Id);
-
+		if($data['EngagementDetailsFinal'] != null)
+			$data['Allergies'] = $this->database_model->getAllergies($data['EngagementDetailsFinal']['Id']);
+		else
+			$data['Allergies'] = null;
+			
 		$this->load->view('patient/endetails', $data);
 	}
 

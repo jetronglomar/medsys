@@ -201,7 +201,7 @@ class Database_model extends CI_Model
 
     public function getRecentVisit($PatientId){
 
-        $query_string = "select * from T_Engagement limit 5";
+        $query_string = "select * from T_Engagement limit 6";
         $data = $this->db->query($query_string)->result();
 
         return $data;
@@ -256,5 +256,12 @@ class Database_model extends CI_Model
 
         $this->db->insert('T_Allergies',$data);
 
+    }
+
+    public function getAllergies($engagementDetialsId){
+        $query_string = "select * from T_Allergies where EngagementDetailsId = $engagementDetialsId";
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
     }
 }

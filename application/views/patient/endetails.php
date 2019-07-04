@@ -342,14 +342,36 @@
                         </div>
                         <div class="x_content">
                             <div id="allergyForm">
-                                    <div class="item form-group">
-                                        <div class="col-md-8 col-sm-12 col-xs-12">
-                                                <input type="text" name="allergy[]" class="form-control" placeholder="Enter Allergy" required>
+
+                                    <?php if($Allergies!=null){ 
+                                        $i = 1;
+                                        foreach($Allergies as $row){
+                                            if($i == 1){
+                                                echo '<div class="item form-group">
+                                                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                                                    <input type="text" name="allergy[]" class="form-control" value="'.$row->Description.'" placeholder="Enter Allergy" required>
+                                                            </div>
+                                                            <div class="btnholder col-md-4 col-sm-12 col-xs-12">
+                                                                    <button id="AddAllergy" class="btn btn-success btn-md pull-right">Add</button>
+                                                            </div>
+                                                        </div>';
+                                            }
+                                            else{
+                                                echo '<div class="item form-group"><div class="col-md-8 col-sm-12 col-xs-12"><input name="allergy[]"  type="text" class="form-control" placeholder="Enter Allergy" value="'.$row->Description.'" required></div><div class="btnholder col-md-4 col-sm-12 col-xs-12"><button  onClick="$(this).parent().parent().remove();" class="removeAllergy btn btn-danger btn-md pull-right">Remove</button></div></div>';
+                                            }
+                                            $i = $i+1;
+                                        }
+                                    }
+                                    else{ ?>
+                                        <div class="item form-group">
+                                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <input type="text" name="allergy[]" class="form-control" placeholder="Enter Allergy" required>
+                                            </div>
+                                            <div class="btnholder col-md-4 col-sm-12 col-xs-12">
+                                                    <button id="AddAllergy" class="btn btn-success btn-md pull-right">Add</button>
+                                            </div>
                                         </div>
-                                        <div class="btnholder col-md-4 col-sm-12 col-xs-12">
-                                                <button id="AddAllergy" class="btn btn-success btn-md pull-right">Add</button>
-                                        </div>
-                                    </div>
+                                    <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -364,6 +386,7 @@
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <input style="margin:auto; display:block" id="saveEnDetails" type="submit" class="btn btn-primary" value="Update Record" />
                                     </div>
+
                                 </div>
                         <!-- </form> -->
                     </div>

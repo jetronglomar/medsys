@@ -35,11 +35,42 @@
           <!-- Content Here -->
           <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
+                  <div class="x_panel">
+                      <div class="x_title">
+                          <h2>Recent Engagement</h2>
+                          <div class="clearfix"></div>
+                      </div>
+                      <div class="x_content">
+                                    <?php if($RecentEngagement == null){ ?>
+                                        <h3><i class='fa fa-folder'></i> No Records Found</h3>
+
+                                        <?php }else{ ?>
+                                                <?php foreach($RecentEngagement as $row){ ?>
+                                                    <div class="animated flipInY col-lg-2 col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="tile-stats">
+                                                                <a href="<?php echo base_url()?>patient/enDetails/<?php echo $row->Id ?>">
+                                                            <!-- <div class="count">179</div> -->
+                                                                    <p style="margin-bottom:10px !important" style="font-size:20px !important"><?php echo date('M d, Y h:i A', strtotime($row->DateOfEngagement)); ?></p>
+                                                                </a>
+                                                            </div>
+                                                    </div>
+                                                 <?php   }
+                                                ?>      
+                                    <?php }?>
+                        </div>
+                        <div class="pull-right">
+                            <a href="<?php echo base_url(); ?>patient/engagement/<?php echo $PatientDetails['Id']; ?>"><u>View All</u></a>
+                        </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Patient Details</h2>
                     <div class="pull-right">
-                        <a href="<?php echo base_url(); ?>patient/engagement/<?php echo $PatientDetails['Id']; ?>" class="btn btn-primary btn-md pull-right">Start Engagement</a>
+                        <a href="<?php echo base_url(); ?>patient/engagement/<?php echo $PatientDetails['Id']; ?>" class="btn btn-primary btn-md pull-right">New Engagement</a>
                     </div>
                     <div class="clearfix"></div>
                   </div>
