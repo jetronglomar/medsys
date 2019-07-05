@@ -49,7 +49,7 @@
                           
                           <script type="text/javascript">
                           var qrcode = new QRCode(document.getElementById("qrcode"), {
-    text: "http://localhost/patient/details/<?php echo $PatientDetails['Id']; ?>",
+    text: "http://localhost/nurse/patientAccess/<?php echo $PatientDetails['QR']; ?>",
     width: 128,
     height: 128,
     colorDark : "#000000",

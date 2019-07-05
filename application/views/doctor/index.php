@@ -96,7 +96,7 @@
                                 else{
                                     echo "<td>Inpatient</td>";
                                 }
-                                echo "<td><a class='btn btn-xs btn-primary' data-toggle='tooltip' data-original-title='View'><i class='fa fa-eye'></i></a></td>";
+                                echo "<td><a href='".base_url()."doctor/patientdetails/".$row->PatientId."' class='btn btn-xs btn-primary' data-toggle='tooltip' data-original-title='View'><i class='fa fa-eye'></i></a></td>";
                                 echo "</tr>";
                             }
                           ?>

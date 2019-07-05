@@ -24,4 +24,33 @@ class Doctor extends CI_Controller {
         // print_r($data);
 		$this->load->view('doctor/index',$data);
 	}
+
+	public function patientdetails(){
+		$Id = $this->uri->segment(3);
+		$data['PatientDetails'] = $this->database_model->getSpecificPatient($Id);
+		$data['RecentEngagement'] = $this->database_model->getRecentVisit($Id);
+		$data['Countries'] = $this->database_model->getAll('R_Countries');
+		$data['Cities'] = $this->database_model->getAll('R_City');
+		$data['Provinces'] = $this->database_model->getAll('R_Province');
+
+		$this->load->view('doctor/patientdetail', $data);
+	}
+
+	function enDetails(){
+		$Id = $this->uri->segment(3);
+		$data['EngagementDetails'] = $this->database_model->selectSpecificEngagement($Id);
+		$data['PatientDetails'] = $this->database_model->getSpecificPatient($data['EngagementDetails']['PatientId']);
+		$data['MedicalRecord'] = $this->database_model->getLaboratoryResultbyPatientId($data['EngagementDetails']['PatientId']);
+		
+		$data['RecentEngagement'] = $this->database_model->getRecentVisit($data['EngagementDetails']['PatientId']);
+		$data['ChiefComplaint'] = $this->database_model->getAll('R_ChiefComplaint');
+
+		$data['EngagementDetailsFinal'] = $this->database_model->getEngagementDetails($Id);
+		if($data['EngagementDetailsFinal'] != null)
+			$data['Allergies'] = $this->database_model->getAllergies($data['EngagementDetailsFinal']['Id']);
+		else
+			$data['Allergies'] = null;
+
+		$this->load->view('doctor/endetails', $data);
+	}
 }
