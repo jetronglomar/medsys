@@ -147,7 +147,7 @@
                </div>
 
             </div>
-        
+            <div class="row">
                 <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -312,29 +312,30 @@
                                         </div>
                                     </div>
                                     <div class="item form-group">
+
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <textarea class="form-control" id="chiefComplaintRemarks" name="chiefComplaintRemarks" placeholder="Enter Remarks" readonly><?php if($EngagementDetailsFinal['chiefComplaintRemarks']!=null) echo $EngagementDetailsFinal['chiefComplaintRemarks']; ?></textarea>
+                                            <textarea class="form-control" id="chiefComplaintRemarks" name="chiefComplaintRemarks" readonly><?php if($EngagementDetailsFinal['chiefComplaintRemarks']!=null) echo $EngagementDetailsFinal['chiefComplaintRemarks']; ?></textarea>
                                         </div>
                                     </div>
 
                                     <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">History of Present Illness</label>
-                                            <textarea class="form-control" id="chiefComplaintRemarks" name="chiefComplaintRemarks" placeholder="Enter Details"></textarea>
+                                            <textarea class="form-control" id="presentIllnessHistory" name="presentIllnessHistory"></textarea>
                                         </div>
                                     </div>
 
                                      <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">Current Medicine</label>
-                                            <textarea class="form-control" id="chiefComplaintRemarks" name="chiefComplaintRemarks" placeholder="Enter Details"></textarea>
+                                            <textarea class="form-control" id="currentMedicince" name="currentMedicince"></textarea>
                                         </div>
                                     </div>
 
                                      <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">Review of Systems</label>
-                                            <textarea class="form-control" id="chiefComplaintRemarks" name="chiefComplaintRemarks" placeholder="Enter Details"></textarea>
+                                            <textarea class="form-control" id="systemsReview" name="systemsReview"></textarea>
                                         </div>
                                     </div>
                           </div>
@@ -349,21 +350,21 @@
                           <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Medicine</label>
-                                                        <textarea class="form-control" placeholder=""></textarea>
+                                                        <textarea class="form-control" name="medicine" placeholder=""></textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Tests</label>
-                                                        <textarea class="form-control" placeholder=""></textarea>
+                                                        <textarea class="form-control" placeholder="" name="tests"></textarea>
                                                     </div>
                                                 </div>
 
                                                  <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Referrals</label>
-                                                        <textarea class="form-control" placeholder=""></textarea>
+                                                        <textarea class="form-control" placeholder="" name="referrals"></textarea>
                                                     </div>
                                                 </div>
 
@@ -371,8 +372,12 @@
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
 
                                                         <label for="occupation">Disposition</label>
-                                                        <select class="form-control" id="chiefComplaint" name="chiefComplaint">
+                                                        <select class="form-control" id="disposition" name="dispositionId">
                                                             <option value="">--Select Here--</option>
+                                                            <?php foreach($Disposition as $row){
+                                                                echo '<option value="'.$row->Id.'">'.$row->Description.'</option>';
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -380,7 +385,7 @@
                                                 <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Follow Up</label>
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" name="followUpDate" class="form-control">
                                                     </div>
                                                 </div>
                           </div>
@@ -392,6 +397,7 @@
 
                   </div>
                 </div>
+            </div>
             </div>
          
 
@@ -441,7 +447,12 @@
      
     $(document).ready(function (){
       
-                    
+        $(function() {
+            $('input[name="followUpDate"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true
+            });
+        });
   
         //Allergy Counter
         var i = 0;

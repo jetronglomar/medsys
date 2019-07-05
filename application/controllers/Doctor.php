@@ -44,6 +44,7 @@ class Doctor extends CI_Controller {
 		
 		$data['RecentEngagement'] = $this->database_model->getRecentVisit($data['EngagementDetails']['PatientId']);
 		$data['ChiefComplaint'] = $this->database_model->getAll('R_ChiefComplaint');
+		$data['Disposition'] = $this->database_model->getAll('R_Disposition');
 
 		$data['EngagementDetailsFinal'] = $this->database_model->getEngagementDetails($Id);
 		if($data['EngagementDetailsFinal'] != null)

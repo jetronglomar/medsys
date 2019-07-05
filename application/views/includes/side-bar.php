@@ -45,7 +45,7 @@
                   </li>
 
                   
-                  <li><a><i class="fa fa-desktop"></i> Queries <span class="fa fa-chevron-down"></span></a>
+                  <!-- <li><a><i class="fa fa-desktop"></i> Queries <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="general_elements.html">Patient History</a></li>
                     </ul>
@@ -65,7 +65,7 @@
                       <li><a href="form_wizards.html">Patient</a></li>
                       <li><a href="form_upload.html">User Account</a></li>
                     </ul>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
               
