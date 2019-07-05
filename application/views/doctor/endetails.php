@@ -41,7 +41,7 @@
                         </div>
           </div>
           
-          <form id="enDetailsForm" action="<?php echo base_url();?>patient/saveEnDetails/0" class="form-horizontal form-label-left" method="post">
+          <form id="enDetailsForm" action="<?php echo base_url();?>doctor/saveEnDetails/<?php echo $EngagementDetailsFinal['Id']; ?>" class="form-horizontal form-label-left" method="post">
           <div class="row">
               <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -321,21 +321,21 @@
                                     <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">History of Present Illness</label>
-                                            <textarea class="form-control" id="presentIllnessHistory" name="presentIllnessHistory"></textarea>
+                                            <textarea class="form-control" id="presentIllnessHistory" name="presentIllnessHistory"><?php if($EngagementDetailsFinal['PresentIllnessHistory']!=null) echo $EngagementDetailsFinal['PresentIllnessHistory']; ?></textarea>
                                         </div>
                                     </div>
 
                                      <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">Current Medicine</label>
-                                            <textarea class="form-control" id="currentMedicince" name="currentMedicince"></textarea>
+                                            <textarea class="form-control" id="CurrentMedicine" name="CurrentMedicine"><?php if($EngagementDetailsFinal['CurrentMedicine']!=null) echo $EngagementDetailsFinal['CurrentMedicine']; ?></textarea>
                                         </div>
                                     </div>
 
                                      <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">Review of Systems</label>
-                                            <textarea class="form-control" id="systemsReview" name="systemsReview"></textarea>
+                                            <textarea class="form-control" id="systemsReview" name="systemsReview"><?php if($EngagementDetailsFinal['SystemsReview']!=null) echo $EngagementDetailsFinal['SystemsReview']; ?></textarea>
                                         </div>
                                     </div>
                           </div>
@@ -350,21 +350,21 @@
                           <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Medicine</label>
-                                                        <textarea class="form-control" name="medicine" placeholder=""></textarea>
+                                                        <textarea class="form-control" name="medicine" placeholder=""><?php if($EngagementDetailsFinal['Medicine']!=null) echo $EngagementDetailsFinal['Medicine']; ?></textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Tests</label>
-                                                        <textarea class="form-control" placeholder="" name="tests"></textarea>
+                                                        <textarea class="form-control" placeholder="" name="tests"><?php if($EngagementDetailsFinal['Tests']!=null) echo $EngagementDetailsFinal['Tests']; ?></textarea>
                                                     </div>
                                                 </div>
 
                                                  <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Referrals</label>
-                                                        <textarea class="form-control" placeholder="" name="referrals"></textarea>
+                                                        <textarea class="form-control" placeholder="" name="referrals"><?php if($EngagementDetailsFinal['Referrals']!=null) echo $EngagementDetailsFinal['Referrals']; ?></textarea>
                                                     </div>
                                                 </div>
 
@@ -375,7 +375,15 @@
                                                         <select class="form-control" id="disposition" name="dispositionId">
                                                             <option value="">--Select Here--</option>
                                                             <?php foreach($Disposition as $row){
-                                                                echo '<option value="'.$row->Id.'">'.$row->Description.'</option>';
+                                                                if($EngagementDetailsFinal['DispositionId']!=null){
+                                                                    if($row->Id == $EngagementDetailsFinal['DispositionId']){
+                                                                        echo '<option value="'.$row->Id.'" selected>'.$row->Description.'</option>';
+                                                                    }
+                                                                    else{
+                                                                        echo '<option value="'.$row->Id.'">'.$row->Description.'</option>';
+                                                                    }
+                                                                }
+                                                                
                                                             }
                                                             ?>
                                                         </select>
@@ -462,7 +470,7 @@
             var form = $(this);
             e.preventDefault();
             $.ajax({type: "POST",
-                url: "<?php echo base_url();?>patient/saveEnDetails/0",
+                url: "<?php echo base_url();?>doctor/saveEnDetails/<?php echo $EngagementDetailsFinal['Id']; ?>",
                 data: form.serialize(),
                 success:function(result) {
                     Swal.fire({

@@ -143,7 +143,7 @@ class Patient extends CI_Controller {
 		$chiefComplaintRemarks = $this->input->post('chiefComplaintRemarks');
 		$EngagementId = $this->input->post('EngagementId');
 
-		$engagementDetailsId = $this->database_model->saveEnagementDetails(
+		$engagementDetailsId = $this->database_model->saveEngagementDetails(
 			$Height,
 			$Pulse,
 			$Weight,

@@ -54,4 +54,34 @@ class Doctor extends CI_Controller {
 
 		$this->load->view('doctor/endetails', $data);
 	}
+
+	function saveEnDetails(){
+
+		// echo "its working";
+		$Id = $this->uri->segment(3);
+		$PresentIllnessHistory = $this->input->post('presentIllnessHistory');
+		$CurrentMedicine = $this->input->post('CurrentMedicine');
+		$SystemsReview = $this->input->post('systemsReview');
+		$Medicine = $this->input->post('medicine');
+		$Tests = $this->input->post('tests');
+		$Referrals = $this->input->post('referrals');
+		$DispositionId = $this->input->post('dispositionId');
+		$FollowUpDate = $this->input->post('followUpDate');
+		$EngagementId = $this->input->post('EngagementId');
+
+		$engagementDetailsId = $this->database_model->updateEngagementDetails(
+			$Id,
+			$PresentIllnessHistory,
+			$CurrentMedicine,
+			$SystemsReview,
+			$Medicine,
+			$Tests,
+			$Referrals,
+			$DispositionId,
+			$FollowUpDate,
+			$EngagementId
+		);
+
+		return true;
+	}
 }

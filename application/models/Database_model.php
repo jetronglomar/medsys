@@ -225,7 +225,7 @@ class Database_model extends CI_Model
         return $data;
     }
 
-    public function saveEnagementDetails($Height,$Pulse,$Weight,$Respiratory,$BMI,$BPNum,$BPDen,$chiefComplaint,$chiefComplaintRemarks,$EngagementId)
+    public function saveEngagementDetails($Height,$Pulse,$Weight,$Respiratory,$BMI,$BPNum,$BPDen,$chiefComplaint,$chiefComplaintRemarks,$EngagementId)
     {
         $today = date("Y-m-d");
 
@@ -280,5 +280,31 @@ class Database_model extends CI_Model
         $data = $this->db->query($query_string)->result();
 
         return $data;
+    }
+
+
+    public function updateEngagementDetails($Id,$PresentIllnessHistory,$CurrentMedicine,$SystemsReview,$Medicine,$Tests,$Referrals,$DispositionId,$FollowUpDate,$EngagementId)
+    {
+        $today = date("Y-m-d");
+        $FollowUpDate = date("Y-m-d", strtotime($FollowUpDate));
+
+        $DoctorId = 1;
+        $data = array(
+            'PresentIllnessHistory'=>$PresentIllnessHistory,
+            'CurrentMedicine'=>$CurrentMedicine,
+            'SystemsReview'=>$SystemsReview,
+            'Medicine'=>$Medicine,
+            'Tests'=>$Tests,
+            'Referrals'=>$Referrals,
+            'DispositionId'=>$DispositionId,
+            'FollowUpDate'=>$FollowUpDate,
+            'DateModified'=>$today,
+            'DoctorId'=>$DoctorId,
+            'EngagementId'=>$EngagementId
+        );
+        $this->db->where('Id', $Id);
+        $this->db->update('T_EngagementDetails', $data);
+
+        return true;
     }
 }
