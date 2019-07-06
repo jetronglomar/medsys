@@ -266,18 +266,10 @@
                                                     <input value="<?php if($EngagementDetailsFinal['BMI']!=null) echo $EngagementDetailsFinal['BMI']; ?>" id="BMI" type="number" name="BMI" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter BMI" readonly>
                                                 </div>
 
-                                                <div class="col-md-2 col-sm-6 col-xs-12">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">BP (mmHg)</label>
-                                                    <input value="<?php if($EngagementDetailsFinal['BPNum']!=null) echo $EngagementDetailsFinal['BPNum']; ?>"  id="BPNum" type="number" name="BPNum" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0" readonly>
-                                                </div>
-                                                <div class="col-md-1 col-sm-6 col-xs-12" style="width:10%; padding-left:0px; padding-right:0px">
-                                                    <label for="occupation">&nbsp;</label>
-                                                    <p>/</p>
-                                                </div>
-
-                                                <div class="col-md-2 col-sm-6 col-xs-12">
-                                                    <label for="occupation">&nbsp;</label>
-                                                    <input value="<?php if($EngagementDetailsFinal['BPDen']!=null) echo $EngagementDetailsFinal['BPDen']; ?>"  id="BPDen" type="number"  name="BPDen" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0" readonly>
+                                                    <input type="text" class="form-control" value="<?php echo $EngagementDetailsFinal['BPNum']; ?>/<?php echo $EngagementDetailsFinal['BPDen'] ?>" readonly/>
+                                                    <!-- <input value="<?php if($EngagementDetailsFinal['BPNum']!=null) echo $EngagementDetailsFinal['BPNum']; ?>"  id="BPNum" type="number" name="BPNum" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0" readonly> -->
                                                 </div>
                                             </div>    
                           </div>

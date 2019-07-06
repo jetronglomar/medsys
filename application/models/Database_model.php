@@ -219,7 +219,7 @@ class Database_model extends CI_Model
 
     public function getRecentVisit($PatientId){
 
-        $query_string = "select * from T_Engagement where PatientId = $PatientId limit 6";
+        $query_string = "select * from T_Engagement where PatientId = $PatientId order by Id desc limit 6";
         $data = $this->db->query($query_string)->result();
 
         return $data;
