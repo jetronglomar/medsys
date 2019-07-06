@@ -84,4 +84,13 @@ class Doctor extends CI_Controller {
 
 		return true;
 	}
+
+	function endEngagement(){
+		$EngagementDetailsId = $this->uri->segment(3);
+
+
+		$result = $this->database_model->EndEngagement($EngagementDetailsId);
+
+		return $result;
+	}
 }

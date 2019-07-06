@@ -37,7 +37,10 @@
           <!-- Content Here -->
           <div class="row">
                         <div class="pull-right" style="margin-right:7px; margin-bottom:3px">
-                            <a href="<?php echo base_url(); ?>patient/engagement/<?php echo $PatientDetails['Id']; ?>" class="btn btn-md btn-primary">End Engagement</a>
+                            <?php if($EngagementDetailsFinal['EngagementStatus']==1) { ?>
+                                <button id="endEngagementButton" class="btn btn-md btn-primary">End Engagement</button>
+                            <?php } ?>
+                            <a href="<?php  echo base_url()?>doctor/printReport/<?php echo $EngagementDetailsFinal['Id']; ?>" target="_blank" id="printEngagementButton" class="btn btn-md btn-primary" <?php if($EngagementDetailsFinal['EngagementStatus'] == 1) {?>style="display:none;" <?php } ?>><i class="fa fa-print"></i> Engagement Report</a>
                         </div>
           </div>
           
@@ -313,21 +316,21 @@
                                     <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">History of Present Illness</label>
-                                            <textarea class="form-control" id="presentIllnessHistory" name="presentIllnessHistory"><?php if($EngagementDetailsFinal['PresentIllnessHistory']!=null) echo $EngagementDetailsFinal['PresentIllnessHistory']; ?></textarea>
+                                            <textarea class="form-control" id="presentIllnessHistory" name="presentIllnessHistory" <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['PresentIllnessHistory']!=null) echo $EngagementDetailsFinal['PresentIllnessHistory']; ?></textarea>
                                         </div>
                                     </div>
 
                                      <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">Current Medicine</label>
-                                            <textarea class="form-control" id="CurrentMedicine" name="CurrentMedicine"><?php if($EngagementDetailsFinal['CurrentMedicine']!=null) echo $EngagementDetailsFinal['CurrentMedicine']; ?></textarea>
+                                            <textarea class="form-control" id="currentMedicine" name="CurrentMedicine"  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['CurrentMedicine']!=null) echo $EngagementDetailsFinal['CurrentMedicine']; ?></textarea>
                                         </div>
                                     </div>
 
                                      <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">Review of Systems</label>
-                                            <textarea class="form-control" id="systemsReview" name="systemsReview"><?php if($EngagementDetailsFinal['SystemsReview']!=null) echo $EngagementDetailsFinal['SystemsReview']; ?></textarea>
+                                            <textarea class="form-control" id="systemsReview" name="systemsReview"  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['SystemsReview']!=null) echo $EngagementDetailsFinal['SystemsReview']; ?></textarea>
                                         </div>
                                     </div>
                           </div>
@@ -342,21 +345,21 @@
                           <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Medicine</label>
-                                                        <textarea class="form-control" name="medicine" placeholder=""><?php if($EngagementDetailsFinal['Medicine']!=null) echo $EngagementDetailsFinal['Medicine']; ?></textarea>
+                                                        <textarea class="form-control" id="medicine" name="medicine" placeholder=""  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['Medicine']!=null) echo $EngagementDetailsFinal['Medicine']; ?></textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Tests</label>
-                                                        <textarea class="form-control" placeholder="" name="tests"><?php if($EngagementDetailsFinal['Tests']!=null) echo $EngagementDetailsFinal['Tests']; ?></textarea>
+                                                        <textarea class="form-control" placeholder="" id="tests" name="tests" <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['Tests']!=null) echo $EngagementDetailsFinal['Tests']; ?></textarea>
                                                     </div>
                                                 </div>
 
                                                  <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Referrals</label>
-                                                        <textarea class="form-control" placeholder="" name="referrals"><?php if($EngagementDetailsFinal['Referrals']!=null) echo $EngagementDetailsFinal['Referrals']; ?></textarea>
+                                                        <textarea class="form-control" placeholder="" id="referrals" name="referrals"  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['Referrals']!=null) echo $EngagementDetailsFinal['Referrals']; ?></textarea>
                                                     </div>
                                                 </div>
 
@@ -364,7 +367,7 @@
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
 
                                                         <label for="occupation">Disposition</label>
-                                                        <select class="form-control" id="disposition" name="dispositionId">
+                                                        <select class="form-control" id="dispositionId" name="dispositionId"  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> >
                                                             <option value="">--Select Here--</option>
                                                             <?php foreach($Disposition as $row){
                                                                 if($EngagementDetailsFinal['DispositionId']!=null){
@@ -385,7 +388,7 @@
                                                 <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Follow Up</label>
-                                                        <input type="text" name="followUpDate" class="form-control">
+                                                        <input type="text"  id="followUpDate" name="followUpDate" class="form-control"  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> />
                                                     </div>
                                                 </div>
                           </div>
@@ -406,9 +409,11 @@
                     <div class="x_content">
                         <!-- <form action="<?php echo base_url();?>patient/saveEnDetails/0" class="form-horizontal form-label-left" method="post"> -->
                                 <div class="form-group">
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input style="margin:auto; display:block" id="saveEnDetails" type="submit" class="btn btn-primary" value="Update Record" />
-                                    </div>
+                                    <?php if($EngagementDetailsFinal['EngagementStatus'] == 1){ ?>
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <input id="updateRecordButton" style="margin:auto; display:block" id="saveEnDetails" type="submit" class="btn btn-primary" value="Update Record" />
+                                        </div>
+                                    <?php }?>
 
                                 </div>
                         <!-- </form> -->
@@ -447,6 +452,49 @@
      
     $(document).ready(function (){
       
+      $("#endEngagementButton").on('click', function(e){
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+            }).then((result) => {
+            if (result.value) {
+
+                $.ajax({type: "POST",
+                    url: "<?php echo base_url();?>doctor/endEngagement/<?php echo $EngagementDetailsFinal['Id']; ?>",
+                    success:function(result) {
+                        Swal.fire(
+                        'Success!',
+                        'Ended the engagement',
+                        'success'
+                        );
+                        $("#endEngagementButton").hide();
+                        $("#updateRecordButton").hide();
+                        $("#printEngagementButton").show();
+                        $("#presentIllnessHistory").prop('disabled', true);
+                        $("#currentMedicine").prop('disabled', true);
+                        $("#systemsReview").prop('disabled', true);
+                        $("#medicine").prop('disabled', true);
+                        $("#tests").prop('disabled', true);
+                        $("#referrals").prop('disabled', true);
+                        $("#dispositionId").prop('disabled', true);
+                        $("#followUpDate").prop('disabled', true);
+                    },
+                    error:function(result) {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Something went wrong, Please try again.'
+                        })
+                    }
+                });
+            }
+            })
+      });
+
         $(function() {
             $('input[name="followUpDate"]').daterangepicker({
                 singleDatePicker: true,

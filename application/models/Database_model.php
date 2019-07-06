@@ -242,7 +242,8 @@ class Database_model extends CI_Model
             'DateCreated'=>$today,
             'DateModified'=>$today,
             'ModifiedBy'=>1,
-            'EngagementId'=>$EngagementId
+            'EngagementId'=>$EngagementId,
+            'EngagementStatus'=> 1
         );
 
         $this->db->insert('T_EngagementDetails', $data);
@@ -307,4 +308,20 @@ class Database_model extends CI_Model
 
         return true;
     }
+
+    public function EndEngagement($Id){
+        $EngagementStatus = 0;
+        $today = date("Y-m-d");
+
+        $data = array(
+            'EngagementStatus' => $EngagementStatus,
+            'DateEnded' =>$today
+        );
+        
+
+        $this->db->where('Id', $Id);
+        $this->db->update('T_EngagementDetails', $data);
+
+        return true;
+    } 
 }
