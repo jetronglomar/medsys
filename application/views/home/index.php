@@ -28,7 +28,7 @@
         <div class="right_col" role="main">
           <!-- top tiles -->
           <div class="row top_tiles">
-             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+             <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-search"></i></div>
                   <!-- <div class="count">179</div> -->
@@ -38,7 +38,7 @@
                   </a>
                 </div>
               </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-user"></i></div>
                   <!-- <div class="count">179</div> -->
@@ -48,15 +48,14 @@
                   </a>
                 </div>
               </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <!-- <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-calendar"></i></div>
-                    <!-- <div class="count">179</div> -->
                     <div class="count" style="font-size:30px !important">Appointment</div>
                     <p style="margin-bottom:10px !important">Create new Appointments</p>
                 </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              </div> -->
+              <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-file-text-o"></i></div>
                   <!-- <div class="count">179</div> -->
@@ -93,28 +92,40 @@
                   </div>
                   <div class="x_content">
                     
-                    <table id="datatable" class="table table-striped table-bordered">
+                  <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>ID</th>
                           <th>Name</th>
                           <th>Gender</th>
-                          <th>Birthday</th>
                           <th>Purpose</th>
                           <th>Type</th>
+                          <th>Action</th>
                         </tr>
                       </thead>
 
 
                       <tbody>
-                        <tr>
-                          <td>1001</td>
-                          <td>Glomar, Jet Ronrick T.</td>
-                          <td>M</td>
-                          <td>27</td>
-                          <td>Check-up</td>
-                          <td>OP</td>
-                        </tr>
+                          <?php
+                            foreach($EngagementList as $row){
+                                echo "<tr>";
+                                echo "<td>".$row->LastName.", ".$row->FirstName."</td>";
+                                if($row->Gender == 1){
+                                    echo "<td>M</td>";
+                                }
+                                else{
+                                    echo "<td>F</td>";
+                                }
+                                echo "<td>".$this->database_model->getDescription($row->PurposeId,'R_Purpose')."</td>";
+                                if($row->PatientType == 1){
+                                    echo "<td>Outpatient</td>";
+                                }
+                                else{
+                                    echo "<td>Inpatient</td>";
+                                }
+                                echo "<td><a href='".base_url()."Patient/detail/".$row->PatientId."' class='btn btn-xs btn-primary' data-toggle='tooltip' data-original-title='View'><i class='fa fa-eye'></i></a></td>";
+                                echo "</tr>";
+                            }
+                          ?>
                       </tbody>
                     </table>
                   </div>

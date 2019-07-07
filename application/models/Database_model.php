@@ -16,6 +16,14 @@ class Database_model extends CI_Model
         return $data;
     }
 
+    public function getSpecificPatientByQR($Id){
+
+        $query_string = "select * from R_Patient where QR = '$Id'";
+        
+        $data = $this->db->query($query_string)->row_array();
+        return $data;
+    }
+
     public function savePatient($Id, $FirstName,$MiddleName, $LastName,$QRCode, $Gender, $Birthday, $Address1, $Address2, $CityVillage, $StateProvince, $Country, $PostalCode, $PhoneNumber, $CellPhoneNumber){
 
         $Birthday = date("Y-m-d", strtotime($Birthday));
@@ -292,6 +300,12 @@ class Database_model extends CI_Model
         return $data;
     }
 
+    public function getAllNurseActivity($engagementDetailsId){
+        $query_string ="select * from T_NurseActivity where EngagementDetailsId = $engagementDetailsId";
+        $data = $this->db->query($query_string)->result();
+        return $data;
+    }
+
 
     public function updateEngagementDetails($Id,$PresentIllnessHistory,$CurrentMedicine,$SystemsReview,$Medicine,$Tests,$Referrals,$DispositionId,$FollowUpDate,$EngagementId)
     {
@@ -333,4 +347,26 @@ class Database_model extends CI_Model
 
         return true;
     } 
+
+    public function validateUser($emailAddress,$password){
+        $query_string ="select * from R_User where EmailAddress = '$emailAddress' and Password = '$password'";
+
+        $result = $this->db->query($query_string)->row_array();
+        return $result;
+    }
+
+    public function saveActivity($ActivityDetails, $EngagementDetailsId){
+        $NurseId = $this->session->userdata('Id');
+        $today = date("Y-m-d h:i a");
+        $data = array(
+            'ActivityDetails' => $ActivityDetails,
+            'EngagementDetailsId' => $EngagementDetailsId,
+            'DateCreated' => $today,
+            'NurseId' => $NurseId
+        );
+
+        $this->db->insert('T_NurseActivity', $data);
+        
+        return true;
+    }
 }

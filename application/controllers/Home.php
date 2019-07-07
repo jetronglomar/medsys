@@ -20,6 +20,9 @@ class Home extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('home/index');
+		$data['EngagementList'] =$this->database_model->getAllTodaysEngagement();
+        // print_r($data);
+		
+		$this->load->view('home/index',$data);
 	}
 }

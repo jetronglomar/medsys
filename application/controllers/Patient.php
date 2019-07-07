@@ -121,11 +121,14 @@ class Patient extends CI_Controller {
 		$data['ChiefComplaint'] = $this->database_model->getAll('R_ChiefComplaint');
 
 		$data['EngagementDetailsFinal'] = $this->database_model->getEngagementDetails($Id);
-		if($data['EngagementDetailsFinal'] != null)
+		if($data['EngagementDetailsFinal'] != null){
 			$data['Allergies'] = $this->database_model->getAllergies($data['EngagementDetailsFinal']['Id']);
-		else
+			$data['NurseActivity'] = $this->database_model->getAllNurseActivity($data['EngagementDetailsFinal']['Id']);
+		}
+		else{
 			$data['Allergies'] = null;
-
+			$data['NurseActivity'] = null;
+		}
 		$this->load->view('patient/endetails', $data);
 	}
 
@@ -174,5 +177,23 @@ class Patient extends CI_Controller {
 		$data['PatientDetails'] = $this->database_model->getSpecificPatient($Id);
 		
 		$this->load->view('patient/card',$data);
+	}
+
+
+	function printReport(){
+		// $this->uri->segment
+		$Id = $this->uri->segment(3);
+		$data['EngagementDetailsFinal'] = $this->database_model->getEngagementDetailsById($Id);
+		$data['EngagementDetails'] = $this->database_model->selectSpecificEngagement($data['EngagementDetailsFinal']['EngagementId']);
+		$data['PatientDetails'] = $this->database_model->getSpecificPatient($data['EngagementDetails']['PatientId']);
+		$data['MedicalRecord'] = $this->database_model->getLaboratoryResultbyPatientId($data['EngagementDetails']['PatientId']);
+		
+		$data['RecentEngagement'] = $this->database_model->getRecentVisit($data['EngagementDetails']['PatientId']);
+		$data['ChiefComplaint'] = $this->database_model->getAll('R_ChiefComplaint');
+		$data['Disposition'] = $this->database_model->getAll('R_Disposition');
+
+
+		
+		$this->load->view('doctor/report', $data);
 	}
 }

@@ -18,6 +18,13 @@ class Doctor extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+
+	// public function __construct()
+	// {
+	// 	parent::__construct();
+	// 	if($this->session->userdata('RoleId') !=4)
+	// 		redirect('security');
+	// }
 	public function index()
 	{
         $data['EngagementList'] =$this->database_model->getAllTodaysEngagement();
@@ -49,11 +56,14 @@ class Doctor extends CI_Controller {
 		
 		$data['EngagementDetailsFinal'] = $this->database_model->getEngagementDetails($data['EngagementDetails']['Id']);
 
-		if($data['EngagementDetailsFinal'] != null)
+		if($data['EngagementDetailsFinal'] != null){
 			$data['Allergies'] = $this->database_model->getAllergies($data['EngagementDetailsFinal']['Id']);
-		else
+			$data['NurseActivity'] = $this->database_model->getAllNurseActivity($data['EngagementDetailsFinal']['Id']);
+		}
+		else{
 			$data['Allergies'] = null;
-
+			$data['NurseActivity'] = null;
+		}
 		$this->load->view('doctor/endetails', $data);
 	}
 

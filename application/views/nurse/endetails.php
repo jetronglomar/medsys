@@ -40,7 +40,7 @@
                             <?php if($EngagementDetailsFinal['EngagementStatus']==1) { ?>
                                 <button id="endEngagementButton" class="btn btn-md btn-primary">End Engagement</button>
                             <?php } ?>
-                            <a href="<?php  echo base_url()?>doctor/printReport/<?php echo $EngagementDetailsFinal['Id']; ?>" target="_blank" id="printEngagementButton" class="btn btn-md btn-primary" <?php if($EngagementDetailsFinal['EngagementStatus'] == 1) {?>style="display:none;" <?php } ?>><i class="fa fa-print"></i> Engagement Report</a>
+                            <button id="addActivity" class="btn btn-md btn-primary"><i class="fa fa-plus"></i> Activity</button>
                         </div>
           </div>
           
@@ -150,6 +150,7 @@
                </div>
 
             </div>
+          
             <div class="row">
                 <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="row">
@@ -224,45 +225,46 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
 
-              <div class="row">
-
-<div class="col-md-12 col-sm-12 col-xs-12">
-  <div class="x_panel">
-    <div class="x_title">
-      <h2>Nurse Actitivities</h2>
-      <div class="clearfix"></div>
-    </div>
-    <div class="x_content">
-      <ul class="list-unstyled timeline">
-        <?php foreach($NurseActivity as $row){ ?>
-                <li>
-                <div class="block">
-                    <div class="tags">
-                    <a href="" class="tag">
-                        <span>Activity</span>
-                    </a>
-                    </div>
-                    <div class="block_content">
-                    <h2 class="title">
-                                    <a><?php echo $row->ActivityDetails; ?></a>
-                                </h2>
-                    <div class="byline">
-                        <span id="testdate">Today</span> by <a>John Doe</a>
-                    </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>Nurse Actitivities</h2>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <ul class="list-unstyled timeline">
+                    <?php foreach($NurseActivity as $row){ ?>
+                            <li>
+                            <div class="block">
+                                <div class="tags">
+                                <a href="" class="tag">
+                                    <span>Activity</span>
+                                </a>
+                                </div>
+                                <div class="block_content">
+                                <h2 class="title">
+                                                <a><?php echo $row->ActivityDetails; ?></a>
+                                            </h2>
+                                <div class="byline">
+                                    <span id="testdate">Today</span> by <a>John Doe</a>
+                                </div>
+                                
+                                </div>
+                            </div>
+                            </li>
+                    <?php } ?>
                     
-                    </div>
-                </div>
-                </li>
-        <?php } ?>
-        
-      </ul>
+                  </ul>
 
-    </div>
-  </div>
-</div>
-</div>
                 </div>
+              </div>
+            </div>
+            </div>
+                </div>
+
+                
                     
                  <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="x_panel">
@@ -442,22 +444,6 @@
             </div>
          
 
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_content">
-                        <!-- <form action="<?php echo base_url();?>patient/saveEnDetails/0" class="form-horizontal form-label-left" method="post"> -->
-                                <div class="form-group">
-                                    <?php if($EngagementDetailsFinal['EngagementStatus'] == 1){ ?>
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <input id="updateRecordButton" style="margin:auto; display:block" id="saveEnDetails" type="submit" class="btn btn-primary" value="Update Record" />
-                                        </div>
-                                    <?php }?>
-
-                                </div>
-                        <!-- </form> -->
-                    </div>
-                </div>
-            </div>
             <!-- <br/> -->
                                                 </form>
           <!-- Content End -->
@@ -488,7 +474,40 @@
     
     <script>
      
+     
     $(document).ready(function (){
+
+        $("#addActivity").on('click', function(e){
+            Swal.fire({
+                    title: 'Enter Activity Details',
+                    input: 'text',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Save',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (activity) => {
+                        $.ajax({type: "POST",
+                            url: "<?php echo base_url();?>nurse/saveactivity/",
+                            data: {'activity': activity, 'EngagementDetailsId': <?php echo $EngagementDetailsFinal['Id']; ?>},
+                            success:function(result) {
+                                Swal.fire({
+                                    type: 'success',
+                                    title: 'Successfully Saved!'
+                                })
+                            },
+                            error:function(result) {
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'Something went wrong, Please try again.'
+                                })
+                            }
+                        });
+                    }
+                    })
+        });
+
       
       $("#endEngagementButton").on('click', function(e){
         Swal.fire({

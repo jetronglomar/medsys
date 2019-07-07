@@ -12,8 +12,14 @@
                 <img src="<?php echo base_url();?>resources/images/nurse.png" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
-                <span>Welcome Nurse,</span>
-                <h2>Jet Glomar</h2>
+                <?php if($this->session->userdata('RoleId') == 1 || $this->session->userdata('RoleId') == 3){ ?>
+                  <span>Welcome Nurse</span>
+                <?php }
+                else{ ?>
+                  <span>Welcome Doctor</span>
+                <?php }?>
+
+                <!-- <h2>Jet Glomar</h2> -->
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -25,24 +31,31 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
+                <?php if($this->session->userdata('RoleId') == 2){ ?>
                   <li><a href="<?php echo base_url() ?>doctor"> <i class="fa fa-stethoscope"></i> Doctor Dashboard</a></li>
                   <li><a href="<?php echo base_url() ?>doctor/findpatient"> <i class="fa fa-search"></i> Find Patient</a></li>
+                <?php } ?>
 
-                  <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+              <?php if($this->session->userdata('RoleId') == 1){ ?>
+                <li><a href="<?php echo base_url() ?>home"> <i class="fa fa-stethoscope"></i>Dashboard</a></li>
+                  <!-- <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo base_url() ?>home">Dashboard</a></li>
                       <li><a href="index2.html">Profile</a></li>
                     </ul>
-                  </li>
+                  </li> -->
                 
                   <li><a><i class="fa fa-group"></i> Patient Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo base_url();?>patient">Profile</a></li>
                       <li><a href="<?php echo base_url();?>lab">Laboratory Result</a></li>
-                      <li><a href="<?php echo base_url();?>appointment">Appointment</a></li>
+                      <!-- <li><a href="<?php echo base_url();?>appointment">Appointment</a></li> -->
                       <li><a href="index3.html">Activities</a></li>
                     </ul>
                   </li>
+              <?php } else{ ?>
+                <li><a href="<?php echo base_url() ?>nurse"> <i class="fa fa-stethoscope"></i> Find Patient</a></li>
+              <?php }?>
 
                   
                   <!-- <li><a><i class="fa fa-desktop"></i> Queries <span class="fa fa-chevron-down"></span></a>
