@@ -38,6 +38,7 @@ class Doctor extends CI_Controller {
 
 	function enDetails(){
 		$Id = $this->uri->segment(3);
+		
 		$data['EngagementDetails'] = $this->database_model->selectSpecificEngagement($Id);
 		$data['PatientDetails'] = $this->database_model->getSpecificPatient($data['EngagementDetails']['PatientId']);
 		$data['MedicalRecord'] = $this->database_model->getLaboratoryResultbyPatientId($data['EngagementDetails']['PatientId']);
@@ -45,8 +46,9 @@ class Doctor extends CI_Controller {
 		$data['RecentEngagement'] = $this->database_model->getRecentVisit($data['EngagementDetails']['PatientId']);
 		$data['ChiefComplaint'] = $this->database_model->getAll('R_ChiefComplaint');
 		$data['Disposition'] = $this->database_model->getAll('R_Disposition');
+		
+		$data['EngagementDetailsFinal'] = $this->database_model->getEngagementDetails($data['EngagementDetails']['Id']);
 
-		$data['EngagementDetailsFinal'] = $this->database_model->getEngagementDetails($Id);
 		if($data['EngagementDetailsFinal'] != null)
 			$data['Allergies'] = $this->database_model->getAllergies($data['EngagementDetailsFinal']['Id']);
 		else
@@ -92,5 +94,22 @@ class Doctor extends CI_Controller {
 		$result = $this->database_model->EndEngagement($EngagementDetailsId);
 
 		return $result;
+	}
+
+	function printReport(){
+		// $this->uri->segment
+		$Id = $this->uri->segment(3);
+		$data['EngagementDetailsFinal'] = $this->database_model->getEngagementDetailsById($Id);
+		$data['EngagementDetails'] = $this->database_model->selectSpecificEngagement($data['EngagementDetailsFinal']['EngagementId']);
+		$data['PatientDetails'] = $this->database_model->getSpecificPatient($data['EngagementDetails']['PatientId']);
+		$data['MedicalRecord'] = $this->database_model->getLaboratoryResultbyPatientId($data['EngagementDetails']['PatientId']);
+		
+		$data['RecentEngagement'] = $this->database_model->getRecentVisit($data['EngagementDetails']['PatientId']);
+		$data['ChiefComplaint'] = $this->database_model->getAll('R_ChiefComplaint');
+		$data['Disposition'] = $this->database_model->getAll('R_Disposition');
+
+
+		
+		$this->load->view('doctor/report', $data);
 	}
 }

@@ -264,6 +264,15 @@ class Database_model extends CI_Model
 
     }
 
+    public function getEngagementDetailsById($Id){
+
+        $query_string = "select * from T_EngagementDetails where Id=$Id order by Id desc limit 1";
+        
+        $query_result = $this->db->query($query_string)->row_array();
+        return $query_result;
+
+    }
+
     public function saveAllergies($allergy, $engagementDetailsId){
         $data = array(
             'Description'=>$allergy,
@@ -317,7 +326,7 @@ class Database_model extends CI_Model
             'EngagementStatus' => $EngagementStatus,
             'DateEnded' =>$today
         );
-        
+
 
         $this->db->where('Id', $Id);
         $this->db->update('T_EngagementDetails', $data);
