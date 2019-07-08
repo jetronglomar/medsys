@@ -199,7 +199,7 @@
                                 <div class="x_content">
                                     <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <select class="form-control" id="chiefComplaint" name="chiefComplaint" required <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?>>
+                                            <select class="form-control" id="chiefComplaint" name="chiefComplaint" required >
                                                 <option value="">--Select Here--</option>
                                                 <?php
                                                     foreach($ChiefComplaint as $row){
@@ -221,7 +221,7 @@
                                     </div>
                                     <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <textarea class="form-control" id="chiefComplaintRemarks" name="chiefComplaintRemarks" placeholder="Enter Remarks" <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?>><?php if($EngagementDetailsFinal['chiefComplaintRemarks']!=null) echo $EngagementDetailsFinal['chiefComplaintRemarks']; ?></textarea>
+                                            <textarea class="form-control" id="chiefComplaintRemarks" name="chiefComplaintRemarks" placeholder="Enter Remarks"><?php if($EngagementDetailsFinal['chiefComplaintRemarks']!=null) echo $EngagementDetailsFinal['chiefComplaintRemarks']; ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -242,36 +242,36 @@
                                             <div class="item form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Height (cm)</label>
-                                                    <input <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> value="<?php if($EngagementDetailsFinal['Height']!=null) echo $EngagementDetailsFinal['Height']; ?>" id="Height" type="text" name="Height"  class="form-control col-md-7 col-xs-12" required="required" placeholder="Enter in CM">
+                                                    <input  value="<?php if($EngagementDetailsFinal['Height']!=null) echo $EngagementDetailsFinal['Height']; ?>" id="Height" type="text" name="Height"  class="form-control col-md-7 col-xs-12" required="required" placeholder="Enter in CM">
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Pulse (/min)</label>
-                                                    <input <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> value="<?php if($EngagementDetailsFinal['Pulse']!=null) echo $EngagementDetailsFinal['Pulse']; ?>" id="Pulse" type="number"  name="Pulse" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter /min">
+                                                    <input value="<?php if($EngagementDetailsFinal['Pulse']!=null) echo $EngagementDetailsFinal['Pulse']; ?>" id="Pulse" type="number"  name="Pulse" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter /min">
                                                 </div>
                                             </div>
                                             
                                             <div class="item form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Weight (kg)</label>
-                                                    <input <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> value="<?php if($EngagementDetailsFinal['Weight']!=null) echo $EngagementDetailsFinal['Weight']; ?>" id="Weight" type="number" name="Weight"  class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter in kg">
+                                                    <input value="<?php if($EngagementDetailsFinal['Weight']!=null) echo $EngagementDetailsFinal['Weight']; ?>" id="Weight" type="number" name="Weight"  class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter in kg">
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Respiratory Rate (/min)</label>
-                                                    <input <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> value="<?php if($EngagementDetailsFinal['Respiratory']!=null) echo $EngagementDetailsFinal['Respiratory']; ?>" id="Respiratory" type="number" name="Respiratory" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter /min">
+                                                    <input value="<?php if($EngagementDetailsFinal['Respiratory']!=null) echo $EngagementDetailsFinal['Respiratory']; ?>" id="Respiratory" type="number" name="Respiratory" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter /min">
                                                 </div>
 
                                             </div>   
                                             <div class="item form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="occupation">Calculated BMI (kg/m&sup2;)</label>
-                                                    <input <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> value="<?php if($EngagementDetailsFinal['BMI']!=null) echo $EngagementDetailsFinal['BMI']; ?>" id="BMI" type="number" name="BMI" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter BMI">
+                                                    <input value="<?php if($EngagementDetailsFinal['BMI']!=null) echo $EngagementDetailsFinal['BMI']; ?>" id="BMI" type="number" name="BMI" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter BMI">
                                                 </div>
 
                                                 <div class="col-md-2 col-sm-6 col-xs-12">
                                                     <label for="occupation">BP (mmHg)</label>
-                                                    <input <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> value="<?php if($EngagementDetailsFinal['BPNum']!=null) echo $EngagementDetailsFinal['BPNum']; ?>"  id="BPNum" type="number" name="BPNum" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0">
+                                                    <input value="<?php if($EngagementDetailsFinal['BPNum']!=null) echo $EngagementDetailsFinal['BPNum']; ?>"  id="BPNum" type="number" name="BPNum" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0">
                                                 </div>
                                                 <div class="col-md-1 col-sm-6 col-xs-12" style="width:10%; padding-left:0px; padding-right:0px">
                                                     <label for="occupation">&nbsp;</label>
@@ -280,7 +280,7 @@
 
                                                 <div class="col-md-2 col-sm-6 col-xs-12">
                                                     <label for="occupation">&nbsp;</label>
-                                                    <input <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> value="<?php if($EngagementDetailsFinal['BPDen']!=null) echo $EngagementDetailsFinal['BPDen']; ?>"  id="BPDen" type="number"  name="BPDen" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0">
+                                                    <input value="<?php if($EngagementDetailsFinal['BPDen']!=null) echo $EngagementDetailsFinal['BPDen']; ?>"  id="BPDen" type="number"  name="BPDen" class="optional form-control col-md-6 col-sm-6 col-xs-6 form-group " required="required" placeholder="0">
                                                 </div>
                                             </div>               
 
@@ -397,47 +397,7 @@
                     </div>
                 </div>
             </div>
-
-              <div class="row">
-
-<div class="col-md-12 col-sm-12 col-xs-12">
-  <div class="x_panel">
-    <div class="x_title">
-      <h2>Nurse Actitivities</h2>
-      <div class="clearfix"></div>
-    </div>
-    <div class="x_content">
-      <ul class="list-unstyled timeline">
-        <?php foreach($NurseActivity as $row){ ?>
-                <li>
-                <div class="block">
-                    <div class="tags">
-                    <a href="" class="tag">
-                        <span>Activity</span>
-                    </a>
-                    </div>
-                    <div class="block_content">
-                    <h2 class="title">
-                                    <a><?php echo $row->ActivityDetails; ?></a>
-                                </h2>
-                    <div class="byline">
-                        <span id="testdate">Today</span> by <a>John Doe</a>
-                    </div>
-                    
-                    </div>
-                </div>
-                </li>
-        <?php } ?>
         
-      </ul>
-
-    </div>
-  </div>
-</div>
-</div>
-
-
-        <?php if($EngagementDetailsFinal['EngagementStatus'] == 1){ ?>
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_content">
@@ -452,7 +412,7 @@
                     </div>
                 </div>
             </div>
-        <?php }?>
+        
             <!-- <br/> -->
                                                 </form>
           <!-- Content End -->

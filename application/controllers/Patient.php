@@ -113,6 +113,7 @@ class Patient extends CI_Controller {
 
 	function enDetails(){
 		$Id = $this->uri->segment(3);
+		
 		$data['EngagementDetails'] = $this->database_model->selectSpecificEngagement($Id);
 		$data['PatientDetails'] = $this->database_model->getSpecificPatient($data['EngagementDetails']['PatientId']);
 		$data['MedicalRecord'] = $this->database_model->getLaboratoryResultbyPatientId($data['EngagementDetails']['PatientId']);
@@ -120,7 +121,7 @@ class Patient extends CI_Controller {
 		$data['RecentEngagement'] = $this->database_model->getRecentVisit($data['EngagementDetails']['PatientId']);
 		$data['ChiefComplaint'] = $this->database_model->getAll('R_ChiefComplaint');
 
-		$data['EngagementDetailsFinal'] = $this->database_model->getEngagementDetails($Id);
+		$data['EngagementDetailsFinal'] = $this->database_model->getEngagementDetails($data['EngagementDetails']['Id']);
 		if($data['EngagementDetailsFinal'] != null){
 			$data['Allergies'] = $this->database_model->getAllergies($data['EngagementDetailsFinal']['Id']);
 			$data['NurseActivity'] = $this->database_model->getAllNurseActivity($data['EngagementDetailsFinal']['Id']);

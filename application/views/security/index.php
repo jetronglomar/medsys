@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>Login Form </title>
 
     <!-- Bootstrap -->
     <link href="<?php echo base_url(); ?>resources/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
