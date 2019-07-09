@@ -65,12 +65,12 @@
                         </div>
                         
                         <div class="item form-group">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12" hidden>
                                 <label for="occupation">Patient Type</label>
                                 <input id="PhoneNumber" type="text" value="<?php if($EngagementDetails['PatientType'] == 1){ echo 'Outpatient'; } else{ echo 'Inpatient'; } ?>" name="PhoneNumber" class="optional form-control col-md-7 col-xs-12" required="required" placeholder="Enter Cellphone Number" readonly>
                             </div>
 
-                           <div id="roomDiv" class="col-md-6 col-sm-6 col-xs-12" <?php if($EngagementDetails['PatientType'] == 1) echo "hidden";?>>
+                           <div id="roomDiv" class="col-md-12 col-sm-12 col-xs-12" <?php if($EngagementDetails['PatientType'] == 1) echo "hidden";?>>
                                 <label for="occupation">Room<span class="required">*</span></label>
                                 <input id="PhoneNumber" type="text" name="PhoneNumber" class="optional form-control col-md-7 col-xs-12" required="required" value="<?php if($EngagementDetails['PatientType'] == 2) echo $this->database_model->getDescription($EngagementDetails['RoomId'],'R_Room'); ?>" placeholder="Enter Cellphone Number" readonly>
                             </div>

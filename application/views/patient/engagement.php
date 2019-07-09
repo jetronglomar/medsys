@@ -76,12 +76,12 @@
 
 
                         <div class="item form-group">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12" hidden>
                                 <label for="occupation">Patient Type</label>
                                 <select class="ronselect form-control col-md-7 col-xs-12" id="PatientType" name="PatientType" required="required">
                                     <option value=""> ---Select Patient Type---</option>
                                     <option value="1">Outpatient</option>
-                                    <option value="2">Inpatient</option>
+                                    <option value="2" selected>Inpatient</option>
                                 </select>
                             </div>
 
