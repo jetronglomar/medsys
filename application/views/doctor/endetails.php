@@ -235,7 +235,9 @@
     </div>
     <div class="x_content">
       <ul class="list-unstyled timeline">
-        <?php foreach($NurseActivity as $row){ ?>
+        <?php 
+        if($NurseActivity != null)
+        foreach($NurseActivity as $row){ ?>
                 <li>
                 <div class="block">
                     <div class="tags">
@@ -362,6 +364,7 @@
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">Current Medicine</label>
                                             <textarea class="form-control" id="currentMedicine" name="CurrentMedicine"  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['CurrentMedicine']!=null) echo $EngagementDetailsFinal['CurrentMedicine']; ?></textarea>
+
                                         </div>
                                     </div>
 
@@ -379,13 +382,41 @@
                           <h4 class="panel-title">(P) Plan</h4>
                         </a>
                         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                          <div class="panel-body">
-                          <div class="item form-group">
+                          <div  class="panel-body">
+                              <div id="medicineForm">
+                                                <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Medicine</label>
-                                                        <textarea class="form-control" id="medicine" name="medicine" placeholder=""  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['Medicine']!=null) echo $EngagementDetailsFinal['Medicine']; ?></textarea>
+                                                        <!-- <textarea class="form-control" id="medicine" name="medicine" placeholder=""  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['Medicine']!=null) echo $EngagementDetailsFinal['Medicine']; ?></textarea> -->
                                                     </div>
                                                 </div>
+
+                                                <div class="item form-group">
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <select class="form-control" name="medName[]">
+                                                            <option value="">--Search Medicine--</option>
+                                                            <option>Paracetamol 500mg</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <input type="text" name="qty[]" class="form-control" value="" placeholder="Enter Qty/Day" required>
+                                                    </div>
+                                                    
+                                                    <br/>
+                                                    <br/>
+                                                                
+                                                    <div class="col-md-10 col-sm-12 col-xs-12">
+                                                        <input type="text" name="datestart[]" class="form-control" value="" placeholder="Select Date Start" required>
+                                                    </div>
+                                                   
+                                                    
+                                                    <div class="btnholder col-md-2 col-sm-12 col-xs-12">
+                                                        <button id="AddMedicine" class="btn btn-success btn-md pull-right"><i class="fa fa-plus"></i></button>
+                                                    </div>
+                                                </div>
+                                                
+                                                </div>
+
 
                                                 <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -489,6 +520,16 @@
     <script>
      
     $(document).ready(function (){
+
+        $('input[name="datestart[]"]').daterangepicker({
+    timePicker: true,
+    singleDatePicker: true,
+    startDate: moment().startOf('hour'),
+    endDate: moment().startOf('hour').add(32, 'hour'),
+    locale: {
+      format: 'M/DD hh:mm A'
+    }
+  });
       
       $("#endEngagementButton").on('click', function(e){
         Swal.fire({
@@ -572,6 +613,11 @@
           
         });
 
+
+        $('#AddMedicine').click(function(event){
+            event.preventDefault();
+            $("#medicineForm").append('<div class="item form-group"><div class="col-md-8 col-sm-12 col-xs-12"><input type="text" name="medname[]" class="form-control" value="" placeholder="Enter Allergy" required></div><div class="col-md-4 col-sm-12 col-xs-12"><input type="text" name="qty[]" class="form-control" value="" placeholder="Enter Qty/Day" required></div><br/><br/><div class="col-md-10 col-sm-12 col-xs-12"><input type="text" name="datestart[]" class="form-control" value="" placeholder="Select Date Start" required></div><div class="btnholder col-md-2 col-sm-12 col-xs-12"><button id="AddMedicine" class="btn btn-danger btn-md pull-right"><i class="fa fa-close"></i></button></div></div>');
+        })
 
 
         $('#PatientType').on('change', function() {
