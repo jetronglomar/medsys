@@ -40,7 +40,7 @@
                   </div>
                   <div class="x_content">
 
-                    <form action="<?php echo base_url();?>patient/savePatient/0" class="form-horizontal form-label-left" novalidate="" method="post">
+                    <form action="<?php echo base_url();?>patient/savePatient/0" class="form-horizontal form-label-left" method="post">
 
                         <div class="item form-group">
                             <div class="col-md-4 col-sm-4 col-xs-12">

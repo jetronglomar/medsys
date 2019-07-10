@@ -369,4 +369,36 @@ class Database_model extends CI_Model
         
         return true;
     }
+
+    public function getSpecificMedicine($keyword){
+        $query_string = "select Id as 'id', Description as 'text' from R_Medicine where Description like '%$keyword%'";
+
+        $data = $this->db->query($query_string)->result();
+        return $data;
+    }
+
+    public function saveEngagementMedicine($engagementDetailsId, $medicine, $qty, $datestart){
+        
+        $doctorID = $this->session->userdata('Id');
+        $Status = 1;
+        $datestart = date('Y-m-d H:i', strtotime($datestart));
+        
+
+        $data = array(
+            'EngagementDetailsId'=> $engagementDetailsId,
+            'DoctorID'=> $doctorID,
+            'MedicineId'=> $medicine,
+            'Qty'=> $qty,
+            'DateStart'=> $datestart,
+            'Status'=> $Status
+        );
+
+        $this->db->insert('T_EngagementMedicine', $data);
+
+        return true;
+    }
+
+    public function deleteMedicine($engagementDetailsId){
+        $this->db->delete('T_EngagementMedicine', array('EngagementDetailsId' => $engagementDetailsId));
+    }
 }

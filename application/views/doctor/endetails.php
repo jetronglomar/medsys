@@ -393,15 +393,17 @@
 
                                                 <div class="item form-group">
                                                     <div class="col-md-8 col-sm-12 col-xs-12">
-                                                        <select class="form-control" name="medName[]">
+                                                        
+                                                        <select class="medicineSelect form-control col-md-12 col-sm-12 col-xs-12" style="width:100% !important" name="medName[]">
                                                             <option value="">--Search Medicine--</option>
                                                             <option>Paracetamol 500mg</option>
                                                         </select>
                                                     </div>
+
                                                     <div class="col-md-4 col-sm-12 col-xs-12">
                                                         <input type="text" name="qty[]" class="form-control" value="" placeholder="Enter Qty/Day" required>
                                                     </div>
-                                                    
+                                                    <br/>
                                                     <br/>
                                                     <br/>
                                                                 
@@ -516,20 +518,44 @@
     <script src="<?php echo base_url();?>resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="<?php echo base_url();?>resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
     
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
     <script>
      
     $(document).ready(function (){
 
-        $('input[name="datestart[]"]').daterangepicker({
-    timePicker: true,
-    singleDatePicker: true,
-    startDate: moment().startOf('hour'),
-    endDate: moment().startOf('hour').add(32, 'hour'),
-    locale: {
-      format: 'M/DD hh:mm A'
+    function reintfields(){
+
+        $('.medicineSelect').select2({
+              placeholder: '--- Search Medicine Name ---',
+              ajax: {
+                url: '<?php echo base_url()?>/doctor/GetMedicine',
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                  return {
+                    results: data
+                  };
+                },
+                cache: true
+              }
+            });
+
+                $('input[name="datestart[]"]').daterangepicker({
+            timePicker: true,
+            singleDatePicker: true,
+            startDate: moment().startOf('hour'),
+            endDate: moment().startOf('hour').add(32, 'hour'),
+            locale: {
+            format: 'M/DD/Y hh:mm A'
+            }
+        });
     }
-  });
+
+
+    reintfields();
+
+
+  
       
       $("#endEngagementButton").on('click', function(e){
         Swal.fire({
@@ -586,8 +612,11 @@
         
 
         $("#enDetailsForm").submit(function(e) {
+
             var form = $(this);
             e.preventDefault();
+
+            
             $.ajax({type: "POST",
                 url: "<?php echo base_url();?>doctor/saveEnDetails/<?php echo $EngagementDetailsFinal['Id']; ?>",
                 data: form.serialize(),
@@ -616,7 +645,8 @@
 
         $('#AddMedicine').click(function(event){
             event.preventDefault();
-            $("#medicineForm").append('<div class="item form-group"><div class="col-md-8 col-sm-12 col-xs-12"><input type="text" name="medname[]" class="form-control" value="" placeholder="Enter Allergy" required></div><div class="col-md-4 col-sm-12 col-xs-12"><input type="text" name="qty[]" class="form-control" value="" placeholder="Enter Qty/Day" required></div><br/><br/><div class="col-md-10 col-sm-12 col-xs-12"><input type="text" name="datestart[]" class="form-control" value="" placeholder="Select Date Start" required></div><div class="btnholder col-md-2 col-sm-12 col-xs-12"><button id="AddMedicine" class="btn btn-danger btn-md pull-right"><i class="fa fa-close"></i></button></div></div>');
+            $("#medicineForm").append('<div class="item form-group"><div class="col-md-8 col-sm-12 col-xs-12"><select class="medicineSelect form-control col-md-12 col-sm-12 col-xs-12" style="width:100% !important" name="medName[]"><option value="">--Search Medicine--</option><option>Paracetamol 500mg</option></select></div><div class="col-md-4 col-sm-12 col-xs-12"><input type="text" name="qty[]" class="form-control" value="" placeholder="Enter Qty/Day" required></div><br/><br/><br/><div class="col-md-10 col-sm-12 col-xs-12"><input type="text" name="datestart[]" class="form-control" value="" placeholder="Select Date Start" required></div><div class="btnholder col-md-2 col-sm-12 col-xs-12"><button id="RemoveMed" class="btn btn-danger btn-md pull-right" onClick="$(this).parent().parent().remove();" ><i class="fa fa-minus"></i></button></div></div>');
+            reintfields();
         })
 
 

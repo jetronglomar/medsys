@@ -74,7 +74,7 @@ class Doctor extends CI_Controller {
 		$PresentIllnessHistory = $this->input->post('presentIllnessHistory');
 		$CurrentMedicine = $this->input->post('CurrentMedicine');
 		$SystemsReview = $this->input->post('systemsReview');
-		$Medicine = $this->input->post('medicine');
+		$Medicine = "";
 		$Tests = $this->input->post('tests');
 		$Referrals = $this->input->post('referrals');
 		$DispositionId = $this->input->post('dispositionId');
@@ -93,6 +93,16 @@ class Doctor extends CI_Controller {
 			$FollowUpDate,
 			$EngagementId
 		);
+		$medicine = $_POST['medName'];
+		$qty = $_POST['qty'];
+		$datestart = $_POST['datestart'];
+
+		if($medicine!= null){
+			$this->database_model->deleteMedicine($engagementDetailsId);
+			for($i = 0; $i<count($medicine); $i++){
+				$this->database_model->saveEngagementMedicine($engagementDetailsId, $medicine[$i], $qty[$i], $datestart[$i]);
+			}
+		}
 
 		return true;
 	}
@@ -122,4 +132,16 @@ class Doctor extends CI_Controller {
 		
 		$this->load->view('doctor/report', $data);
 	}
+
+	public function GetMedicine(){
+		$json = [];
+		
+		$this->load->database();
+
+		if(!empty($this->input->get("q"))){
+            $keyword =  $this->input->get("q");
+            $json = $this->database_model->getSpecificMedicine($keyword);
+		}
+		echo json_encode($json);
+    }
 }
