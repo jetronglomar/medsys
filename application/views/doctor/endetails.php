@@ -383,15 +383,80 @@
                         </a>
                         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                           <div  class="panel-body">
-                              <div id="medicineForm">
+                                            <div id="medicineForm">
                                                 <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Medicine</label>
                                                         <!-- <textarea class="form-control" id="medicine" name="medicine" placeholder=""  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['Medicine']!=null) echo $EngagementDetailsFinal['Medicine']; ?></textarea> -->
                                                     </div>
                                                 </div>
-
+                                                
+                                                <?php if(count($Medicines)>0){        
+                                                    $i = 0;                                                
+                                                    foreach($Medicines as $row) {
+                                                        if($i==0){?>
                                                 <div class="item form-group">
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        
+                                                        <select class="medicineSelect form-control col-md-12 col-sm-12 col-xs-12" style="width:100% !important" name="medName[]">
+                                                            <option value="">--Search Medicine--</option>
+                                                            <?php echo "<option value='".$row->MedicineId."' selected>".$this->database_model->getDescription($row->MedicineId,'R_Medicine')."</option>"; ?>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <input type="text" name="qty[]" class="form-control" value="<?php echo $row->Qty; ?>" placeholder="Enter Qty/Day">
+                                                    </div>
+                                                    <br/>
+                                                    <br/>
+                                                    <br/>
+                                                                
+                                                    <div class="col-md-10 col-sm-12 col-xs-12">
+                                                        <input type="text" name="datestart[]" class="form-control" value="<?php echo date("m/d/Y h:i a", strtotime($row->DateStart)) ?> - <?php echo date("m/d/Y h:i a", strtotime($row->DateEnd)) ?>" placeholder="Select Date Start" required>
+                                                    </div>
+                                                   
+                                                    <div class="btnholder col-md-2 col-sm-12 col-xs-12">
+                                                        <button id="AddMedicine" class="btn btn-success btn-md pull-right"><i class="fa fa-plus"></i></button>
+                                                    </div>
+                                                </div>
+                                            
+                                                        <?php }
+                                                        else{
+                                                            ?>
+ <div class="item form-group">
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        
+                                                        <select class="medicineSelect form-control col-md-12 col-sm-12 col-xs-12" style="width:100% !important" name="medName[]">
+                                                            <option value="">--Search Medicine--</option>
+                                                            <?php echo "<option value='".$row->MedicineId."' selected>".$this->database_model->getDescription($row->MedicineId,'R_Medicine')."</option>"; ?>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <input type="text" name="qty[]" class="form-control" value="<?php echo $row->Qty; ?>" placeholder="Enter Qty/Day">
+                                                    </div>
+                                                    <br/>
+                                                    <br/>
+                                                    <br/>
+                                                                
+                                                    <div class="col-md-10 col-sm-12 col-xs-12">
+                                                        <input type="text" name="datestart[]" class="form-control" value="<?php echo date("m/d/Y h:i a", strtotime($row->DateStart)) ?> - <?php echo date("m/d/Y h:i a", strtotime($row->DateEnd)) ?>" placeholder="Select Date Start" required>
+                                                    </div>
+                                                   
+                                                    
+                                                    <div class="btnholder col-md-2 col-sm-12 col-xs-12">
+                                                    <!-- balik dito   -->
+                                                    <button id="RemoveMedicine" class="btn btn-danger btn-md pull-right" onClick="$(this).parent().parent().remove();"><i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                </div>
+                                                            <?php
+                                                        }
+                                                        $i++;
+                                                    }
+                                                        }
+
+                                                            else{ ?>
+<div class="item form-group">
                                                     <div class="col-md-8 col-sm-12 col-xs-12">
                                                         
                                                         <select class="medicineSelect form-control col-md-12 col-sm-12 col-xs-12" style="width:100% !important" name="medName[]">
@@ -401,7 +466,7 @@
                                                     </div>
 
                                                     <div class="col-md-4 col-sm-12 col-xs-12">
-                                                        <input type="text" name="qty[]" class="form-control" value="" placeholder="Enter Qty/Day" required>
+                                                        <input type="text" name="qty[]" class="form-control" value="" placeholder="Enter Qty/Day">
                                                     </div>
                                                     <br/>
                                                     <br/>
@@ -416,9 +481,10 @@
                                                         <button id="AddMedicine" class="btn btn-success btn-md pull-right"><i class="fa fa-plus"></i></button>
                                                     </div>
                                                 </div>
-                                                
+                                                            <?php 
+                                                                
+                                                            }                                                        ?>
                                                 </div>
-
 
                                                 <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -540,13 +606,13 @@
               }
             });
 
-                $('input[name="datestart[]"]').daterangepicker({
-            timePicker: true,
-            singleDatePicker: true,
-            startDate: moment().startOf('hour'),
-            endDate: moment().startOf('hour').add(32, 'hour'),
-            locale: {
-            format: 'M/DD/Y hh:mm A'
+            $('input[name="datestart[]"]').daterangepicker({
+                timePicker: true,
+                // singleDatePicker: true,
+                // startDate: moment().startOf('hour'),
+                // endDate: moment().startOf('hour').add(32, 'hour'),
+                locale: {
+                format: 'M/DD/Y hh:mm A'
             }
         });
     }
@@ -616,7 +682,7 @@
             var form = $(this);
             e.preventDefault();
 
-            
+
             $.ajax({type: "POST",
                 url: "<?php echo base_url();?>doctor/saveEnDetails/<?php echo $EngagementDetailsFinal['Id']; ?>",
                 data: form.serialize(),

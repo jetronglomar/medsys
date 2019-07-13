@@ -58,6 +58,7 @@ class Doctor extends CI_Controller {
 
 		if($data['EngagementDetailsFinal'] != null){
 			$data['Allergies'] = $this->database_model->getAllergies($data['EngagementDetailsFinal']['Id']);
+			$data['Medicines'] = $this->database_model->getAllMedicines($data['EngagementDetailsFinal']['Id']);
 			$data['NurseActivity'] = $this->database_model->getAllNurseActivity($data['EngagementDetailsFinal']['Id']);
 		}
 		else{
@@ -97,7 +98,7 @@ class Doctor extends CI_Controller {
 		$qty = $_POST['qty'];
 		$datestart = $_POST['datestart'];
 
-		if($medicine!= null){
+		if($medicine[0]!= null){
 			$this->database_model->deleteMedicine($engagementDetailsId);
 			for($i = 0; $i<count($medicine); $i++){
 				$this->database_model->saveEngagementMedicine($engagementDetailsId, $medicine[$i], $qty[$i], $datestart[$i]);

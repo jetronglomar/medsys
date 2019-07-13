@@ -300,6 +300,13 @@ class Database_model extends CI_Model
         return $data;
     }
 
+    public function getAllMedicines($engagementDetialsId){
+        $query_string = "select * from T_EngagementMedicine where EngagementDetailsId = $engagementDetialsId";
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
+    }
+
     public function getAllNurseActivity($engagementDetailsId){
         $query_string ="select * from T_NurseActivity where EngagementDetailsId = $engagementDetailsId";
         $data = $this->db->query($query_string)->result();
@@ -329,7 +336,7 @@ class Database_model extends CI_Model
         $this->db->where('Id', $Id);
         $this->db->update('T_EngagementDetails', $data);
 
-        return true;
+        return $Id;
     }
 
     public function EndEngagement($Id){
@@ -381,8 +388,14 @@ class Database_model extends CI_Model
         
         $doctorID = $this->session->userdata('Id');
         $Status = 1;
-        $datestart = date('Y-m-d H:i', strtotime($datestart));
+
+        $date = explode('-',$datestart);
+
+
+        $datestart = date('Y-m-d H:i', strtotime($date[0]));
+        $dateend = date('Y-m-d H:i', strtotime($date[1]));
         
+
 
         $data = array(
             'EngagementDetailsId'=> $engagementDetailsId,
@@ -390,6 +403,7 @@ class Database_model extends CI_Model
             'MedicineId'=> $medicine,
             'Qty'=> $qty,
             'DateStart'=> $datestart,
+            'DateEnd'=> $dateend,
             'Status'=> $Status
         );
 
@@ -399,6 +413,7 @@ class Database_model extends CI_Model
     }
 
     public function deleteMedicine($engagementDetailsId){
+
         $this->db->delete('T_EngagementMedicine', array('EngagementDetailsId' => $engagementDetailsId));
     }
 }
