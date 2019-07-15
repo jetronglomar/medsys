@@ -294,7 +294,35 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                    
+                                                    
+                                                
+                                                <div id="doctorForm"> 
+                                                    <div class="item form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <label for="occupation">Doctor</label>
+                                                            <!-- <textarea class="form-control" placeholder="" readonly><?php echo $EngagementDetailsFinal['Medicine']; ?></textarea> -->
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item form-group">
+                                                        <div class="col-md-10 col-sm-10 col-xs-12">
+                                                                    <select class="doctorSelect form-control col-md-12 col-sm-12 col-xs-12" style="width:100% !important" name="doctor[]">
+                                                                        <option value="">--Search Doctor--</option>
+                                                                    </select>
+                                                            <!-- <textarea class="form-control" placeholder="" readonly><?php echo $EngagementDetailsFinal['Medicine']; ?></textarea> -->
+                                                        </div>
+
+                                                        <div class="btnholder col-md-2 col-sm-12 col-xs-12">
+                                                                    <button id="AddDoctor" class="btn btn-success btn-md pull-right">
+                                                                        <i class="fa fa-plus"></i>
+                                                                    </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+
+
+
                                                 <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Medicine</label>
@@ -440,12 +468,37 @@
     <script src="<?php echo base_url();?>resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="<?php echo base_url();?>resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
     
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
     <script>
      
     $(document).ready(function (){
       
                     
+
+    function reintfields() {
+
+        $('.doctorSelect').select2({
+            placeholder: '--- Search Doctor ---',
+            ajax: {
+                url: '<?php echo base_url() ?>/patient/GetDoctor',
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            }
+        });
+
+        }
+
+
+        reintfields();
+
+
+
   
         //Allergy Counter
         var i = 0;
@@ -478,6 +531,13 @@
             $("#allergyForm").append('<div class="item form-group"><div class="col-md-8 col-sm-12 col-xs-12"><input id="allergy'+i+'" name="allergy[]"  type="text" class="form-control" placeholder="Enter Allergy" required></div><div class="btnholder col-md-4 col-sm-12 col-xs-12"><button value="'+i+'" onClick="$(this).parent().parent().remove();" class="removeAllergy btn btn-danger btn-md pull-right">Remove</button></div></div>');
           
         });
+
+        $('#AddDoctor').click(function(event){
+            event.preventDefault();
+            $("#doctorForm").append('<div class="item form-group"><div class="col-md-10 col-sm-10 col-xs-12"><select class="doctorSelect form-control col-md-12 col-sm-12 col-xs-12" style="width:100% !important" name="doctor[]"><option value="">--Search Doctor--</option></select></div><div class="btnholder col-md-2 col-sm-12 col-xs-12"><button id="RemoveDoctor" onClick="$(this).parent().parent().remove()" class="btn btn-danger btn-md pull-right"><i class="fa fa-minus"></i></button></div></div>');
+            reintfields();
+        });
+
 
 
 

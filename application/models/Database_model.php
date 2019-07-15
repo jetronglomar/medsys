@@ -186,6 +186,7 @@ class Database_model extends CI_Model
             inner join R_Patient p
             on e.PatientId = p.Id
             where date(e.DateOfEngagement) = '$today'";
+            // where date(e.DateOfEngagement) = '$today'";
 
         $data = $this->db->query($query_string)->result();
 
@@ -384,6 +385,13 @@ class Database_model extends CI_Model
         return $data;
     }
 
+    public function getSpecificDoctor($keyword){
+        $query_string = "select Id as 'id', CONCAT(FirstName,' ',LastName) as 'text' from R_Doctor where FirstName like '%$keyword%' or LastName like '%$keyword%' or CONCAT(FirstName,' ',LastName) like '%$keyword%'";
+
+        $data = $this->db->query($query_string)->result();
+        return $data;
+    }
+
     public function saveEngagementMedicine($engagementDetailsId, $medicine, $qty, $datestart){
         
         $doctorID = $this->session->userdata('Id');
@@ -415,5 +423,20 @@ class Database_model extends CI_Model
     public function deleteMedicine($engagementDetailsId){
 
         $this->db->delete('T_EngagementMedicine', array('EngagementDetailsId' => $engagementDetailsId));
+    }
+
+    public function saveEngagementDetailsDoctor($enagementDetailsId, $doctorId){
+        $data = array(
+            'DoctorId'=>$doctorId,
+            'EngagementDetailsId'=> $enagementDetailsId
+        );
+
+        $this->db->insert('T_EngagementDetailsDoctor', $data);
+
+        return true;
+    }
+
+    public function deleteDoctor($engagementDetailsId){
+        $this->db->delete('T_EngagementDetailsDoctor', array('EngagementDetailsId' => $engagementDetailsId));
     }
 }

@@ -60,6 +60,8 @@ class Patient extends CI_Controller {
 		$PhoneNumber = $this->input->post('PhoneNumber');
 		$CellPhoneNumber = $this->input->post('CellPhoneNumber');
 
+		
+
 		$QRCode = $this->randomizer();
 		 $QRCode;
  
@@ -170,6 +172,15 @@ class Patient extends CI_Controller {
 			// create functionality for saving allergyu
 			$this->database_model->saveAllergies($allergy[$i], $engagementDetailsId);
 		}
+
+		$doctor = $_POST['doctor'];
+
+		if($doctor[0]!= null){
+			$this->database_model->deleteDoctor($engagementDetailsId);
+			for($i = 0; $i<count($doctor); $i++){
+				$this->database_model->saveEngagementDetailsDoctor($engagementDetailsId, $doctor[$i]);
+			}
+		}
 	}
 
 
@@ -197,4 +208,16 @@ class Patient extends CI_Controller {
 		
 		$this->load->view('doctor/report', $data);
 	}
+
+	public function GetDoctor(){
+		$json = [];
+		
+		$this->load->database();
+
+		if(!empty($this->input->get("q"))){
+            $keyword =  $this->input->get("q");
+            $json = $this->database_model->getSpecificDoctor($keyword);
+		}
+		echo json_encode($json);
+    }
 }
