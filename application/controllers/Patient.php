@@ -38,6 +38,7 @@ class Patient extends CI_Controller {
 		$data['Countries'] = $this->database_model->getAll('R_Countries');
 		$data['Cities'] = $this->database_model->getAll('R_City');
 		$data['Provinces'] = $this->database_model->getAll('R_Province');
+		$data['haveEngagement'] = $this->database_model->getEngagementNotEnded($Id);
 
 		$this->load->view('patient/detail', $data);
 	}
@@ -127,6 +128,7 @@ class Patient extends CI_Controller {
 		if($data['EngagementDetailsFinal'] != null){
 			$data['Allergies'] = $this->database_model->getAllergies($data['EngagementDetailsFinal']['Id']);
 			$data['NurseActivity'] = $this->database_model->getAllNurseActivity($data['EngagementDetailsFinal']['Id']);
+			$data['Doctors'] = $this->database_model->getAllDoctors($data['EngagementDetailsFinal']['Id']);
 		}
 		else{
 			$data['Allergies'] = null;

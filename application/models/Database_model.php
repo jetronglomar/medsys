@@ -153,7 +153,8 @@ class Database_model extends CI_Model
             'PurposeId'=> $PurposeId,
             'PatientType' => $PatientType,
             'RoomId' =>$RoomId,
-            'DateOfEngagement'=> $DateOfEngagement
+            'DateOfEngagement'=> $DateOfEngagement,
+            'IsEnded' => 1
         );
         
         $this->db->insert('T_Engagement', $data);
@@ -185,13 +186,39 @@ class Database_model extends CI_Model
             from T_Engagement e
             inner join R_Patient p
             on e.PatientId = p.Id
-            where date(e.DateOfEngagement) = '$today'";
+            where e.IsEnded = 0";
+            
             // where date(e.DateOfEngagement) = '$today'";
 
         $data = $this->db->query($query_string)->result();
 
         return $data;
     }
+
+    public function getEngagementForDoctor(){
+        $UserId = 2;
+        $today = date("Y-m-d");
+        $query_string = "
+            select e.*,
+            p.FirstName,
+            p.LastName,
+            p.MiddleName,
+            p.Gender
+            from T_Engagement e
+            inner join R_Patient p
+            on e.PatientId = p.Id
+            where e.IsEnded = 0
+            and e.Id in 
+            (select EngagementId from T_EngagementDetails where Id in (select EngagementDetailsId from T_EngagementDetailsDoctor  where DoctorId = $UserId) order by Id desc)";
+            
+            // where date(e.DateOfEngagement) = '$today'";
+
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
+    }
+
+
 
     public function getDescription($Id,$TableName){
         $query_string = "select * from $TableName where Id = $Id";
@@ -257,6 +284,13 @@ class Database_model extends CI_Model
 
         $this->db->insert('T_EngagementDetails', $data);
 
+        $dataToUpdate = array(
+            'IsEnded' => 0
+        );
+
+        $this->db->where('Id', $EngagementId);
+        $this->db->update('T_Engagement', $dataToUpdate);
+
         $query_string = "select * from T_EngagementDetails order by Id desc limit 1";
         
         $query_result = $this->db->query($query_string)->row_array();
@@ -308,10 +342,25 @@ class Database_model extends CI_Model
         return $data;
     }
 
+
+    public function getAllDoctors($engagementDetialsId){
+        $query_string = "select * from T_EngagementDetailsDoctor where EngagementDetailsId = $engagementDetialsId";
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
+    }
+
     public function getAllNurseActivity($engagementDetailsId){
         $query_string ="select * from T_NurseActivity where EngagementDetailsId = $engagementDetailsId";
         $data = $this->db->query($query_string)->result();
         return $data;
+    }
+
+    public function getDoctorName($DoctorId){
+
+        $query_string ="select * from R_Doctor where Id = $DoctorId";
+        $data =  $this->db->query($query_string)->row_array();
+        return $data['FirstName'].' '.$data['LastName'];
     }
 
 
@@ -438,5 +487,18 @@ class Database_model extends CI_Model
 
     public function deleteDoctor($engagementDetailsId){
         $this->db->delete('T_EngagementDetailsDoctor', array('EngagementDetailsId' => $engagementDetailsId));
+    }
+
+    public function getEngagementNotEnded($PatientId){
+        $query_string = "select * from T_Engagement where PatientId = $PatientId and IsEnded = 0";
+        $result = $this->db->query($query_string)->result();
+
+        if(!empty($result)){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
     }
 }

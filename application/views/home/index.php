@@ -98,7 +98,7 @@
                           <th>Name</th>
                           <th>Gender</th>
                           <th>Purpose</th>
-                          <th>Type</th>
+                          <th hidden>Type</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -117,10 +117,10 @@
                                 }
                                 echo "<td>".$this->database_model->getDescription($row->PurposeId,'R_Purpose')."</td>";
                                 if($row->PatientType == 1){
-                                    echo "<td>Outpatient</td>";
+                                    echo "<td hidden>Outpatient</td>";
                                 }
                                 else{
-                                    echo "<td>Inpatient</td>";
+                                    echo "<td hidden>Inpatient</td>";
                                 }
                                 echo "<td><a href='".base_url()."Patient/detail/".$row->PatientId."' class='btn btn-xs btn-primary' data-toggle='tooltip' data-original-title='View'><i class='fa fa-eye'></i></a></td>";
                                 echo "</tr>";

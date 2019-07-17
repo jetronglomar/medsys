@@ -27,7 +27,7 @@ class Doctor extends CI_Controller {
 	// }
 	public function index()
 	{
-        $data['EngagementList'] =$this->database_model->getAllTodaysEngagement();
+        $data['EngagementList'] = $this->database_model->getEngagementForDoctor();
         // print_r($data);
 		$this->load->view('doctor/index',$data);
 	}
