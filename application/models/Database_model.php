@@ -196,7 +196,7 @@ class Database_model extends CI_Model
     }
 
     public function getEngagementForDoctor(){
-        $UserId = 2;
+        $UserId = 1;
         $today = date("Y-m-d");
         $query_string = "
             select e.*,
@@ -209,7 +209,7 @@ class Database_model extends CI_Model
             on e.PatientId = p.Id
             where e.IsEnded = 0
             and e.Id in 
-            (select EngagementId from T_EngagementDetails where Id in (select EngagementDetailsId from T_EngagementDetailsDoctor  where DoctorId = $UserId) order by Id desc)";
+            (select td.EngagementId from T_EngagementDetails td where td.Id in (select EngagementId from T_EngagementDetailsDoctor where DoctorId = $UserId ))";
             
             // where date(e.DateOfEngagement) = '$today'";
 
