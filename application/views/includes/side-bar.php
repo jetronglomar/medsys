@@ -15,8 +15,11 @@
                 <?php if($this->session->userdata('RoleId') == 1 || $this->session->userdata('RoleId') == 3){ ?>
                   <span>Welcome Nurse</span>
                 <?php }
-                else{ ?>
+                else if($this->session->userdata('RoleId') == 2){ ?>
                   <span>Welcome Doctor</span>
+                <?php }
+                else if($this->session->userdata('RoleId') == 4){ ?>
+                  <span>Welcome Pharmacist</span>
                 <?php }?>
 
                 <!-- <h2>Jet Glomar</h2> -->
@@ -53,7 +56,7 @@
                       <li><a href="index3.html">Activities</a></li>
                     </ul>
                   </li>
-              <?php } else{ ?>
+              <?php } else if($this->session->userdata('RoleId')==3){ ?>
                 <li><a href="<?php echo base_url() ?>nurse"> <i class="fa fa-stethoscope"></i> Find Patient</a></li>
               <?php }?>
 

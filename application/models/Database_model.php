@@ -442,8 +442,11 @@ class Database_model extends CI_Model
     }
 
     public function saveEngagementMedicine($engagementDetailsId, $medicine, $qty, $datestart){
-        
         $doctorID = $this->session->userdata('Id');
+        $doctorData = $this->db->query("select * from R_Doctor where UserId = $doctorID")->row_array();
+        
+        $doctorID = $doctorData['Id'];
+        
         $Status = 1;
 
         $date = explode('-',$datestart);
@@ -471,7 +474,7 @@ class Database_model extends CI_Model
 
     public function deleteMedicine($engagementDetailsId){
 
-        $this->db->delete('T_EngagementMedicine', array('EngagementDetailsId' => $engagementDetailsId));
+        $this->db->delete('T_EngagementMedicine', array('EngagementDetailsId' => $engagementDetailsId, 'Status' => 1 ));
     }
 
     public function saveEngagementDetailsDoctor($enagementDetailsId, $doctorId){
@@ -500,5 +503,27 @@ class Database_model extends CI_Model
             return false;
         }
         
+    }
+    
+
+    public function getPendingMedicine(){
+        $query_string = "select m.*,CONCAT(p.FirstName,' ',p.LastName) as 'PatientName' , CONCAT(d.FirstName,' ',d.LastName) as 'DoctorName' from T_EngagementMedicine m inner join T_EngagementDetails td on td.Id = m.EngagementDetailsId inner join T_Engagement t on td.EngagementId = t.Id inner join R_Patient p on p.Id = t.PatientId inner join R_Doctor d on d.Id = m.DoctorId order by m.Id desc";
+
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
+    }
+
+    public function toggleMedicineStatus($Id, $Status){
+        
+
+        $data = array(
+            'Status'=> $Status
+        );
+
+        $this->db->where('Id',$Id);
+        $this->db->update('T_EngagementMedicine', $data);
+        
+        return true;
     }
 }

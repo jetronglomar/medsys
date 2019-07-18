@@ -447,14 +447,14 @@ $this->load->view('includes/head');
                                                         <div class="item form-group">
                                                             <div class="col-md-8 col-sm-12 col-xs-12">
 
-                                                                <select class="medicineSelect form-control col-md-12 col-sm-12 col-xs-12" style="width:100% !important" name="medName[]">
+                                                                <select class="medicineSelect form-control col-md-12 col-sm-12 col-xs-12" style="width:100% !important" name="medName[]" <?php if($row->Status!=1) echo "disabled"; ?> >
                                                                     <option value="">--Search Medicine--</option>
                                                                     <?php echo "<option value='" . $row->MedicineId . "' selected>" . $this->database_model->getDescription($row->MedicineId, 'R_Medicine') . "</option>"; ?>
                                                                 </select>
                                                             </div>
 
                                                             <div class="col-md-4 col-sm-12 col-xs-12">
-                                                                <input type="text" name="qty[]" class="form-control" value="<?php echo $row->Qty; ?>" placeholder="Enter Qty/Day">
+                                                                <input type="text" name="qty[]" class="form-control" value="<?php echo $row->Qty; ?>" placeholder="Enter Qty/Day" <?php if($row->Status!=1) echo "readonly"; ?>>
                                                             </div>
                                                             <br/>
                                                             <br/>
@@ -462,14 +462,29 @@ $this->load->view('includes/head');
 
                                                             <div class="col-md-10 col-sm-12 col-xs-12">
                                                                 <input type="text" name="datestart[]" class="form-control" value="<?php echo date(" m/d/Y h:i a", strtotime($row->DateStart)) ?> - <?php echo date("m/d/Y h:i a ", strtotime($row->DateEnd)) ?>" placeholder="Select Date Start"
-                                                                    required>
+                                                                    required <?php if($row->Status!=1) echo "readonly"; ?>>
                                                             </div>
 
-                                                            <div class="btnholder col-md-2 col-sm-12 col-xs-12">
-                                                                <button id="AddMedicine" class="btn btn-success btn-md pull-right">
-                                                                    <i class="fa fa-plus"></i>
+                                                           <?php if($row->Status != 1) {
+                                                                    if($row->Status == 2){ ?>
+                                                                        <span class="label label-success">Approved</span>
+                                                                    <?php }
+                                                                     else{?>
+                                                                     <span class="label label-danger">Disapproved</span>
+                                                                     <?php }?>
+                                                                    <br/>
+                                                                    <br/>
+                                                                    <?php if(count($Medicines)== 1){ ?>
+                                                                    <button id="AddMedicine" class="btn btn-success btn-md pull-right">
+                                                                        <i class="fa fa-plus"></i>
+                                                                    </button>
+                                                                    <?php } ?>
+                                                                <?php } 
+                                                                else {?>
+                                                                <button id="RemoveMedicine" class="btn btn-danger btn-md pull-right" onClick="$(this).parent().parent().remove();">
+                                                                    <i class="fa fa-minus"></i>
                                                                 </button>
-                                                            </div>
+                                                                <?php } ?>
                                                         </div>
 
                                                         <?php 
@@ -478,14 +493,14 @@ $this->load->view('includes/head');
                                                         <div class="item form-group">
                                                             <div class="col-md-8 col-sm-12 col-xs-12">
 
-                                                                <select class="medicineSelect form-control col-md-12 col-sm-12 col-xs-12" style="width:100% !important" name="medName[]">
+                                                                <select class="medicineSelect form-control col-md-12 col-sm-12 col-xs-12" style="width:100% !important" name="medName[]" <?php if($row->Status!=1) echo "disabled"; ?>>
                                                                     <option value="">--Search Medicine--</option>
                                                                     <?php echo "<option value='" . $row->MedicineId . "' selected>" . $this->database_model->getDescription($row->MedicineId, 'R_Medicine') . "</option>"; ?>
                                                                 </select>
                                                             </div>
 
                                                             <div class="col-md-4 col-sm-12 col-xs-12">
-                                                                <input type="text" name="qty[]" class="form-control" value="<?php echo $row->Qty; ?>" placeholder="Enter Qty/Day">
+                                                                <input type="text" name="qty[]" class="form-control" value="<?php echo $row->Qty; ?>" placeholder="Enter Qty/Day" <?php if($row->Status!=1) echo "readonly"; ?>>
                                                             </div>
                                                             <br/>
                                                             <br/>
@@ -494,15 +509,32 @@ $this->load->view('includes/head');
                                                             <div class="col-md-10 col-sm-12 col-xs-12">
                                                                 <input type="text" name="datestart[]" class="form-control" value="<?php echo date(" m/d/Y h:i a
                                                                     ", strtotime($row->DateStart)) ?> - <?php echo date("m/d/Y h:i a ", strtotime($row->DateEnd)) ?>" placeholder="Select Date Start"
-                                                                    required>
+                                                                    required <?php if($row->Status!=1) echo "readonly"; ?>>
                                                             </div>
 
 
                                                             <div class="btnholder col-md-2 col-sm-12 col-xs-12">
                                                                 <!-- balik dito   -->
+                                                                <?php if($row->Status != 1) {
+                                                                    if($row->Status == 2){ ?>
+                                                                        <span class="label label-success">Approved</span>
+                                                                    <?php }
+                                                                     else{?>
+                                                                     <span class="label label-danger">Disapproved</span>
+                                                                     <?php }?>
+                                                                    <br/>
+                                                                    <br/>
+                                                                    <?php if($i == (count($Medicines)-1)){?>
+                                                                    <button id="AddMedicine" class="btn btn-success btn-md pull-right">
+                                                                        <i class="fa fa-plus"></i>
+                                                                    </button>
+                                                                     <?php } ?>
+                                                                <?php } 
+                                                                else {?>
                                                                 <button id="RemoveMedicine" class="btn btn-danger btn-md pull-right" onClick="$(this).parent().parent().remove();">
                                                                     <i class="fa fa-minus"></i>
                                                                 </button>
+                                                                <?php } ?>
                                                             </div>
                                                         </div>
                                                         <?php

@@ -47,6 +47,9 @@ class Security extends CI_Controller {
             else if($this->session->userdata('RoleId')==2){
                 redirect('Doctor');
             }
+            else if($this->session->userdata('RoleId')==4){
+                redirect('Pharmacist');
+            }
             else{
                 redirect('Nurse');
             }
