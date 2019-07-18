@@ -18,8 +18,7 @@ $this->load->view('includes/head');
             <?php
         $this->load->view('includes/side-bar');
         ?>
-
-
+        
             <!-- top navigation -->
             <?php
         $this->load->view('includes/top-nav');

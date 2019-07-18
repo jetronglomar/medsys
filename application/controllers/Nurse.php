@@ -1,11 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
 class Nurse extends CI_Controller {
 
     public function index(){
-        $data['Patient'] = $this->database_model->getAll('R_Patient');
-		$this->load->view('nurse/index',$data);
+        // $data['Patient'] = $this->database_model->getAll('R_Patient');
+        // $this->load->view('nurse/index',$data);
+        
+		$this->load->view('nurse/realtime');
     }
 
     public function patientAccess(){
@@ -71,5 +74,9 @@ class Nurse extends CI_Controller {
         $this->database_model->saveActivity($ActivityDetails, $EngagementDetailsId);
 
         return true;
+    }
+
+    public function getData(){
+
     }
 }

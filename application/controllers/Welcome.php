@@ -19,7 +19,13 @@ class Welcome extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 	public function index()
-	{
-		$this->load->view('welcome_message');
-	}
+    {
+        // Load package path
+        $this->load->add_package_path(FCPATH.'vendor/romainrg/ratchet_client');
+        $this->load->library('ratchet_client');
+        $this->load->remove_package_path(FCPATH.'vendor/romainrg/ratchet_client');
+
+        // Run server
+        $this->ratchet_client->run();
+    }
 }
