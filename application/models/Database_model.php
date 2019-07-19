@@ -516,14 +516,56 @@ class Database_model extends CI_Model
 
     public function toggleMedicineStatus($Id, $Status){
         
+        $today = date("Y-m-d H:i");
 
-        $data = array(
-            'Status'=> $Status
-        );
+        if($Status == 2){
+            $data = array(
+                'Status'=> $Status,
+                'DateApproved' => $today
+            );
+        }
+        else{
+            $data = array(
+                'Status'=> $Status
+            );
+        }
+
+        
 
         $this->db->where('Id',$Id);
         $this->db->update('T_EngagementMedicine', $data);
+
+        if($Status == 2){
+            $query_string = "select * from T_EngagementMedicine where Id = $Id";
+            
+            $medicine = $this->db->query($query_string)->row_array();
+
+            $dateEnd = strtotime($medicine['DateEnd']); 
+            $dateStart = strtotime($medicine['DateStart']);
+
+            $diff = $dateEnd - $dateStart;
+
+            $hours = $diff / ( 60 * 60 );
+            $days = round($hours/24);
+
+            $NumberOfReminder = $days * $medicine['Qty'];
+            $tempToday = $today;
+            $everywhatHour = round(24/$medicine['Qty']);
+            for($i=0; $i<$NumberOfReminder; $i++){
+                $medicineSchedule = array(
+                    'MedicineDetailsId' => $Id,
+                    'PlannedSchedule' => $tempToday
+                );
+
+                $this->db->insert('T_MedicineSchedule', $medicineSchedule);
+
+                $tempToday = date("Y-m-d H:i", strtotime('+2 hours',strtotime($tempToday)));
+
+                echo $NumberOfReminder;
+                echo "<br/>";
+            }
+        }
         
-        return true;
+        // return true;
     }
 }

@@ -16,7 +16,7 @@ class Pharmacist extends CI_Controller {
 
         $result = $this->database_model->toggleMedicineStatus($Id, $Status);
 
-        redirect('pharmacist/index');
+        // redirect('pharmacist/index');
     }
 
 }
