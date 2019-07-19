@@ -76,7 +76,10 @@ class Nurse extends CI_Controller {
         return true;
     }
 
-    public function getData(){
+    public function pendingMeds(){
+        $data = array();
+        $data = $this->database_model->getPendingMeds();
 
+        echo json_encode($data);
     }
 }

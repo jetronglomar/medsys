@@ -549,7 +549,11 @@ class Database_model extends CI_Model
             $days = round($hours/24);
 
             $NumberOfReminder = $days * $medicine['Qty'];
-            $tempToday = $today;
+            if($today > $medicine['DateStart'])
+                $tempToday = $today;
+            else
+                $tempToday = $medicine['DateStart'];
+
             $everywhatHour = round(24/$medicine['Qty']);
             for($i=0; $i<$NumberOfReminder; $i++){
                 $medicineSchedule = array(
@@ -561,11 +565,27 @@ class Database_model extends CI_Model
 
                 $tempToday = date("Y-m-d H:i", strtotime('+2 hours',strtotime($tempToday)));
 
-                echo $NumberOfReminder;
+                echo $tempToday;
                 echo "<br/>";
             }
         }
         
         // return true;
+    }
+    
+
+    public function getPendingMeds(){
+        $query_string = "select t.*,CONCAT(p.FirstName,' ',p.LastName) as 'patientName', m.Description as 'medicineDescription',r.Description as 'roomDescription',
+                        (select count(tms.Id) from T_MedicineSchedule tms where tms.MedicineDetailsId = tm.Id) as 'Count'
+                        from T_Engagement t
+                        inner join T_EngagementDetails td on t.Id = td.EngagementId
+                        inner join R_Patient p on p.Id = t.PatientId
+                        inner join R_Room r on r.Id = t.RoomId
+                        inner join T_EngagementMedicine tm on tm.EngagementDetailsId = td.Id
+                        inner join R_Medicine m on m.Id = tm.MedicineId";
+
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
     }
 }
