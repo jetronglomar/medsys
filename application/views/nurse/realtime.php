@@ -79,6 +79,7 @@
       </div>
 
       <?php $this->load->view('includes/scripts'); ?>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="<?php echo base_url(); ?>resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
       <script src="<?php echo base_url(); ?>resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
       <script src="<?php echo base_url(); ?>resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
@@ -98,6 +99,7 @@
     <script>
       $(document).ready(function() {
 
+          var modals =[];
         function InitOverviewDataTable() {
           oOverviewTable = $('#example').DataTable(
             {
@@ -117,15 +119,54 @@
                     }
                 }
                 ,
-                { data: "Count" },
-                { data: "Id" }
+                {
+                  data: "Count", "render": function (data, type, row) {
+   
+                    return ' <span class="label label-danger">'+data+'</span>';
+                    }
+                },
+                {
+                  data: "EngagementId", "render": function (data, type, row) {
+   
+                    return ' <a class="btn btn-xs btn-primary" href="<?php echo base_url() ?>/nurse/endetails/'+data+'"><i class="fa fa-eye"></i></a>';
+                    }
+                }
               ],
               "aoColumnDefs": [{ "bVisible": false, "aTargets": [0] }],
-              "order": [[0, "desc"]]
+              "order": [[0, "desc"]],
+              "createdRow": function (row, data, index) {
+                // console.log(row);
+                // console.log(data);
+                    if(data['Count']>0){
+                      // swalFire(row.patientName, row.roomDescription, row.medicineDescription);
+                      patientName = data['patientName'];
+                      medicineName = data['medicineDescription'];
+                      roomNumber = data['roomDescription'];
+                      engagementId = data['EngagementId'];
+                      modals.push({title:'<strong>Medicine Reminder</strong>', type:'info', html: '<b>'+patientName+'</b> needs to take <b>'+medicineName+'</b> in 10 minutes. Please proceed to Room: <b>'+roomNumber+'</b><br/><b><a href="<?php echo base_url() ?>nurse/endetails/'+engagementId+'" target="_blank">Click here</a></b> to view Engagement Details',confirmButtonText: 'Ok'})
+                    }
+                    Swal.queue(modals);
+                }
             });
+           
+            
+            
           }
+          function refresh(){
+          var url = '<?php base_url() ?>nurse/pendingMeds';
+
+          oOverviewTable.ajax.url(url).load();
+         }
+
+          window.setInterval(function(){
+            modals = [];
+            refresh()();
+          }, 50000);
           InitOverviewDataTable();
+
+
         });
       
+        
   </script>
 </html>  

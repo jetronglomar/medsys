@@ -575,8 +575,12 @@ class Database_model extends CI_Model
     
 
     public function getPendingMeds(){
-        $query_string = "select t.*,CONCAT(p.FirstName,' ',p.LastName) as 'patientName', m.Description as 'medicineDescription',r.Description as 'roomDescription',
-                        (select count(tms.Id) from T_MedicineSchedule tms where tms.MedicineDetailsId = tm.Id) as 'Count'
+
+        $today = date("Y-m-d H:i");
+        $today = date("Y-m-d H:i", strtotime('+10 minutes',strtotime($today)));
+
+        $query_string = "select t.Id as 'EngagementId', t.*,CONCAT(p.FirstName,' ',p.LastName) as 'patientName', m.Description as 'medicineDescription',r.Description as 'roomDescription',
+                        (select count(tms.Id) from T_MedicineSchedule tms where tms.MedicineDetailsId = tm.Id and tms.PlannedSchedule<'$today' ) as 'Count'
                         from T_Engagement t
                         inner join T_EngagementDetails td on t.Id = td.EngagementId
                         inner join R_Patient p on p.Id = t.PatientId
@@ -584,6 +588,8 @@ class Database_model extends CI_Model
                         inner join T_EngagementMedicine tm on tm.EngagementDetailsId = td.Id
                         inner join R_Medicine m on m.Id = tm.MedicineId";
 
+                        
+                        
         $data = $this->db->query($query_string)->result();
 
         return $data;
