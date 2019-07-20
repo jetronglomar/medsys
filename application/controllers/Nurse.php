@@ -80,14 +80,14 @@ class Nurse extends CI_Controller {
     public function saveMedicineActivity(){
 
         $MedicineScheduleId = $this->input->post('MedicineScheduleId');
-
-        $medicineDescription = $this->database_model->toggleMedicineSchedule($MedicineScheduleId);
+        $nurseRemarks = $this->input->post('activity');
+        $medicineDescription = $this->database_model->toggleMedicineSchedule($MedicineScheduleId,$nurseRemarks);
 
         $EngagementDetailsId = $this->input->post('EngagementDetailsId');
 
-        $ActivityDetails = "Provided a $medicineDescription with following Remarks:";
+        $ActivityDetails = "Provided $medicineDescription with following Remarks:";
         $ActivityDetails = $ActivityDetails.' '.$this->input->post('activity');
-        
+
         $this->database_model->saveActivity($ActivityDetails, $EngagementDetailsId);
 
         return true;

@@ -105,7 +105,7 @@
                   </div>
                   <div class="x_content">
                       <?php if($PendingMedicines==null){ ?>
-                      <h3><i class='fa fa-folder'></i> No Records Found</h3>
+                      <h3><i class='fa fa-folder'></i> No Pending Medicine Found</h3>
                       <?php }else{ ?>
                         <table id="datatablenew" class="table table-striped table-bordered">
                       <thead>
@@ -131,9 +131,26 @@
                             echo "<tr>";
                               echo "<td>".$row->medicineDescription."</td>";
                               echo "<td>".date('Y-m-d h:i a', strtotime($row->PlannedSchedule))."</td>";
+                              if($row->Status == 1){
+                                echo "<td>
+                                <span class='label label-warning'>Provided & Pending for Relative's Approval</span>
+                                  </td>";
+                              }
+                              else if($row->Status == 2){
+                                echo "<td>
+                                    <span class='label label-success'>Approved by Relative</span>
+                                  </td>";
+                              }
+                            //   else if($row->Status == 3){
+                            //    echo "<td>
+                            //             <span class='label label-success'>Disapproved by Relative</span>
+                            //       </td>";
+                            //   }
+                              else{
                               echo "<td>
                               <button class='providedMed btn btn-xs btn-success' value='".$row->Id."'><i class='fa fa-check-square-o'></i> Provided</button>
                                 </td>";
+                            }
 
 
                             echo "</tr>";
@@ -476,7 +493,7 @@
         $('.providedMed').on('click', function(e){
             e.preventDefault();
             var Id = $(this).val();
-            // $(this).prop('disabled', true);
+            var obj = $(this);
 
             Swal.fire({
                     title: 'Enter Provided Medicine Remarks',
@@ -492,6 +509,7 @@
                             url: "<?php echo base_url();?>nurse/saveMedicineActivity/",
                             data: {'activity': activity, 'MedicineScheduleId':Id, 'EngagementDetailsId': <?php echo $EngagementDetailsFinal['Id']; ?>},
                             success:function(result) {
+                                obj.prop('disabled', true);
                                 Swal.fire({
                                     type: 'success',
                                     title: 'Successfully Saved!'
@@ -637,8 +655,8 @@
 
 
         $('#datatablenew').dataTable( {
-        "lengthMenu": [3, 5, 10, 20, 100],
-        "pageLength": 3
+            "lengthMenu": [5, 10, 20, 100],
+            "pageLength": 5
         });
 
 

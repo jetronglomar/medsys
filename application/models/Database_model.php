@@ -692,15 +692,27 @@ class Database_model extends CI_Model
         return $data;
     }
 
-    public function toggleMedicineSchedule($medicineScheduleId){
+    public function toggleMedicineSchedule($medicineScheduleId,$nurseRemarks){
         
         $today = date("Y-m-d H:i");
         $NurseId = $this->session->userdata('Id');
 
-        
-        $data = array('');
+
+        $data = array(
+            'Status' => 1,
+            'NurseRemarks' => $nurseRemarks,
+            'NurseId'=> $NurseId,
+            'ActualTaken' => $today 
+        );
 
         $this->db->where('Id', $medicineScheduleId);
         $this->db->update('T_MedicineSchedule', $data);
+
+        $data = $this->db->query("select m.Description from T_MedicineSchedule tms
+        inner join T_EngagementMedicine tm on tms.MedicineDetailsId = tm.Id 
+        inner join R_Medicine m on m.Id = tm.MedicineId
+        where tms.Id = $medicineScheduleId")->row_array();
+
+        return $data['Description'];
     }
 }
