@@ -77,6 +77,22 @@ class Nurse extends CI_Controller {
         return true;
     }
 
+    public function saveMedicineActivity(){
+
+        $MedicineScheduleId = $this->input->post('MedicineScheduleId');
+
+        $medicineDescription = $this->database_model->toggleMedicineSchedule($MedicineScheduleId);
+
+        $EngagementDetailsId = $this->input->post('EngagementDetailsId');
+
+        $ActivityDetails = "Provided a $medicineDescription with following Remarks:";
+        $ActivityDetails = $ActivityDetails.' '.$this->input->post('activity');
+        
+        $this->database_model->saveActivity($ActivityDetails, $EngagementDetailsId);
+
+        return true;
+    }
+
     public function pendingMeds(){
         $data = array();
         $data = $this->database_model->getPendingMeds();

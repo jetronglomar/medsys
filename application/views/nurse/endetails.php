@@ -132,7 +132,7 @@
                               echo "<td>".$row->medicineDescription."</td>";
                               echo "<td>".date('Y-m-d h:i a', strtotime($row->PlannedSchedule))."</td>";
                               echo "<td>
-                              <button id='providedMed' class='btn btn-xs btn-success'><i class='fa fa-check-square-o'></i> Provided</button>
+                              <button class='providedMed btn btn-xs btn-success' value='".$row->Id."'><i class='fa fa-check-square-o'></i> Provided</button>
                                 </td>";
 
 
@@ -473,6 +473,40 @@
      
      
     $(document).ready(function (){
+        $('.providedMed').on('click', function(e){
+            e.preventDefault();
+            var Id = $(this).val();
+            // $(this).prop('disabled', true);
+
+            Swal.fire({
+                    title: 'Enter Provided Medicine Remarks',
+                    input: 'text',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Save',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (activity) => {
+                        $.ajax({type: "POST",
+                            url: "<?php echo base_url();?>nurse/saveMedicineActivity/",
+                            data: {'activity': activity, 'MedicineScheduleId':Id, 'EngagementDetailsId': <?php echo $EngagementDetailsFinal['Id']; ?>},
+                            success:function(result) {
+                                Swal.fire({
+                                    type: 'success',
+                                    title: 'Successfully Saved!'
+                                })
+                            },
+                            error:function(result) {
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'Something went wrong, Please try again.'
+                                })
+                            }
+                        });
+                    }
+                    })
+        });
 
         $("#addActivity").on('click', function(e){
             Swal.fire({

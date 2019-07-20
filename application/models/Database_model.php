@@ -690,6 +690,17 @@ class Database_model extends CI_Model
         $data = $this->db->query($query_string)->result();
 
         return $data;
+    }
 
+    public function toggleMedicineSchedule($medicineScheduleId){
+        
+        $today = date("Y-m-d H:i");
+        $NurseId = $this->session->userdata('Id');
+
+        
+        $data = array('');
+
+        $this->db->where('Id', $medicineScheduleId);
+        $this->db->update('T_MedicineSchedule', $data);
     }
 }
