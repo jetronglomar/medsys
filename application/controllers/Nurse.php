@@ -57,6 +57,7 @@ class Nurse extends CI_Controller {
         
         if($data['EngagementDetailsFinal'] != null){
             $data['NurseActivity'] = $this->database_model->getAllNurseActivity($data['EngagementDetailsFinal']['Id']);
+            $data['PendingMedicines'] = $this->database_model->getMedicineToBeProvided($data['EngagementDetailsFinal']['Id']);
             $data['Allergies'] = $this->database_model->getAllergies($data['EngagementDetailsFinal']['Id']);
         }
         else{
@@ -81,5 +82,24 @@ class Nurse extends CI_Controller {
         $data = $this->database_model->getPendingMeds();
 
         echo json_encode($data);
+    }
+
+    public function pendings(){
+
+        $data['RequestedMedicine'] = $this->database_model->getDisapprovedMedicine(); 
+        $this->load->view('nurse/pendingmeds', $data);
+    }
+
+    public function disapprovedMedsToggle(){
+        $MedicineRequestId = $this->uri->segment(3);
+        $Status = $this->uri->segment(4);
+
+        $result = $this->database_model->toggleMedicineStatusNurse($MedicineRequestId, $Status);
+        redirect('nurse/pendings');
+    }
+
+    public function query_tester(){
+        $data = $this->database_model->getMedicineToBeProvided(1);
+        print_r(json_encode($data));
     }
 }

@@ -57,7 +57,8 @@
                     </ul>
                   </li>
               <?php } else if($this->session->userdata('RoleId')==3){ ?>
-                <li><a href="<?php echo base_url() ?>nurse"> <i class="fa fa-stethoscope"></i> Find Patient</a></li>
+                <li><a href="<?php echo base_url() ?>nurse"> <i class="fa fa-stethoscope"></i> Upcoming Activities</a></li>
+                <li><a href="<?php echo base_url() ?>nurse/pendings"> <i class="fa fa-tasks"></i> Out of Stock Medicines</a></li>
               <?php }?>
 
                   

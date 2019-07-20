@@ -37,16 +37,13 @@
           <!-- Content Here -->
           <div class="row">
                         <div class="pull-right" style="margin-right:7px; margin-bottom:3px">
-                            <?php if($EngagementDetailsFinal['EngagementStatus']==1) { ?>
-                                <button id="endEngagementButton" class="btn btn-md btn-primary">End Engagement</button>
-                            <?php } ?>
                             <button id="addActivity" class="btn btn-md btn-primary"><i class="fa fa-plus"></i> Activity</button>
                         </div>
           </div>
           
           <form id="enDetailsForm" action="<?php echo base_url();?>doctor/saveEnDetails/<?php echo $EngagementDetailsFinal['Id']; ?>" class="form-horizontal form-label-left" method="post">
           <div class="row">
-              <div class="col-md-8 col-sm-12 col-xs-12">
+              <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Patient Engagement Form</h2>
@@ -100,21 +97,21 @@
                 </div>
               </div>
 
-               <div class="col-md-4 col-sm-12 col-xs-12">
+               <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Medical Record</h2>
+                    <h2>Pending Medicines</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                      <?php if($MedicalRecord==null){ ?>
+                      <?php if($PendingMedicines==null){ ?>
                       <h3><i class='fa fa-folder'></i> No Records Found</h3>
                       <?php }else{ ?>
                         <table id="datatablenew" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>Result Date</th>
-                          <th>Category</th>
+                          <th>Medicine Description</th>
+                          <th>Schedule</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -130,12 +127,12 @@
                           <td>OP</td>
                         </tr> -->
                         <?php 
-                          foreach($MedicalRecord as $row){
+                          foreach($PendingMedicines as $row){
                             echo "<tr>";
-                              echo "<td>".$row->TestDate."</td>";
-                              echo "<td>".$row->CategoryDescription."</td>";
+                              echo "<td>".$row->medicineDescription."</td>";
+                              echo "<td>".date('Y-m-d h:i a', strtotime($row->PlannedSchedule))."</td>";
                               echo "<td>
-                              <a href='".base_url()."uploads/".$row->Attachment."' class='btn btn-info btn-xs' target='_blank' data-toggle='tooltip' title='View'> <i class='fa fa-eye'></i></a>
+                              <button id='providedMed' class='btn btn-xs btn-success'><i class='fa fa-check-square-o'></i> Provided</button>
                                 </td>";
 
 
@@ -356,21 +353,21 @@
                                     <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">History of Present Illness</label>
-                                            <textarea class="form-control" id="presentIllnessHistory" name="presentIllnessHistory" <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['PresentIllnessHistory']!=null) echo $EngagementDetailsFinal['PresentIllnessHistory']; ?></textarea>
+                                            <textarea class="form-control" id="presentIllnessHistory" name="presentIllnessHistory" readonly><?php if($EngagementDetailsFinal['PresentIllnessHistory']!=null) echo $EngagementDetailsFinal['PresentIllnessHistory']; ?></textarea>
                                         </div>
                                     </div>
 
                                      <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">Current Medicine</label>
-                                            <textarea class="form-control" id="currentMedicine" name="CurrentMedicine"  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['CurrentMedicine']!=null) echo $EngagementDetailsFinal['CurrentMedicine']; ?></textarea>
+                                            <textarea class="form-control" id="currentMedicine" name="CurrentMedicine"  readonly><?php if($EngagementDetailsFinal['CurrentMedicine']!=null) echo $EngagementDetailsFinal['CurrentMedicine']; ?></textarea>
                                         </div>
                                     </div>
 
                                      <div class="item form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="occupation">Review of Systems</label>
-                                            <textarea class="form-control" id="systemsReview" name="systemsReview"  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['SystemsReview']!=null) echo $EngagementDetailsFinal['SystemsReview']; ?></textarea>
+                                            <textarea class="form-control" id="systemsReview" name="systemsReview" readonly><?php if($EngagementDetailsFinal['SystemsReview']!=null) echo $EngagementDetailsFinal['SystemsReview']; ?></textarea>
                                         </div>
                                     </div>
                           </div>
@@ -382,24 +379,24 @@
                         </a>
                         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                           <div class="panel-body">
-                          <div class="item form-group">
+                                                <div class="item form-group" hidden>
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Medicine</label>
-                                                        <textarea class="form-control" id="medicine" name="medicine" placeholder=""  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['Medicine']!=null) echo $EngagementDetailsFinal['Medicine']; ?></textarea>
+                                                        <textarea class="form-control" id="medicine" name="medicine" placeholder=""  readonly><?php if($EngagementDetailsFinal['Medicine']!=null) echo $EngagementDetailsFinal['Medicine']; ?></textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Tests</label>
-                                                        <textarea class="form-control" placeholder="" id="tests" name="tests" <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['Tests']!=null) echo $EngagementDetailsFinal['Tests']; ?></textarea>
+                                                        <textarea class="form-control" placeholder="" id="tests" name="tests" readonly><?php if($EngagementDetailsFinal['Tests']!=null) echo $EngagementDetailsFinal['Tests']; ?></textarea>
                                                     </div>
                                                 </div>
 
                                                  <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Referrals</label>
-                                                        <textarea class="form-control" placeholder="" id="referrals" name="referrals"  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> ><?php if($EngagementDetailsFinal['Referrals']!=null) echo $EngagementDetailsFinal['Referrals']; ?></textarea>
+                                                        <textarea class="form-control" placeholder="" id="referrals" name="referrals"  readonly><?php if($EngagementDetailsFinal['Referrals']!=null) echo $EngagementDetailsFinal['Referrals']; ?></textarea>
                                                     </div>
                                                 </div>
 
@@ -407,7 +404,7 @@
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
 
                                                         <label for="occupation">Disposition</label>
-                                                        <select class="form-control" id="dispositionId" name="dispositionId"  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> >
+                                                        <select class="form-control" id="dispositionId" name="dispositionId" readonly>
                                                             <option value="">--Select Here--</option>
                                                             <?php foreach($Disposition as $row){
                                                                 if($EngagementDetailsFinal['DispositionId']!=null){
@@ -428,7 +425,7 @@
                                                 <div class="item form-group">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <label for="occupation">Follow Up</label>
-                                                        <input type="text"  id="followUpDate" name="followUpDate" class="form-control"  <?php if($EngagementDetailsFinal['EngagementStatus'] == 0) echo "disabled"; ?> />
+                                                        <input type="text"  id="followUpDate" name="followUpDate" class="form-control"  readonly/>
                                                     </div>
                                                 </div>
                           </div>

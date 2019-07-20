@@ -442,6 +442,7 @@ class Database_model extends CI_Model
     }
 
     public function saveEngagementMedicine($engagementDetailsId, $medicine, $qty, $datestart){
+        $today = date("Y-m-d H:i");
         $doctorID = $this->session->userdata('Id');
         $doctorData = $this->db->query("select * from R_Doctor where UserId = $doctorID")->row_array();
         
@@ -464,7 +465,8 @@ class Database_model extends CI_Model
             'Qty'=> $qty,
             'DateStart'=> $datestart,
             'DateEnd'=> $dateend,
-            'Status'=> $Status
+            'Status'=> $Status,
+            'DateCreated'=> $today
         );
 
         $this->db->insert('T_EngagementMedicine', $data);
@@ -504,10 +506,32 @@ class Database_model extends CI_Model
         }
         
     }
-    
+
 
     public function getPendingMedicine(){
-        $query_string = "select m.*,CONCAT(p.FirstName,' ',p.LastName) as 'PatientName' , CONCAT(d.FirstName,' ',d.LastName) as 'DoctorName' from T_EngagementMedicine m inner join T_EngagementDetails td on td.Id = m.EngagementDetailsId inner join T_Engagement t on td.EngagementId = t.Id inner join R_Patient p on p.Id = t.PatientId inner join R_Doctor d on d.Id = m.DoctorId order by m.Id desc";
+        $query_string = "select m.*,r.Description as 'roomDescription',CONCAT(p.FirstName,' ',p.LastName) as 'PatientName' , CONCAT(d.FirstName,' ',d.LastName) as 'DoctorName'
+         from T_EngagementMedicine m 
+         inner join T_EngagementDetails td on td.Id = m.EngagementDetailsId
+         inner join T_Engagement t on td.EngagementId = t.Id 
+         inner join R_Room r on t.RoomId = r.Id
+         inner join R_Patient p on p.Id = t.PatientId 
+         inner join R_Doctor d on d.Id = m.DoctorId order by m.Id desc";
+
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
+    }
+
+    public function getDisapprovedMedicine(){
+        $query_string = "select m.*,r.Description as 'roomDescription',CONCAT(p.FirstName,' ',p.LastName) as 'PatientName' , CONCAT(d.FirstName,' ',d.LastName) as 'DoctorName'
+         from T_EngagementMedicine m 
+         inner join T_EngagementDetails td on td.Id = m.EngagementDetailsId
+         inner join T_Engagement t on td.EngagementId = t.Id 
+         inner join R_Room r on t.RoomId = r.Id
+         inner join R_Patient p on p.Id = t.PatientId 
+         inner join R_Doctor d on d.Id = m.DoctorId 
+         where m.Status = 0
+         order by m.Id desc";
 
         $data = $this->db->query($query_string)->result();
 
@@ -572,6 +596,62 @@ class Database_model extends CI_Model
         
         // return true;
     }
+
+    public function toggleMedicineStatusNurse($Id, $Status){
+        
+        $today = date("Y-m-d H:i");
+
+        if($Status == 2){
+            $data = array(
+                'Status'=> $Status,
+                'DateApproved' => $today,
+                'ProvidedByPatient'=>true
+            );
+        }
+
+        
+
+        $this->db->where('Id',$Id);
+        $this->db->update('T_EngagementMedicine', $data);
+
+        if($Status == 2){
+            $query_string = "select * from T_EngagementMedicine where Id = $Id";
+            
+            $medicine = $this->db->query($query_string)->row_array();
+
+            $dateEnd = strtotime($medicine['DateEnd']); 
+            $dateStart = strtotime($medicine['DateStart']);
+
+            $diff = $dateEnd - $dateStart;
+
+            $hours = $diff / ( 60 * 60 );
+            $days = round($hours/24);
+
+            $NumberOfReminder = $days * $medicine['Qty'];
+            if($today > $medicine['DateStart'])
+                $tempToday = $today;
+            else
+                $tempToday = $medicine['DateStart'];
+
+            $everywhatHour = round(24/$medicine['Qty']);
+            for($i=0; $i<$NumberOfReminder; $i++){
+                $medicineSchedule = array(
+                    'MedicineDetailsId' => $Id,
+                    'PlannedSchedule' => $tempToday
+                );
+
+                $this->db->insert('T_MedicineSchedule', $medicineSchedule);
+
+                $tempToday = date("Y-m-d H:i", strtotime('+2 hours',strtotime($tempToday)));
+
+                echo $tempToday;
+                echo "<br/>";
+            }
+        }
+        
+        // return true;
+    }
+    
     
 
     public function getPendingMeds(){
@@ -593,5 +673,23 @@ class Database_model extends CI_Model
         $data = $this->db->query($query_string)->result();
 
         return $data;
+    }
+
+    public function getMedicineToBeProvided($EngagementDetailsId){
+        
+        $today = date("Y-m-d H:i");
+        $today = date("Y-m-d H:i", strtotime('+10 minutes',strtotime($today)));
+
+
+        $query_string = "select tms.*,tm.EngagementDetailsId,m.Description as 'medicineDescription'
+        from T_MedicineSchedule tms 
+        inner join T_EngagementMedicine tm on tms.MedicineDetailsId = tm.Id
+        inner join R_Medicine m on tm.MedicineId = m.Id
+        where tms.PlannedSchedule<'$today' and tm.EngagementDetailsId=$EngagementDetailsId";
+
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
+
     }
 }

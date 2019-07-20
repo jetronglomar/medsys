@@ -56,6 +56,7 @@
                       <thead>
                         <tr>
                           <th>Request Number</th>
+                          <th>Room Number</th>
                           <th>Requested By</th>
                           <th>Patient Name</th>
                           <th>Qty</th>
@@ -77,6 +78,7 @@
 
                             echo "<tr>"; 
                                 echo "<td>".date('Y').'-'.date('m',strtotime($row->DateCreated)).'-'.str_pad($row->Id, 4, '0', STR_PAD_LEFT)."</td>";
+                                echo "<td>".$row->roomDescription."</td>";
                                 echo "<td>Dr. ".$row->DoctorName."</td>";
                                 echo "<td>".$row->PatientName."</td>";
                                 echo "<td>".$days*$row->Qty."</td>";    
@@ -90,10 +92,9 @@
                                     echo "<td>Disapproved</td>";
                                 }
 
-                                if($row->Status == 1){
+                                if($row->Status == 0){
                                     echo "<td>
-                                            <a href='".base_url()."pharmacist/toggleStatus/".$row->Id."/2' data-toggle='tooltip' title='Approve' class='btn btn-success btn-xs '><i class='fa fa-check'></i></a>
-                                            <a href='".base_url()."pharmacist/toggleStatus/".$row->Id."/0' data-toggle='tooltip' title='Approve' class='btn btn-danger btn-xs '><i class='fa fa-close'></i></a>
+                                            <a href='".base_url()."nurse/disapprovedMedsToggle/".$row->Id."/2' data-toggle='tooltip' title='Provided by Patient' class='btn btn-success btn-xs '><i class='fa fa-check'></i></a>
                                         </td>";
                                 }
                                 else{
