@@ -16,6 +16,27 @@ class Database_model extends CI_Model
         return $data;
     }
 
+    public function getLatestEngagement($PatientId){
+        $query_string ="select e.*, r.Description as 'roomDescription' from T_Engagement e
+        inner join R_Room r on r.Id = e.RoomId
+        where e.PatientId = $PatientId
+        order by Id desc
+        limit 1";
+
+        $data = $this->db->query($query_string)->row_array();
+        return $data;
+    }
+
+    public function getSpecificPatientRelative(){
+
+        $UserId = $this->session->userdata('Id');
+
+        $query_string = "select * from R_Patient where Id = (select PatientId from R_UserPatient where UserId = $UserId limit 1)";
+        
+        $data = $this->db->query($query_string)->row_array();
+        return $data;
+    }
+
     public function getSpecificPatientByQR($Id){
 
         $query_string = "select * from R_Patient where QR = '$Id'";
@@ -196,7 +217,10 @@ class Database_model extends CI_Model
     }
 
     public function getEngagementForDoctor(){
-        $UserId = 1;
+        $UserId = $this->session->userdata('Id');
+        $DoctorData = $this->db->query("select * from R_Doctor where UserId = $UserId")->row_array();
+
+        $DoctorId = $DoctorData['Id'];
         $today = date("Y-m-d");
         $query_string = "
             select e.*,
@@ -209,7 +233,7 @@ class Database_model extends CI_Model
             on e.PatientId = p.Id
             where e.IsEnded = 0
             and e.Id in 
-            (select td.EngagementId from T_EngagementDetails td where td.Id in (select EngagementId from T_EngagementDetailsDoctor where DoctorId = $UserId ))";
+            (select td.EngagementId from T_EngagementDetails td where td.Id in (select EngagementDetailsId from T_EngagementDetailsDoctor where DoctorId = $DoctorId ))";
             
             // where date(e.DateOfEngagement) = '$today'";
 
@@ -351,7 +375,22 @@ class Database_model extends CI_Model
     }
 
     public function getAllNurseActivity($engagementDetailsId){
-        $query_string ="select * from T_NurseActivity where EngagementDetailsId = $engagementDetailsId";
+        $query_string ="select na.*, u.Name from T_NurseActivity na 
+        inner join R_User u on u.Id = na.NurseId
+        where na.EngagementDetailsId = $engagementDetailsId order by na.Id desc";
+        $data = $this->db->query($query_string)->result();
+        return $data;
+    }
+
+    public function getAllNurseActivityRelative(){
+
+        $UserId = $this->session->userdata('Id');
+
+        $query_string ="select na.*, u.Name from T_NurseActivity na
+        inner join T_EngagementDetails ed on ed.Id = na.EngagementDetailsId
+        inner join T_Engagement e on e.Id = ed.EngagementId
+        inner join R_User u on u.Id = na.NurseId
+        where e.PatientId in (select PatientId from R_UserPatient where UserId = $UserId) order by na.Id desc";
         $data = $this->db->query($query_string)->result();
         return $data;
     }
@@ -522,6 +561,22 @@ class Database_model extends CI_Model
         return $data;
     }
 
+    public function getMedicineListDoctor($EngagementDetailsId){
+        $query_string = "select m.*,r.Description as 'roomDescription',CONCAT(p.FirstName,' ',p.LastName) as 'PatientName' , CONCAT(d.FirstName,' ',d.LastName) as 'DoctorName'
+         from T_EngagementMedicine m 
+         inner join T_EngagementDetails td on td.Id = m.EngagementDetailsId
+         inner join T_Engagement t on td.EngagementId = t.Id 
+         inner join R_Room r on t.RoomId = r.Id
+         inner join R_Patient p on p.Id = t.PatientId 
+         inner join R_Doctor d on d.Id = m.DoctorId 
+         where td.Id = $EngagementDetailsId
+         order by m.Id desc";
+
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
+    }
+
     public function getDisapprovedMedicine(){
         $query_string = "select m.*,r.Description as 'roomDescription',CONCAT(p.FirstName,' ',p.LastName) as 'PatientName' , CONCAT(d.FirstName,' ',d.LastName) as 'DoctorName'
          from T_EngagementMedicine m 
@@ -666,7 +721,8 @@ class Database_model extends CI_Model
                         inner join R_Patient p on p.Id = t.PatientId
                         inner join R_Room r on r.Id = t.RoomId
                         inner join T_EngagementMedicine tm on tm.EngagementDetailsId = td.Id
-                        inner join R_Medicine m on m.Id = tm.MedicineId";
+                        inner join R_Medicine m on m.Id = tm.MedicineId
+                        where (select count(tms.Id) from T_MedicineSchedule tms where tms.MedicineDetailsId = tm.Id and tms.PlannedSchedule<'$today' )>0";
 
                         
                         
@@ -714,5 +770,54 @@ class Database_model extends CI_Model
         where tms.Id = $medicineScheduleId")->row_array();
 
         return $data['Description'];
+    }
+
+    public function toggleMedicineScheduleRelative($medicineScheduleId,$nurseRemarks){
+        
+        $today = date("Y-m-d H:i");
+        $PatientId = $this->session->userdata('Id');
+
+
+        $data = array(
+            'Status' => 2,
+            'NurseRemarks' => $nurseRemarks,
+            'PatientId'=> $PatientId,
+            'ActualTaken' => $today 
+        );
+
+        $this->db->where('Id', $medicineScheduleId);
+        $this->db->update('T_MedicineSchedule', $data);
+
+        $data = $this->db->query("select m.Description from T_MedicineSchedule tms
+        inner join T_EngagementMedicine tm on tms.MedicineDetailsId = tm.Id 
+        inner join R_Medicine m on m.Id = tm.MedicineId
+        where tms.Id = $medicineScheduleId")->row_array();
+
+        return $data['Description'];
+    }
+
+    public function getMedicineScheduleByRelative(){
+        $UserId = $this->session->userdata('Id');
+
+        
+
+        $query_string = "select ms.*, m.Description as 'medicineDescription'
+        from T_MedicineSchedule ms
+        inner join T_EngagementMedicine tms on ms.MedicineDetailsId = tms.Id
+        inner join R_Medicine m on m.Id = tms.MedicineId
+        inner join T_EngagementDetails ed on tms.EngagementDetailsId = ed.Id
+        inner join T_Engagement e on e.Id = ed.EngagementId
+        where e.PatientId in (select PatientId from R_UserPatient where UserId = $UserId)";
+
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
+    }
+
+    public function countTaken($MedicineDetailsId){
+        $query_string = "select count(*) as 'Count' from T_MedicineSchedule where MedicineDetailsId = $MedicineDetailsId and Status = 2";
+
+        $data = $this->db->query($query_string)->row_array();
+        return $data['Count'];
     }
 }

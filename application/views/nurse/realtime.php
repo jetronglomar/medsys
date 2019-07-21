@@ -99,6 +99,24 @@
     <script>
       $(document).ready(function() {
 
+var conn = new WebSocket('ws://localhost:8000');
+conn.onopen = function(e) {
+    console.log("Connection established!");
+    
+};  
+
+conn.onmessage = function(e) {
+    // alert(e.data);
+    Swal.fire({
+      title: 'Buzz by Relative',
+      type:'info',
+      html:e.data,
+      confirmButtonText: 'Ok'
+    });
+};
+
+        
+
           var modals =[];
         function InitOverviewDataTable() {
           oOverviewTable = $('#example').DataTable(

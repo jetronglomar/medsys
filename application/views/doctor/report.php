@@ -163,10 +163,7 @@
                           <div class="table-responsive">
                             <table class="table">
                               <tbody>
-                                <tr>
-                                  <th style="width:50%">Medicine</th>
-                                  <td><?php if($EngagementDetailsFinal['Medicine'] != null) echo $EngagementDetailsFinal['Medicine']; ?></td>
-                                </tr>
+                              
                                 <tr>
                                   <th>Tests</th>
                                   <td><?php if($EngagementDetailsFinal['Tests'] != null) echo $EngagementDetailsFinal['Tests']; ?></td>
@@ -192,11 +189,44 @@
                      
                       <div class="row">
                         <!-- accepted payments column -->
-                        <div class="col-xs-6">
-                          
+                        <div class="col-xs-12">
+                        <p class="lead">(M) Medicine</p>
+                          <div class="table-responsive">
+                            <table class="table">
+                              <tbody>
+                                <tr>
+                                  <th style="width:50%">Description</th>
+                                  <th style="width:50%">Date</th>
+                                  <th style="width:50%">Qty Recommended</th>
+                                  <th style="width:50%">Qty Taken</th>
+                                </tr>
+                                <?php
+                                  foreach($MedicineList as $row){
+
+                                    $dateEnd = strtotime($row->DateEnd); 
+                                    $dateStart = strtotime($row->DateStart);
+        
+                                    $diff = $dateEnd - $dateStart;
+        
+                                    $hours = $diff / ( 60 * 60 );
+                                    $days = round($hours/24);
+
+
+                                    echo "<tr>";
+                                      echo "<td>".$this->database_model->getDescription($row->MedicineId, 'R_Medicine')."</td>";
+                                      echo "<td>".date('M-d-Y h:i a', strtotime($row->DateStart))." to ".date('m-d-Y h:i a', strtotime($row->DateEnd))."</td>";
+                                      echo "<td>".$days*$row->Qty."</td>";
+                                      echo "<td>".$this->database_model->countTaken($row->Id)."</td>";
+                                    echo "</tr>";
+                                  }
+                                ?>
+                              
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                         <!-- /.col -->
-                        <div class="col-xs-6">
+                        <div class="col-xs-12">
                           <p class="lead">(O) Objective</p>
                           <div class="table-responsive">
                             <table class="table">

@@ -129,7 +129,7 @@ class Doctor extends CI_Controller {
 		$data['ChiefComplaint'] = $this->database_model->getAll('R_ChiefComplaint');
 		$data['Disposition'] = $this->database_model->getAll('R_Disposition');
 
-
+		$data['MedicineList'] = $this->database_model->getMedicineListDoctor($Id);
 		
 		$this->load->view('doctor/report', $data);
 	}

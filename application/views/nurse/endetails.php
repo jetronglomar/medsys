@@ -262,7 +262,7 @@
                                                 <a><?php echo $row->ActivityDetails; ?></a>
                                             </h2>
                                 <div class="byline">
-                                    <span id="testdate">Today</span> by <a>John Doe</a>
+                                <span id="testdate"><?php echo date('m-d-y h:i a', strtotime($row->DateCreated)) ?></span> by <a><?php echo $row->Name; ?></a>
                                 </div>
                                 
                                 </div>

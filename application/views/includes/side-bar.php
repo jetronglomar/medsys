@@ -12,15 +12,22 @@
                 <img src="<?php echo base_url();?>resources/images/nurse.png" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
-                <?php if($this->session->userdata('RoleId') == 1 || $this->session->userdata('RoleId') == 3){ ?>
-                  <span>Welcome Nurse</span>
+                <?php if($this->session->userdata('RoleId') == 1){ ?>
+                  <span>Welcome Admin</span>
                 <?php }
                 else if($this->session->userdata('RoleId') == 2){ ?>
                   <span>Welcome Doctor</span>
                 <?php }
                 else if($this->session->userdata('RoleId') == 4){ ?>
                   <span>Welcome Pharmacist</span>
-                <?php }?>
+                <?php }
+                  else if($this->session->userdata('RoleId') == 5){ ?>
+                    <span>Welcome Patient's Guardian</span>
+                  <?php }
+                  else if($this->session->userdata('Nurse') == 3){?>
+                    <span>Welcome Nurse</span>
+                  <?php }?>
+                
 
                 <!-- <h2>Jet Glomar</h2> -->
               </div>
@@ -59,7 +66,9 @@
               <?php } else if($this->session->userdata('RoleId')==3){ ?>
                 <li><a href="<?php echo base_url() ?>nurse"> <i class="fa fa-stethoscope"></i> Upcoming Activities</a></li>
                 <li><a href="<?php echo base_url() ?>nurse/pendings"> <i class="fa fa-tasks"></i> Out of Stock Medicines</a></li>
-              <?php }?>
+              <?php } else if($this->session->userdata('RoleId') == 5){ ?>
+                <li><a href="<?php echo base_url() ?>Kiosk"> <i class="fa fa-home"></i>Home</a></li>
+              <?php } ?>
 
                   
                   <!-- <li><a><i class="fa fa-desktop"></i> Queries <span class="fa fa-chevron-down"></span></a>
