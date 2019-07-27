@@ -4,8 +4,10 @@
   $this->load->view('includes/head');
 ?>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" /> -->
+<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>resources/css/daterangepicker.css" />
+<link href="<?php echo base_url();?>resources/css/select2.min.css" rel="stylesheet" />
 
 <script>
 
@@ -84,7 +86,7 @@
     </div>
 
     <?php $this->load->view('includes/scripts'); ?>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="<?php echo base_url();?>resources/js/sweetalert2@8.js"></script>
     <script src="<?php echo base_url();?>resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url();?>resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="<?php echo base_url();?>resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>

@@ -58,6 +58,7 @@
                           <th>Request Number</th>
                           <th>Requested By</th>
                           <th>Patient Name</th>
+                          <th>Medicine Description</th>
                           <th>Qty</th>
                           <th>Status</th>
                           <th>Action</th>
@@ -79,6 +80,7 @@
                                 echo "<td>".date('Y').'-'.date('m',strtotime($row->DateCreated)).'-'.str_pad($row->Id, 4, '0', STR_PAD_LEFT)."</td>";
                                 echo "<td>Dr. ".$row->DoctorName."</td>";
                                 echo "<td>".$row->PatientName."</td>";
+                                echo "<td>".$row->medicineDescription."</td>";
                                 echo "<td>".$days*$row->Qty."</td>";    
                                 if($row->Status == 1){
                                     echo "<td>Pending</td>";

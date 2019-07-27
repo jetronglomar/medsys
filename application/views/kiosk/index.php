@@ -124,7 +124,7 @@
                                     }
 
                                     if($row->Status == 1){
-                                        echo "<td><button class='confirmMed btn btn-xs btn-success' data-toggle='tooltip' title='Confirm' value='".$row->Id."'><i class='fa fa-check'></i></button></td>";
+                                        echo "<td><button class='confirmMed btn btn-xs btn-success'  value='".$row->Id."'><i class='fa fa-check'></i></button></td>";
                                     }
                                     else{
                                         echo "<td>N/A</td>";
@@ -147,9 +147,11 @@
         <!-- /footer content -->
       </div>
     </div>
+    
           
     <?php $this->load->view('includes/scripts'); ?>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script> -->
+    <script src="<?php echo base_url();?>resources/js/sweetalert2@8.js"></script>
     <script src="<?php echo base_url();?>resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url();?>resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="<?php echo base_url();?>resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
@@ -168,24 +170,7 @@
 
   <script>
       $(document).ready(function(){
-
-
-var conn = new WebSocket('ws://localhost:8000');
-conn.onopen = function(e) {
-    console.log("Connection established!");
-    
-};  
-
-conn.onmessage = function(e) {
-    console.log(e.data);
-};
-
-$('#buzz').on('click', function(){
-conn.send('Relative of <?php echo $PatientDetails["FirstName"]." ".$PatientDetails['LastName']; ?> is trying to call your attention. Please proceed to <?php echo $EngagementDetails['roomDescription']; ?>');
-});
-
-
-
+        
         $('.confirmMed').on('click', function(e){
             e.preventDefault();
             var Id = $(this).val();
@@ -221,6 +206,24 @@ conn.send('Relative of <?php echo $PatientDetails["FirstName"]." ".$PatientDetai
                     }
                     })
         });
+
+
+var conn = new WebSocket('ws://localhost:8000');
+conn.onopen = function(e) {
+    console.log("Connection established!");
+    
+};  
+
+conn.onmessage = function(e) {
+    console.log(e.data);
+};
+
+$('#buzz').on('click', function(){
+conn.send('Relative of <?php echo $PatientDetails["FirstName"]." ".$PatientDetails['LastName']; ?> is trying to call your attention. Please proceed to <?php echo $EngagementDetails['roomDescription']; ?>');
+});
+
+
+
 
 
       });

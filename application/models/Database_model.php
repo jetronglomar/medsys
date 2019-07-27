@@ -548,8 +548,9 @@ class Database_model extends CI_Model
 
 
     public function getPendingMedicine(){
-        $query_string = "select m.*,r.Description as 'roomDescription',CONCAT(p.FirstName,' ',p.LastName) as 'PatientName' , CONCAT(d.FirstName,' ',d.LastName) as 'DoctorName'
+        $query_string = "select m.*,rm.Description as 'medicineDescription',r.Description as 'roomDescription',CONCAT(p.FirstName,' ',p.LastName) as 'PatientName' , CONCAT(d.FirstName,' ',d.LastName) as 'DoctorName'
          from T_EngagementMedicine m 
+         inner join R_Medicine rm on rm.Id = m.MedicineId
          inner join T_EngagementDetails td on td.Id = m.EngagementDetailsId
          inner join T_Engagement t on td.EngagementId = t.Id 
          inner join R_Room r on t.RoomId = r.Id
@@ -578,8 +579,9 @@ class Database_model extends CI_Model
     }
 
     public function getDisapprovedMedicine(){
-        $query_string = "select m.*,r.Description as 'roomDescription',CONCAT(p.FirstName,' ',p.LastName) as 'PatientName' , CONCAT(d.FirstName,' ',d.LastName) as 'DoctorName'
+        $query_string = "select m.*,rm.Description as 'medicineDescription',r.Description as 'roomDescription',CONCAT(p.FirstName,' ',p.LastName) as 'PatientName' , CONCAT(d.FirstName,' ',d.LastName) as 'DoctorName'
          from T_EngagementMedicine m 
+         inner join R_Medicine rm on rm.Id = m.MedicineId
          inner join T_EngagementDetails td on td.Id = m.EngagementDetailsId
          inner join T_Engagement t on td.EngagementId = t.Id 
          inner join R_Room r on t.RoomId = r.Id
@@ -715,14 +717,14 @@ class Database_model extends CI_Model
         $today = date("Y-m-d H:i", strtotime('+10 minutes',strtotime($today)));
 
         $query_string = "select t.Id as 'EngagementId', t.*,CONCAT(p.FirstName,' ',p.LastName) as 'patientName', m.Description as 'medicineDescription',r.Description as 'roomDescription',
-                        (select count(tms.Id) from T_MedicineSchedule tms where tms.MedicineDetailsId = tm.Id and tms.PlannedSchedule<'$today' ) as 'Count'
+                        (select count(tms.Id) from T_MedicineSchedule tms where tms.MedicineDetailsId = tm.Id and tms.PlannedSchedule<'$today' and tms.Status = 0) as 'Count'
                         from T_Engagement t
                         inner join T_EngagementDetails td on t.Id = td.EngagementId
                         inner join R_Patient p on p.Id = t.PatientId
                         inner join R_Room r on r.Id = t.RoomId
                         inner join T_EngagementMedicine tm on tm.EngagementDetailsId = td.Id
                         inner join R_Medicine m on m.Id = tm.MedicineId
-                        where (select count(tms.Id) from T_MedicineSchedule tms where tms.MedicineDetailsId = tm.Id and tms.PlannedSchedule<'$today' )>0";
+                        where (select count(tms.Id) from T_MedicineSchedule tms where tms.MedicineDetailsId = tm.Id and tms.PlannedSchedule<'$today' and tms.Status = 0 )>0";
 
                         
                         

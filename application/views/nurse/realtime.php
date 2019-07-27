@@ -79,7 +79,7 @@
       </div>
 
       <?php $this->load->view('includes/scripts'); ?>
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+      <script src="<?php echo base_url();?>resources/js/sweetalert2@8.js"></script>
     <script src="<?php echo base_url(); ?>resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
       <script src="<?php echo base_url(); ?>resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
       <script src="<?php echo base_url(); ?>resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>

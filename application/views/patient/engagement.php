@@ -4,8 +4,8 @@
   $this->load->view('includes/head');
 ?>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>resources/css/daterangepicker.css" />
+<link href="<?php echo base_url();?>resources/css/select2.min.css" rel="stylesheet" />
 
   <body class="nav-md">
     <div class="container body">
