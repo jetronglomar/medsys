@@ -48,19 +48,18 @@
 
               <?php if($this->session->userdata('RoleId') == 1){ ?>
                 <li><a href="<?php echo base_url() ?>home"> <i class="fa fa-stethoscope"></i>Dashboard</a></li>
-                  <!-- <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="<?php echo base_url() ?>home">Dashboard</a></li>
-                      <li><a href="index2.html">Profile</a></li>
-                    </ul>
-                  </li> -->
                 
                   <li><a><i class="fa fa-group"></i> Patient Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo base_url();?>patient">Profile</a></li>
                       <li><a href="<?php echo base_url();?>lab">Laboratory Result</a></li>
-                      <!-- <li><a href="<?php echo base_url();?>appointment">Appointment</a></li> -->
-                      <li><a href="index3.html">Activities</a></li>
+                    </ul>
+                  </li>
+
+                  <li><a><i class="fa fa-cog"></i> System Setup <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="<?php echo base_url();?>admin/user">User</a></li>
+                    
                     </ul>
                   </li>
               <?php } else if($this->session->userdata('RoleId')==3){ ?>
@@ -71,27 +70,7 @@
               <?php } ?>
 
                   
-                  <!-- <li><a><i class="fa fa-desktop"></i> Queries <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="general_elements.html">Patient History</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-table"></i> Reports <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="tables.html">Patient History</a></li>
-                      <li><a href="tables_dynamic.html">TBA</a></li>
-                    </ul>
-                  </li>
-
-                  <li><a><i class="fa fa-cogs"></i> Configuration <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="form.html">Doctor</a></li>
-                      <li><a href="form_advanced.html">Nurse</a></li>
-                      <li><a href="form_validation.html">Specialization</a></li>
-                      <li><a href="form_wizards.html">Patient</a></li>
-                      <li><a href="form_upload.html">User Account</a></li>
-                    </ul>
-                  </li> -->
+             
                 </ul>
               </div>
               

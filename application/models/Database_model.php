@@ -8,6 +8,24 @@ class Database_model extends CI_Model
         return $result;
     }
 
+    public function getAllUser(){
+        $query_string = "select u.*,r.Description as 'roleDescription' from R_User u
+        inner join R_Role r on u.RoleId = r.Id";
+
+        $data = $this->db->query($query_string)->result();
+
+        return $data;
+    }
+
+    public function getSpecificUser($UserID){
+        $query_string = "select * from R_User where Id = $UserID";
+        
+        $data = $this->db->query($query_string)->row_array();
+
+        
+        return $data;
+    }
+
     public function getSpecificPatient($Id){
 
         $query_string = "select * from R_Patient where Id = $Id";
