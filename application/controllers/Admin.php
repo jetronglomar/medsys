@@ -30,8 +30,19 @@ class Admin extends CI_Controller {
         $RoleId = $this->input->post('RoleId');
 
 
-        $Password = $this->encryptor($Password,$this->generateRandomString(32));
+        $secretCode = $this->generateRandomString(32);
+        $Password = $this->encryptor($Password,$secretCode);
 
+
+        //create database model for update user
+        $result = $this->database_model->updateUser($Name, $EmailAddress, $Password, $secretCode, $RoleId);
+
+        if($result){
+            //Redirect to index then fire swal
+        }
+        else{
+            //Do something
+        }
     }
 
     public function addUser(){
