@@ -463,11 +463,34 @@ class Database_model extends CI_Model
     } 
 
     public function validateUser($emailAddress,$password){
-        $query_string ="select * from R_User where EmailAddress = '$emailAddress' and Password = '$password'";
+        
+        $query_string ="select * from R_User where EmailAddress = '$emailAddress'";
 
         $result = $this->db->query($query_string)->row_array();
-        return $result;
+        $password_result = $this->decryptor($result['Password'], $result['EncryptionCode']);
+        if($password == $password_result)
+            return $result;
+        else
+            return null;
     }
+
+
+    function decryptor($encryptedText, $encryptionCode){
+
+        $this->encryption->initialize(
+            array(
+                    'cipher' => 'aes-256',
+                    'mode' => 'ctr',
+                    'key' => $encryptionCode
+            )
+        );
+
+        $decryptedText = $this->encryption->decrypt($encryptedText);
+
+        return $decryptedText;
+
+    }
+    
 
     public function saveActivity($ActivityDetails, $EngagementDetailsId){
         $NurseId = $this->session->userdata('Id');
@@ -839,5 +862,19 @@ class Database_model extends CI_Model
 
         $data = $this->db->query($query_string)->row_array();
         return $data['Count'];
+    }
+
+    public function updateUser($Id, $Name, $EmailAddress, $Password, $secretCode, $RoleId){
+        $data = array(
+            'EmailAddress'=>$EmailAddress,
+            'Password'=>$Password,
+            'EncryptionCode'=>$secretCode,
+            'RoleId'=>$RoleId
+        );
+
+        $this->db->where('Id', $Id);
+        $this->db->update('R_User', $data);
+
+        return true;
     }
 }

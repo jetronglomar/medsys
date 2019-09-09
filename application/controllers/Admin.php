@@ -35,13 +35,16 @@ class Admin extends CI_Controller {
 
 
         //create database model for update user
-        $result = $this->database_model->updateUser($Name, $EmailAddress, $Password, $secretCode, $RoleId);
+        $result = $this->database_model->updateUser($Id, $Name, $EmailAddress, $Password, $secretCode, $RoleId);
 
         if($result){
             //Redirect to index then fire swal
+
+            redirect('admin/user');
         }
         else{
             //Do something
+            redirect('admin/user');
         }
     }
 
